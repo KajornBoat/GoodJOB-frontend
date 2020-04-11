@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Modal, View, Text, StyleSheet, Button } from "react-native";
 import API from "../API/API";
 import CreateJobScreen from "./CreateJobScreen";
+import * as ImagePicker from 'expo-image-picker';
+import firebase from '../API/firebase/firebase';
+
 const DashboardScreen = (props) => {
   const [visible, setVisible] = useState(false);
   const getUID = () => {
@@ -24,6 +27,12 @@ const DashboardScreen = (props) => {
       alert(idToken);
     });
   };
+  const uploadImage = async() => {
+    var file = await ImagePicker.launchImageLibraryAsync();
+    await API.user.uploadImage(file);
+  };
+
+
   return (
     <View style={(styles.container, { margin: 30 })}>
       <Button title="Sign out" onPress={() => API.auth.signOut()} />
@@ -31,8 +40,11 @@ const DashboardScreen = (props) => {
       <Button title="Get idToken" onPress={() => getIdToken()} />
       <Button title="Get UID" onPress={() => getUID()} />
       <Button title="Get USer" onPress={() => getUser()} />
+      
       <Text>{"\n"}</Text>
-      <Button title="Create NewUser" onPress={() => API.user.createNewUser()} />
+      <Button title="Create NewUser" onPress={() => API.user.createNewUser()} /> 
+      <Button title="Upload Image" onPress={() => uploadImage ()} />
+      <Text>{"\n"}</Text>
       <Button
         title="Setting Screen"
         onPress={() => props.navigation.navigate("Setting")}

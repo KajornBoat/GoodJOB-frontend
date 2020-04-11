@@ -15,6 +15,8 @@ import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 import PopUpScreen from "./PopUpScreen";
+import api from "../API/API";
+
 
 const AvatarComponent = ({ url, role, onChangeImage }) => {
   const templateEmployer = require("../assets/รูปนายจ้าง.png");
@@ -45,7 +47,8 @@ const AvatarComponent = ({ url, role, onChangeImage }) => {
             aspect: [4, 4],
             quality: 1,
           });
-          console.log(result);
+          api.user.uploadImage(result);
+          //console.log(result);
           if (!result.cancelled) {
             onChangeImage(result.uri);
           }
@@ -420,6 +423,7 @@ const RoleComponent = ({ role, setRole }) => {
           }}
         >
           นายจ้าง
+          
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
