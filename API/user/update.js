@@ -49,7 +49,7 @@ class Update {
               },
               body: JSON.stringify({
                 "photoURL": downloadURL,
-                "idToken" idToken
+                "idToken" : idToken
 
               }),
             }) 
