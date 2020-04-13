@@ -17,7 +17,7 @@ class LoadingScreen extends Component {
         //console.log(user)
         if (user) {
           //firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
-          this.props.navigation.navigate('Dashboard');
+          this.props.navigation.navigate('MainUser');
         } else {
           this.props.navigation.navigate('Login');
         }

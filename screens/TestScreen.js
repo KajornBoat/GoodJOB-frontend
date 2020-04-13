@@ -4,8 +4,9 @@ import API from "../API/API";
 import CreateJobScreen from "./CreateJobScreen";
 import * as ImagePicker from 'expo-image-picker';
 import firebase from '../API/firebase/firebase';
+import {SafeAreaView } from 'react-native-safe-area-context';
 
-const DashboardScreen = (props) => {
+const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
   const getUID = () => {
     API.user.getUserID().then((uid) => {
@@ -34,27 +35,28 @@ const DashboardScreen = (props) => {
 
 
   return (
-    <View style={(styles.container, { margin: 30 })}>
-      <Button title="Sign out" onPress={() => API.auth.signOut()} />
-      <Text>{"\n"}</Text>
-      <Button title="Get idToken" onPress={() => getIdToken()} />
-      <Button title="Get UID" onPress={() => getUID()} />
-      <Button title="Get USer" onPress={() => getUser()} />
-      
-      <Text>{"\n"}</Text>
-      <Button title="Create NewUser" onPress={() => API.user.createNewUser()} /> 
-      <Button title="Upload Image" onPress={() => uploadImage ()} />
-      <Text>{"\n"}</Text>
-      <Button
-        title="Setting Screen"
-        onPress={() => props.navigation.navigate("Setting")}
-      />
-      <Button title="Create Job" onPress={() => setVisible(true)} />
-      <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
-    </View>
+    <SafeAreaView>
+
+      <View style={(styles.container, { margin: 0 })}>
+        <Button title="Sign out" onPress={() => API.auth.signOut()} />
+        <Text>{"\n"}</Text>
+        <Button title="Get idToken" onPress={() => getIdToken()} />
+        <Button title="Get UID" onPress={() => getUID()} />
+        <Button title="Get USer" onPress={() => getUser()} />
+        
+        <Text>{"\n"}</Text>
+        <Button title="Create NewUser" onPress={() => API.user.createNewUser()} /> 
+        <Button title="Upload Image" onPress={() => uploadImage ()} />
+        <Text>{"\n"}</Text>
+        <Button title="Create Job" onPress={() => setVisible(true)} />
+        <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
+        </View>
+
+    </SafeAreaView>
+    
   );
 };
-export default DashboardScreen;
+export default TestScreen;
 
 const styles = StyleSheet.create({
   container: {
