@@ -15,8 +15,10 @@ import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 import PopUpScreen from "./PopUpScreen";
+import { apisAreAvailable } from "expo";
+import api from "../API/API"
 
-const AvatarComponent = ({ url, role, onChangeImage }) => {
+const AvatarComponent =  ({ url, role, onChangeImage }) => {
   const templateEmployer = require("../assets/รูปนายจ้าง.png");
   const templateEmployee = require("../assets/รูปลูกจ้าง.png");
   return (
@@ -47,7 +49,8 @@ const AvatarComponent = ({ url, role, onChangeImage }) => {
           });
           console.log(result);
           if (!result.cancelled) {
-            onChangeImage(result.uri);
+            let url = await api.user.update.image(result).catch(err => console.log(err));          
+            onChangeImage(url);
           }
         }}
         editButton={{
@@ -73,6 +76,7 @@ const TextInputComponent = ({
   title,
   maxLength,
   keyboardType,
+  updateData,
 }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
@@ -133,11 +137,13 @@ const TextInputComponent = ({
             >
               <Text style={{ color: "#126f6f" }}>CANCEL</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={() => {
                 setActive(false);
                 onSaved(text);
+                updateData(text)
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -149,7 +155,7 @@ const TextInputComponent = ({
   );
 };
 
-const PickerComponent = ({ title, value, items, onValueChange }) => {
+const PickerComponent = ({ title, value, items, onValueChange , updateData }) => {
   return (
     <View>
       <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
@@ -165,7 +171,10 @@ const PickerComponent = ({ title, value, items, onValueChange }) => {
               color: "transparent",
               height: 25,
             }}
-            onValueChange={(itemValue, itemIndex) => onValueChange(itemValue)}
+            onValueChange={(itemValue, itemIndex) => {
+              onValueChange(itemValue)
+              updateData(itemValue)
+            }}
           >
             <Picker.Item
               key={0}
@@ -201,7 +210,7 @@ const PickerComponent = ({ title, value, items, onValueChange }) => {
   );
 };
 
-const MultipleSelect = ({ title, values, onChange, items }) => {
+const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
   const list = [...values];
   const [message, setMessage] = useState("");
   const Item = (props) => {
@@ -264,6 +273,7 @@ const MultipleSelect = ({ title, values, onChange, items }) => {
             onRequestClose={() => {
               setActive(false);
               onChange(list);
+              updateData(list)
             }}
             visible={active}
             animationType="fade"
@@ -478,12 +488,14 @@ const SettingScreen = () => {
               value={firstName}
               onSaved={setFirstName}
               maxLength={20}
+              updateData ={api.user.update.firstname}
             />
             <TextInputComponent
               title="นามสกุล"
               value={lastName}
               onSaved={setLastName}
               maxLength={20}
+              updateData ={api.user.update.lastName}
             />
             <TextInputComponent
               title="อายุ"
@@ -491,6 +503,7 @@ const SettingScreen = () => {
               onSaved={setAge}
               maxLength={2}
               keyboardType="numeric"
+              updateData ={api.user.update.age}
             />
             <TextInputComponent
               title="หมายเลขโทรศัพท์"
@@ -498,6 +511,7 @@ const SettingScreen = () => {
               onSaved={setPhoneNumber}
               maxLength={10}
               keyboardType="numeric"
+              updateData ={api.user.update.phoneNumber}
             />
             <TextInputComponent
               title="เลขประจำตัวประชาชน"
@@ -505,18 +519,21 @@ const SettingScreen = () => {
               onSaved={setIdCard}
               maxLength={13}
               keyboardType="numeric"
+              updateData ={api.user.update.id_card}
             />
             <PickerComponent
               title="จังหวัดที่อยู่ปัจจุบัน"
               value={currentProvince}
               onValueChange={setCurrentProvince}
               items={require("../assets/constValue").PROVINCE_TH}
+              updateData ={api.user.update.id_card}
             />
             <PickerComponent
               title="เพศ"
               value={gender}
               onValueChange={setGender}
               items={require("../assets/constValue").GENDER}
+              updateData ={api.user.update.gender}
             />
             <MultipleSelect
               title="ตำแหน่งงานที่สนใจ"
@@ -525,6 +542,7 @@ const SettingScreen = () => {
                 setInterestJob(value);
               }}
               items={require("../assets/constValue").JOB_POSITION}
+              updateData ={api.user.update.interested}
             />
             <TextAreaComponent
               title="แนะนำตัวเอง"
@@ -532,6 +550,7 @@ const SettingScreen = () => {
               onSaved={setIntroduceText}
               maxLength={200}
               height={110}
+              updateData ={api.user.update.introduce}
             />
             <RoleComponent role={currentRole} setRole={setCurrentRole} />
           </View>

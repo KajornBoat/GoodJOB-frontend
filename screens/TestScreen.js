@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Modal, View, Text, StyleSheet, Button } from "react-native";
 import API from "../API/API";
+import manageUser from "../API/user/manage"
 import CreateJobScreen from "./CreateJobScreen";
 import * as ImagePicker from 'expo-image-picker';
-import firebase from '../API/firebase/firebase';
 import {SafeAreaView } from 'react-native-safe-area-context';
 
 const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
+
   const getUID = () => {
-    API.user.getUserID().then((uid) => {
+    manageUser.getUserID().then((uid) => {
       console.log("UID = ", uid);
       alert(uid);
     });
@@ -23,14 +24,15 @@ const TestScreen = (props) => {
     });
   };
   const getIdToken = () => {
-    API.user.getIdToken().then((idToken) => {
+    manageUser.getIdToken().then((idToken) => {
       console.log("idToken = ", idToken);
       alert(idToken);
     });
   };
   const uploadImage = async() => {
     var file = await ImagePicker.launchImageLibraryAsync();
-    await API.user.uploadImage(file);
+    let link =  await API.user.update.image(file);
+    //console.log(link)
   };
 
 
@@ -45,7 +47,6 @@ const TestScreen = (props) => {
         <Button title="Get USer" onPress={() => getUser()} />
         
         <Text>{"\n"}</Text>
-        <Button title="Create NewUser" onPress={() => API.user.createNewUser()} /> 
         <Button title="Upload Image" onPress={() => uploadImage ()} />
         <Text>{"\n"}</Text>
         <Button title="Create Job" onPress={() => setVisible(true)} />
