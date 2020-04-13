@@ -1,6 +1,8 @@
 
 import Auth from './auth';
-import User from './user';
+import Users from './user/user';
+
+const User = new Users();
 
 class API {
     auth = Auth;

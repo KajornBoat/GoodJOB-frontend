@@ -2,8 +2,6 @@ import firebase from './firebase/firebase';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
 
-import user from './user';
-
 var configAuth = require('./firebase/firebaseConfig');
 
 class Auth {
@@ -44,10 +42,10 @@ class Auth {
                 .then(function(result) {
                   console.log('user signed in ');
                   if (result.additionalUserInfo.isNewUser) {
-                    console.log("New User");
-                    user.createNewUser()
+                    //console.log("New User");
+     
                   } else {
-                    console.log("Old User")
+                    //console.log("Old User")
                   }
                 })
                 .catch(function(error) {
@@ -68,9 +66,9 @@ class Auth {
       };
       async signInWithGoogleAsync(){
         try {
-          console.log("Press")
+          //console.log("Press")
           const result = await Google.logInAsync(configAuth);
-          console.log("Login ",result.idToken)
+          //console.log("Login ",result.idToken)
           if (result.type === 'success') { 
             this.__onSignIn(result);
             return result.accessToken;
@@ -105,8 +103,7 @@ class Auth {
               .then(function(result) {
                 console.log('user signed in ');
                 if (result.additionalUserInfo.isNewUser) {
-                  console.log("New User");
-                  user.createNewUser()
+                  console.log("New User"); 
                 } else {
                   console.log("Old User")
                 }

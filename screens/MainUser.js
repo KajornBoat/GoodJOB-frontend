@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs(){
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Test" component={TestScreen} />
+      <Tab.Screen name="TestScreen" component={TestScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
