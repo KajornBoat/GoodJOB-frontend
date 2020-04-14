@@ -1,31 +1,23 @@
 import React, { useState } from "react";
 import { Modal, View, Text, StyleSheet, Button } from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-
-
-
-import SettingsScreen from './SettingScreen';
-import TestScreen from './TestScreen'
-
+import SettingMenu from "./SettingMenu";
+import TestScreen from "./TestScreen";
 const Tab = createBottomTabNavigator();
 
-
-function MyTabs(){
+function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="TestScreen" component={TestScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="SettingMenu" component={SettingMenu} />
     </Tab.Navigator>
   );
 }
 
 const MainUser = (props) => {
-  return (
-    <MyTabs />
-  );
+  return <MyTabs />;
 };
-
 
 export default MainUser;
 

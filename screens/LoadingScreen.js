@@ -1,31 +1,30 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import firebase from '../API/firebase/firebase';
-import API from '../API/API'
+import React, { Component } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import firebase from "../API/firebase/firebase";
+import API from "../API/API";
 
 class LoadingScreen extends Component {
-
   componentDidMount() {
     this.checkIfLoggedIn();
   }
 
   checkIfLoggedIn = () => {
-
     firebase.auth().onAuthStateChanged(
-      function(user) {
-        console.log('AUTH STATE CHANGED CALLED ')
+      function (user) {
+        console.log("AUTH STATE CHANGED CALLED ");
         //console.log(user)
         if (user) {
           //firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
-          this.props.navigation.navigate('MainUser');
+          // if user don't have data
+          this.props.navigation.navigate("SelectRole");
+          // else
+          //this.props.navigation.navigate("MainUser");
         } else {
-          this.props.navigation.navigate('Login');
+          this.props.navigation.navigate("Login");
         }
       }.bind(this)
     );
   };
-
-  
 
   render() {
     return (
@@ -41,7 +40,7 @@ export default LoadingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
