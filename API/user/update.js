@@ -70,7 +70,7 @@ class Update {
   }
   async firstname(firstname){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -85,10 +85,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async lastName(lastname){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -103,10 +104,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async gender(gender){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -121,28 +123,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
-  }
-  async role(CurrentRole){
-    const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "current_role": CurrentRole,
-             }
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    if(result.status < 300) return result;
   }
   async province(currentProvince){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -157,11 +142,12 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
 
   }
   async interested(interested){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -178,10 +164,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async introduce(introduce_text){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -196,10 +183,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async phoneNumber(phone_number){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -214,10 +202,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async id_card(id_card){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -232,10 +221,11 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
   async age(age){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user', {
+    const result = await fetch(config.hostname+'/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -250,6 +240,7 @@ class Update {
     .catch((error) => {
       console.error('Error:', error);
     });
+    if(result.status < 300) return result;
   }
 }
 const update = new Update();

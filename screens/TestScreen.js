@@ -36,8 +36,6 @@ const TestScreen = (props) => {
     console.log("Link = ",link)
   };
 
-  const [active, setActive] = useState(false);
-
   return (
     <SafeAreaView>
 
@@ -54,18 +52,7 @@ const TestScreen = (props) => {
         <Button title="Create Job" onPress={() => setVisible(true)} />
         <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
         <Text>{"\n"}</Text>
-        <Button title="POPUP_Loading" onPress={() => setActive(true)} />
-        <PopUpScreen
-          visible={active}
-          onRequestClose={() => {
-            setActive(false);
-          }}
-        >
-          <View style={[{ flexDirection: "row" }, styles.popUpContainer]}>
-            <ActivityIndicator size="large" />
-            <Text>    Loading...</Text>
-          </View>
-        </PopUpScreen>
+        
       </View>
 
     </SafeAreaView>

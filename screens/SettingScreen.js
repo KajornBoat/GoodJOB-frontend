@@ -9,41 +9,22 @@ import {
   TextInput,
   Picker,
   Modal,
-  ActivityIndicator,
-  Button
 } from "react-native";
 import { Avatar, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
-import PopUpScreen from "./PopUpScreen";
-import { apisAreAvailable } from "expo";
+import PopUpScreen from "../component/PopUpScreen";
+import PopUpLoading from "../component/PopupLoading"
 import api from "../API/API"
+import { set } from "react-native-reanimated";
 
-
-
-
-const LoadingComponent = ({active,setActive}) => {
-  //const [active, setActive] = useState(false);
-  return (
-    <PopUpScreen
-      visible={active}
-      onRequestClose={() => {
-        setActive(false);
-      }}
-    >
-      <View style={[{ flexDirection: "row" }, styles.popUpLoading]}>
-        <ActivityIndicator size="large" />
-        <Text>       Loading...</Text>
-      </View>
-    </PopUpScreen>
-  )
-};
 
 const AvatarComponent =  ({ url, role, onChangeImage }) => {
   const templateEmployer = require("../assets/รูปนายจ้าง.png");
   const templateEmployee = require("../assets/รูปลูกจ้าง.png");
-  const [activeLoad, setActiveLopad] = useState(false);
+  const [activeLoad, setActiveLoad] = useState(false);
+
   return (
     <View style={{ alignItems: "center" }}>
       <Text style={[styles.gapVertical, styles.labelFont, { fontSize: 16 }]}>
@@ -71,11 +52,14 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
             quality: 1,
           });
           if (!result.cancelled) {
-            setActiveLopad(true)
-            let link = await api.user.update.image(result).catch(err => console.log(err));   
-            console.log("URL = ",link)
+            setActiveLoad(true)
+            let link = await api.user.update.image(result).catch(err => console.log(err));           
             onChangeImage(link);
-            setActiveLopad(false)
+
+            setTimeout(() => {
+              setActiveLoad(false)
+            },2500)
+            
           }
         }}
         editButton={{
@@ -91,11 +75,10 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
           underlayColor: "#c3eaff",
         }}
       />
-      <Button title="POPUP_Loading" onPress={() => setActiveLopad(true)} />
 
-      <LoadingComponent
+      <PopUpLoading
         active = {activeLoad}
-        setActive  = {setActiveLopad}
+        setActive  = {setActiveLoad}
       />
 
     </View>
@@ -112,6 +95,8 @@ const TextInputComponent = ({
 }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
+  const [activeLoad, setActiveLoad] = useState(false);
+
   return (
     <View>
       <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
@@ -172,22 +157,33 @@ const TextInputComponent = ({
 
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
-              onPress={() => {
+              onPress={ async() => {
+                setActiveLoad(true);  
+                await updateData(text);
+                setActiveLoad(false);
                 setActive(false);
                 onSaved(text);
-                updateData(text)
+                
+             
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
             </TouchableOpacity>
+            
           </View>
         </View>
       </PopUpScreen>
+
+      <PopUpLoading
+              active = {activeLoad}
+              setActive  = {setActiveLoad}
+      />
     </View>
   );
 };
 
 const PickerComponent = ({ title, value, items, onValueChange , updateData }) => {
+  const [activeLoad, setActiveLoad] = useState(false);
   return (
     <View>
       <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
@@ -203,9 +199,11 @@ const PickerComponent = ({ title, value, items, onValueChange , updateData }) =>
               color: "transparent",
               height: 25,
             }}
-            onValueChange={(itemValue, itemIndex) => {
-              onValueChange(itemValue)
-              updateData(itemValue)
+            onValueChange={async(itemValue, itemIndex) => {
+              setActiveLoad(true)
+              await updateData(itemValue)
+              setActiveLoad(false)
+              onValueChange(itemValue)       
             }}
           >
             <Picker.Item
@@ -238,6 +236,10 @@ const PickerComponent = ({ title, value, items, onValueChange , updateData }) =>
           style={{ position: "absolute", top: "45%", right: "2%" }}
         />
       </View>
+      <PopUpLoading
+              active = {activeLoad}
+              setActive  = {setActiveLoad}
+      />
     </View>
   );
 };
@@ -279,8 +281,9 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
     setMessage(str);
     return;
   }, [values]);
-
+  
   const [active, setActive] = useState(false);
+  const [activeLoad, setActiveLoad] = useState(false);
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -302,10 +305,13 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
           />
           <Modal
             transparent
-            onRequestClose={() => {
+            onRequestClose={async() => {
+              setActiveLoad(true);
+              await updateData(list);
+              setActiveLoad(false);
               setActive(false);
               onChange(list);
-              updateData(list)
+              
             }}
             visible={active}
             animationType="fade"
@@ -336,6 +342,10 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
           </Modal>
         </View>
       </TouchableOpacity>
+      <PopUpLoading
+              active = {activeLoad}
+              setActive  = {setActiveLoad}
+      />
     </View>
   );
 };
@@ -343,6 +353,7 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
 const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateData}) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
+  const [activeLoad, setActiveLoad] = useState(false);
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -414,10 +425,13 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateDa
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
-              onPress={() => {
+              onPress={async() => {
+                setActiveLoad(true);
+                await updateData(text);
+                setActiveLoad(false);
                 setActive(false);
                 onSaved(text);
-                updateData(value);
+                
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -425,6 +439,10 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateDa
           </View>
         </View>
       </PopUpScreen>
+      <PopUpLoading
+              active = {activeLoad}
+              setActive  = {setActiveLoad}
+      />
     </View>
   );
 };
@@ -561,7 +579,7 @@ const SettingScreen = () => {
               value={currentProvince}
               onValueChange={setCurrentProvince}
               items={require("../assets/constValue").PROVINCE_TH}
-              updateData ={api.user.update.id_card}
+              updateData ={api.user.update.province}
             />
             <PickerComponent
               title="เพศ"
@@ -619,10 +637,7 @@ const styles = StyleSheet.create({
   popUpContainer: {
     margin: 10,
   },
-  popUpLoading: {
-    margin: 20,
-    alignItems: "center",
-  },
+ 
 });
 
 export default SettingScreen;
