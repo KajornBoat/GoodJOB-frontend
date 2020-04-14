@@ -1,10 +1,26 @@
 import firebase from './firebase/firebase';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
+import manageUser from "./user/manage";
 
-var configAuth = require('./firebase/firebaseConfig');
+const configAuth = require('./firebase/firebaseConfig');
+const config = require("./config.json")
+
 
 class Auth {
+    async __loginApi(){
+      const idToken = await manageUser.getIdToken();
+      console.log("IDTOKEN = ",idToken)
+      fetch(config.hostname+'/auth/login', {
+        method: 'GET',
+        headers: {
+          "idtoken" : idToken
+        },
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
     __isUserEqual(googleUser, firebaseUser){
         if (firebaseUser) {
           var providerData = firebaseUser.providerData;
@@ -21,7 +37,7 @@ class Auth {
         }
         return false;
       };
-      __onSignIn = (googleUser) => {
+      __onSignIn = async (googleUser) => {
         //console.log('Google Auth Response', googleUser);
         // We need to register an Observer on Firebase Auth to make sure auth is initialized.
         var unsubscribe = firebase.auth().onAuthStateChanged(
@@ -39,14 +55,9 @@ class Auth {
               firebase
                 .auth()
                 .signInWithCredential(credential)
-                .then(function(result) {
+                .then( result =>  {
                   console.log('user signed in ');
-                  if (result.additionalUserInfo.isNewUser) {
-                    //console.log("New User");
-     
-                  } else {
-                    //console.log("Old User")
-                  }
+                  this.__loginApi();
                 })
                 .catch(function(error) {
                   var errorCode = error.code;
@@ -55,8 +66,6 @@ class Auth {
                   var email = error.email;
                   // The firebase.auth.AuthCredential type that was used.
                   var credential = error.credential;
-                  
-                  // ...
                 });
             } else {
               console.log('User already signed-in Firebase.');
@@ -100,22 +109,21 @@ class Auth {
               firebase
               .auth()
               .signInWithCredential(credential)
-              .then(function(result) {
+              .then(result => {
                 console.log('user signed in ');
-                if (result.additionalUserInfo.isNewUser) {
-                  console.log("New User"); 
-                } else {
-                  console.log("Old User")
-                }
+
+                this.__loginApi();
+
               }).catch((error) => {
                     console.log(error)
                 });
-
+              
               console.log('Logged in!', `Hi ${(await response.json()).name}!`)
-
+              
             } else {
               // type === 'cancel'
             }
+
           } catch ({ message }) {
             alert(`Facebook Login Error: ${message}`);
           }
