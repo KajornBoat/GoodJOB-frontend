@@ -15,14 +15,11 @@ import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 import PopUpScreen from "../component/PopUpScreen";
-import PopUpLoading from "../component/PopupLoading"
-import api from "../API/API"
+import PopUpLoading from "../component/PopupLoading";
+import api from "../API/API";
 import { set } from "react-native-reanimated";
 
-
-const AvatarComponent =  ({ url, role, onChangeImage }) => {
-  const templateEmployer = require("../assets/รูปนายจ้าง.png");
-  const templateEmployee = require("../assets/รูปลูกจ้าง.png");
+const AvatarComponent = ({ url, onChangeImage }) => {
   const [activeLoad, setActiveLoad] = useState(false);
 
   return (
@@ -33,15 +30,9 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
       <Avatar
         containerStyle={styles.gapVertical}
         rounded
-        source={
-          url
-            ? {
-                uri: url,
-              }
-            : role === "Employer"
-            ? templateEmployer
-            : templateEmployee
-        }
+        source={{
+          uri: url,
+        }}
         size="large"
         showEditButton
         onEditPress={async () => {
@@ -52,14 +43,15 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
             quality: 1,
           });
           if (!result.cancelled) {
-            setActiveLoad(true)
-            let link = await api.user.update.image(result).catch(err => console.log(err));           
+            setActiveLoad(true);
+            let link = await api.user.update
+              .image(result)
+              .catch((err) => console.log(err));
             onChangeImage(link);
 
             setTimeout(() => {
-              setActiveLoad(false)
-            },2500)
-            
+              setActiveLoad(false);
+            }, 2500);
           }
         }}
         editButton={{
@@ -76,11 +68,7 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
         }}
       />
 
-      <PopUpLoading
-        active = {activeLoad}
-        setActive  = {setActiveLoad}
-      />
-
+      <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
     </View>
   );
 };
@@ -108,7 +96,7 @@ const TextInputComponent = ({
           style={[
             styles.inputContainer,
             styles.gapVertical,
-            { color: value ? "black" : "#f003" },
+            { color: value ? "black" : "gray" },
           ]}
         >
           {value || "กรุณาใส่" + title}
@@ -157,32 +145,32 @@ const TextInputComponent = ({
 
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
-              onPress={ async() => {
-                setActiveLoad(true);  
+              onPress={async () => {
+                setActiveLoad(true);
                 await updateData(text);
                 setActiveLoad(false);
                 setActive(false);
                 onSaved(text);
-                
-             
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </PopUpScreen>
 
-      <PopUpLoading
-              active = {activeLoad}
-              setActive  = {setActiveLoad}
-      />
+      <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
     </View>
   );
 };
 
-const PickerComponent = ({ title, value, items, onValueChange , updateData }) => {
+const PickerComponent = ({
+  title,
+  value,
+  items,
+  onValueChange,
+  updateData,
+}) => {
   const [activeLoad, setActiveLoad] = useState(false);
   return (
     <View>
@@ -199,11 +187,11 @@ const PickerComponent = ({ title, value, items, onValueChange , updateData }) =>
               color: "transparent",
               height: 25,
             }}
-            onValueChange={async(itemValue, itemIndex) => {
-              setActiveLoad(true)
-              await updateData(itemValue)
-              setActiveLoad(false)
-              onValueChange(itemValue)       
+            onValueChange={async (itemValue, itemIndex) => {
+              setActiveLoad(true);
+              await updateData(itemValue);
+              setActiveLoad(false);
+              onValueChange(itemValue);
             }}
           >
             <Picker.Item
@@ -221,7 +209,7 @@ const PickerComponent = ({ title, value, items, onValueChange , updateData }) =>
           style={[
             styles.inputContainer,
             {
-              color: value ? "black" : "#f003",
+              color: value ? "black" : "gray",
               position: "absolute",
               top: 0,
               width: "100%",
@@ -236,15 +224,12 @@ const PickerComponent = ({ title, value, items, onValueChange , updateData }) =>
           style={{ position: "absolute", top: "45%", right: "2%" }}
         />
       </View>
-      <PopUpLoading
-              active = {activeLoad}
-              setActive  = {setActiveLoad}
-      />
+      <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
     </View>
   );
 };
 
-const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
+const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
   const list = [...values];
   const [message, setMessage] = useState("");
   const Item = (props) => {
@@ -281,7 +266,7 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
     setMessage(str);
     return;
   }, [values]);
-  
+
   const [active, setActive] = useState(false);
   const [activeLoad, setActiveLoad] = useState(false);
   return (
@@ -305,13 +290,12 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
           />
           <Modal
             transparent
-            onRequestClose={async() => {
+            onRequestClose={async () => {
               setActiveLoad(true);
               await updateData(list);
               setActiveLoad(false);
               setActive(false);
               onChange(list);
-              
             }}
             visible={active}
             animationType="fade"
@@ -342,15 +326,19 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
           </Modal>
         </View>
       </TouchableOpacity>
-      <PopUpLoading
-              active = {activeLoad}
-              setActive  = {setActiveLoad}
-      />
+      <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
     </View>
   );
 };
 
-const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateData}) => {
+const TextAreaComponent = ({
+  title,
+  value,
+  maxLength,
+  height,
+  onSaved,
+  updateData,
+}) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
@@ -391,7 +379,6 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateDa
           <TextInput
             value={text}
             onChangeText={setText}
-            
             style={[
               styles.gapVertical,
               {
@@ -418,20 +405,18 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateDa
               onPress={() => {
                 setActive(false);
                 setText(value);
-                
               }}
             >
               <Text style={{ color: "#126f6f" }}>CANCEL</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
-              onPress={async() => {
+              onPress={async () => {
                 setActiveLoad(true);
                 await updateData(text);
                 setActiveLoad(false);
                 setActive(false);
                 onSaved(text);
-                
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -439,79 +424,14 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateDa
           </View>
         </View>
       </PopUpScreen>
-      <PopUpLoading
-              active = {activeLoad}
-              setActive  = {setActiveLoad}
-      />
-    </View>
-  );
-};
-
-const RoleComponent = ({ role, setRole }) => {
-  return (
-    <View
-      style={[styles.gapVertical, { flexDirection: "row", marginVertical: 30 }]}
-    >
-      <Text
-        style={[
-          {
-            marginRight: "2.5%",
-            textAlignVertical: "center",
-            width: "15.5%",
-          },
-          styles.labelFont,
-        ]}
-      >
-        บทบาท
-      </Text>
-      <TouchableOpacity
-        onPress={() => setRole("Employer")}
-        style={{
-          width: "39%",
-          marginHorizontal: "1%",
-        }}
-      >
-        <Text
-          style={{
-            textAlign: "center",
-            paddingVertical: 10,
-            borderWidth: 0.5,
-            borderRadius: 5,
-            backgroundColor: role == "Employer" ? "#567091" : "white",
-            borderColor: role == "Employer" ? "#567091" : "black",
-            color: role == "Employer" ? "white" : "black",
-          }}
-        >
-          นายจ้าง
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => setRole("Job Seeker")}
-        style={{
-          width: "39%",
-          marginHorizontal: "1%",
-        }}
-      >
-        <Text
-          style={{
-            paddingVertical: 10,
-            textAlign: "center",
-            borderWidth: 0.5,
-            borderRadius: 5,
-            backgroundColor: role == "Job Seeker" ? "#567091" : "white",
-            borderColor: role == "Job Seeker" ? "#567091" : "black",
-            color: role == "Job Seeker" ? "white" : "black",
-          }}
-        >
-          ลูกจ้าง
-        </Text>
-      </TouchableOpacity>
+      <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
     </View>
   );
 };
 
 const SettingScreen = () => {
   const [url, setUrl] = useState("");
+  const [email, setEmail] = useState("cekmitl@kmitl.ac.th");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
@@ -521,7 +441,6 @@ const SettingScreen = () => {
   const [gender, setGender] = useState("");
   const [introduceText, setIntroduceText] = useState("");
   const [interestJob, setInterestJob] = useState([]);
-  const [currentRole, setCurrentRole] = useState("Employer");
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
@@ -531,24 +450,29 @@ const SettingScreen = () => {
       >
         <ScrollView>
           <View style={styles.formContainer}>
-            <AvatarComponent
-              url={url}
-              role={currentRole}
-              onChangeImage={setUrl}
-            />
+            <AvatarComponent url={url} onChangeImage={setUrl} />
+            <Text
+              style={[
+                styles.gapVertical,
+                styles.labelFont,
+                { textAlign: "center" },
+              ]}
+            >
+              {email}
+            </Text>
             <TextInputComponent
               title="ชื่อจริง"
               value={firstName}
               onSaved={setFirstName}
               maxLength={20}
-              updateData ={api.user.update.firstname}
+              updateData={api.user.update.firstname}
             />
             <TextInputComponent
               title="นามสกุล"
               value={lastName}
               onSaved={setLastName}
               maxLength={20}
-              updateData ={api.user.update.lastName}
+              updateData={api.user.update.lastName}
             />
             <TextInputComponent
               title="อายุ"
@@ -556,7 +480,7 @@ const SettingScreen = () => {
               onSaved={setAge}
               maxLength={2}
               keyboardType="numeric"
-              updateData ={api.user.update.age}
+              updateData={api.user.update.age}
             />
             <TextInputComponent
               title="หมายเลขโทรศัพท์"
@@ -564,7 +488,7 @@ const SettingScreen = () => {
               onSaved={setPhoneNumber}
               maxLength={10}
               keyboardType="numeric"
-              updateData ={api.user.update.phoneNumber}
+              updateData={api.user.update.phoneNumber}
             />
             <TextInputComponent
               title="เลขประจำตัวประชาชน"
@@ -572,21 +496,21 @@ const SettingScreen = () => {
               onSaved={setIdCard}
               maxLength={13}
               keyboardType="numeric"
-              updateData ={api.user.update.id_card}
+              updateData={api.user.update.id_card}
             />
             <PickerComponent
               title="จังหวัดที่อยู่ปัจจุบัน"
               value={currentProvince}
               onValueChange={setCurrentProvince}
               items={require("../assets/constValue").PROVINCE_TH}
-              updateData ={api.user.update.province}
+              updateData={api.user.update.province}
             />
             <PickerComponent
               title="เพศ"
               value={gender}
               onValueChange={setGender}
               items={require("../assets/constValue").GENDER}
-              updateData ={api.user.update.gender}
+              updateData={api.user.update.gender}
             />
             <MultipleSelect
               title="ตำแหน่งงานที่สนใจ"
@@ -595,7 +519,7 @@ const SettingScreen = () => {
                 setInterestJob(value);
               }}
               items={require("../assets/constValue").JOB_POSITION}
-              updateData ={api.user.update.interested}
+              updateData={api.user.update.interested}
             />
             <TextAreaComponent
               title="แนะนำตัวเอง"
@@ -603,9 +527,8 @@ const SettingScreen = () => {
               onSaved={setIntroduceText}
               maxLength={200}
               height={110}
-              updateData ={api.user.update.introduce}
+              updateData={api.user.update.introduce}
             />
-            <RoleComponent role={currentRole} setRole={setCurrentRole} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -613,13 +536,11 @@ const SettingScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    marginTop: Constants.statusBarHeight,
-  },
+  container: { marginBottom: 40 },
   formContainer: {
     flex: 1,
     marginTop: 15,
-    marginBottom: 50,
+    marginBottom: 20,
     marginHorizontal: 30,
   },
   gapVertical: {
@@ -637,7 +558,6 @@ const styles = StyleSheet.create({
   popUpContainer: {
     margin: 10,
   },
- 
 });
 
 export default SettingScreen;
