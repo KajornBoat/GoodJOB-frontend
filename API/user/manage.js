@@ -21,5 +21,5 @@ class Manage {
         return firebase.auth().currentUser.uid;
     }
 }
-
-export default new Manage();
+var manage = new Manage();
+export default manage;

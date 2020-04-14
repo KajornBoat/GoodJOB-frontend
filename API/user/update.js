@@ -49,7 +49,7 @@ class Update {
               },
               body: JSON.stringify({
                 "photoURL": downloadURL,
-                "idToken" : idToken
+                "idtoken" : idToken
 
               }),
             }) 
@@ -57,6 +57,7 @@ class Update {
               if(result.status === 200 ){
                 resolve(downloadURL)
               }
+              resolve(downloadURL)
             })
             .catch(reject);
           });
@@ -69,14 +70,16 @@ class Update {
   }
   async firstname(firstname){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateFirstname', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idtoken" : idToken
       },
-      body: JSON.stringify({
-        "firstname": firstname,
-        "idToken" : idToken
+      body: JSON.stringify({ 
+          "info": {
+               "firstname" : firstname
+                  }
       }),
     }) 
     .catch((error) => {
@@ -85,14 +88,16 @@ class Update {
   }
   async lastName(lastname){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateLastname', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "lastname": lastname,
-        "idToken" : idToken
+        "info": {
+          "lastname": lastname,
+             }
       }),
     }) 
     .catch((error) => {
@@ -101,14 +106,16 @@ class Update {
   }
   async gender(gender){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateGender', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "gender": gender,
-        "idToken" : idToken
+        "info": {
+          "gender": gender,
+             }
       }),
     }) 
     .catch((error) => {
@@ -117,14 +124,16 @@ class Update {
   }
   async role(CurrentRole){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateCurrentRole', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "current_role": CurrentRole,
-        "idToken" : idToken
+        "info": {
+          "current_role": CurrentRole,
+             }
       }),
     }) 
     .catch((error) => {
@@ -133,14 +142,16 @@ class Update {
   }
   async province(currentProvince){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateCurrentProvince', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "current_province": currentProvince,
-        "idToken" : idToken
+        "info": {
+          "current_province": currentProvince,
+             }   
       }),
     }) 
     .catch((error) => {
@@ -150,14 +161,18 @@ class Update {
   }
   async interested(interested){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateInterested', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "interested": interested,
-        "idToken" : idToken
+        "info": {
+          "interested": interested,
+             }   
+        
+        
       }),
     }) 
     .catch((error) => {
@@ -166,14 +181,16 @@ class Update {
   }
   async introduce(introduce_text){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateIntroduce', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "introduce_text": introduce_text,
-        "idToken" : idToken
+        "info": {
+           "introduce_text": introduce_text,
+         }   
       }),
     }) 
     .catch((error) => {
@@ -182,14 +199,16 @@ class Update {
   }
   async phoneNumber(phone_number){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updatePhoneNumber', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "phone_number": phone_number,
-        "idToken" : idToken
+        "info": {
+          "phone_number": phone_number,
+         }   
       }),
     }) 
     .catch((error) => {
@@ -198,14 +217,16 @@ class Update {
   }
   async id_card(id_card){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateID_card', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "id_card": id_card,
-        "idToken" : idToken
+        "info": {
+          "id_card": id_card,
+         }         
       }),
     }) 
     .catch((error) => {
@@ -214,14 +235,16 @@ class Update {
   }
   async age(age){
     const idToken = await manageUser.getIdToken();
-    fetch(config.hostname+'/user/updateAge', {
-      method: 'POST',
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "idToken" : idToken
       },
       body: JSON.stringify({
-        "age": age,
-        "idToken" : idToken
+        "info": {
+          "age": age,
+         }     
       }),
     }) 
     .catch((error) => {
