@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Modal, View, Text, StyleSheet, Button } from "react-native";
+import { Modal, View, Text, StyleSheet, Button ,ActivityIndicator} from "react-native";
 import API from "../API/API";
 import manageUser from "../API/user/manage"
 import CreateJobScreen from "./CreateJobScreen";
 import * as ImagePicker from 'expo-image-picker';
 import {SafeAreaView } from 'react-native-safe-area-context';
+import PopUpScreen from "./PopUpScreen";
 
 const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
@@ -32,9 +33,10 @@ const TestScreen = (props) => {
   const uploadImage = async() => {
     var file = await ImagePicker.launchImageLibraryAsync();
     let link =  await API.user.update.image(file);
-    //console.log(link)
+    console.log("Link = ",link)
   };
 
+  const [active, setActive] = useState(false);
 
   return (
     <SafeAreaView>
@@ -51,7 +53,20 @@ const TestScreen = (props) => {
         <Text>{"\n"}</Text>
         <Button title="Create Job" onPress={() => setVisible(true)} />
         <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
-        </View>
+        <Text>{"\n"}</Text>
+        <Button title="POPUP_Loading" onPress={() => setActive(true)} />
+        <PopUpScreen
+          visible={active}
+          onRequestClose={() => {
+            setActive(false);
+          }}
+        >
+          <View style={[{ flexDirection: "row" }, styles.popUpContainer]}>
+            <ActivityIndicator size="large" />
+            <Text>    Loading...</Text>
+          </View>
+        </PopUpScreen>
+      </View>
 
     </SafeAreaView>
     
@@ -64,5 +79,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  popUpContainer: {
+    margin: 20,
+    alignItems: "center",
   },
 });

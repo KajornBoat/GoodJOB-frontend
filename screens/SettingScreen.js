@@ -9,6 +9,8 @@ import {
   TextInput,
   Picker,
   Modal,
+  ActivityIndicator,
+  Button
 } from "react-native";
 import { Avatar, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
@@ -18,9 +20,30 @@ import PopUpScreen from "./PopUpScreen";
 import { apisAreAvailable } from "expo";
 import api from "../API/API"
 
+
+
+
+const LoadingComponent = ({active,setActive}) => {
+  //const [active, setActive] = useState(false);
+  return (
+    <PopUpScreen
+      visible={active}
+      onRequestClose={() => {
+        setActive(false);
+      }}
+    >
+      <View style={[{ flexDirection: "row" }, styles.popUpLoading]}>
+        <ActivityIndicator size="large" />
+        <Text>       Loading...</Text>
+      </View>
+    </PopUpScreen>
+  )
+};
+
 const AvatarComponent =  ({ url, role, onChangeImage }) => {
   const templateEmployer = require("../assets/รูปนายจ้าง.png");
   const templateEmployee = require("../assets/รูปลูกจ้าง.png");
+  const [activeLoad, setActiveLopad] = useState(false);
   return (
     <View style={{ alignItems: "center" }}>
       <Text style={[styles.gapVertical, styles.labelFont, { fontSize: 16 }]}>
@@ -47,10 +70,12 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
             aspect: [4, 4],
             quality: 1,
           });
-          console.log(result);
           if (!result.cancelled) {
-            let url = await api.user.update.image(result).catch(err => console.log(err));          
-            onChangeImage(url);
+            setActiveLopad(true)
+            let link = await api.user.update.image(result).catch(err => console.log(err));   
+            console.log("URL = ",link)
+            onChangeImage(link);
+            setActiveLopad(false)
           }
         }}
         editButton={{
@@ -66,6 +91,13 @@ const AvatarComponent =  ({ url, role, onChangeImage }) => {
           underlayColor: "#c3eaff",
         }}
       />
+      <Button title="POPUP_Loading" onPress={() => setActiveLopad(true)} />
+
+      <LoadingComponent
+        active = {activeLoad}
+        setActive  = {setActiveLopad}
+      />
+
     </View>
   );
 };
@@ -308,7 +340,7 @@ const MultipleSelect = ({ title, values, onChange, items , updateData }) => {
   );
 };
 
-const TextAreaComponent = ({ title, value, maxLength, height, onSaved }) => {
+const TextAreaComponent = ({ title, value, maxLength, height, onSaved , updateData}) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   return (
@@ -348,6 +380,7 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved }) => {
           <TextInput
             value={text}
             onChangeText={setText}
+            
             style={[
               styles.gapVertical,
               {
@@ -374,6 +407,7 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved }) => {
               onPress={() => {
                 setActive(false);
                 setText(value);
+                
               }}
             >
               <Text style={{ color: "#126f6f" }}>CANCEL</Text>
@@ -383,6 +417,7 @@ const TextAreaComponent = ({ title, value, maxLength, height, onSaved }) => {
               onPress={() => {
                 setActive(false);
                 onSaved(text);
+                updateData(value);
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -583,6 +618,10 @@ const styles = StyleSheet.create({
   },
   popUpContainer: {
     margin: 10,
+  },
+  popUpLoading: {
+    margin: 20,
+    alignItems: "center",
   },
 });
 
