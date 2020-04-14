@@ -17,8 +17,7 @@ class Update {
       };
       const uid = await manageUser.getUserID();
       const idToken = await manageUser.getIdToken();
-     // console.log(uid)
-
+      
       return new Promise((resolve, reject) => {
 
         const task = firebase.storage().ref().child('images/' + uid).put(blob, metadata);
@@ -42,19 +41,21 @@ class Update {
         const taskCompleted = () => {
           task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log('File available at', downloadURL);
-              fetch(config.hostname+'/user/updatePhotoURL', {
-              method: 'POST',
+              fetch(config.hostname+'/user', {
+              method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
+                "idtoken" : idToken
               },
               body: JSON.stringify({
-                "photoURL": downloadURL,
-                "idtoken" : idToken
-
+                "info": {
+                  "photoURL": downloadURL,
+                     }
+                
               }),
             }) 
             .then(result => {
-              if(result.status === 200 ){
+              if(result.status < 300 ){
                 resolve(downloadURL)
               }
               resolve(downloadURL)
