@@ -5,7 +5,7 @@ import manageUser from "../API/user/manage"
 import CreateJobScreen from "./CreateJobScreen";
 import * as ImagePicker from 'expo-image-picker';
 import {SafeAreaView } from 'react-native-safe-area-context';
-import PopUpScreen from "./PopUpScreen";
+import PopUpScreen from "../component/PopUpScreen";
 
 const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
