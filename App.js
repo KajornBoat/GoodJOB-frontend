@@ -8,7 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 import SelectRoleScreen from "./screens/SelectRoleScreen";
 import MainUser from "./screens/MainUser";
-import { ValueContextProvider } from "./screens/ValueContextProvider";
+import { ValueContextProvider } from "./component/ValueContextProvider";
 const Stack = createStackNavigator();
 
 function MyStack() {

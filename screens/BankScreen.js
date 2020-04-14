@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import PopUpScreen from "./PopUpScreen";
+import PopUpScreen from "../component/PopUpScreen";
 
 const PickerComponent = ({ title, value, items, onValueChange }) => {
   return (

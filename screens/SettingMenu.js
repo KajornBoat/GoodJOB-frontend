@@ -6,7 +6,7 @@ import Constants from "expo-constants";
 import API from "../API/API";
 import SettingScreen from "./SettingScreen";
 import BankScreen from "./BankScreen";
-import { ValueContext } from "./ValueContextProvider";
+import { ValueContext } from "../component/ValueContextProvider";
 
 const HeaderBack = ({ onClickBackArrow }) => {
   return (

@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 
-import { ValueContext } from "./ValueContextProvider";
+import { ValueContext } from "../component/ValueContextProvider";
 
 const SelectRoleScreen = ({ navigation }) => {
   const { role, setRole } = useContext(ValueContext);
