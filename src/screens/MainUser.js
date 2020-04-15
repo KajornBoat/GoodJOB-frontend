@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingMenu from "./SettingMenu";
+import SettingScreen from "./SettingUser";
 import TestScreen from "./TestScreen";
 import { ValueContext } from "../component/ValueContextProvider";
 import { Image, View } from "react-native";
