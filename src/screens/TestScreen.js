@@ -5,7 +5,8 @@ import manageUser from "../API/user/manage"
 import CreateJobScreen from "./CreateJobScreen";
 import * as ImagePicker from 'expo-image-picker';
 import {SafeAreaView } from 'react-native-safe-area-context';
-import PopUpScreen from "../component/PopUpScreen";
+import {useSelector, useDispatch} from "react-redux"
+import * as action from "../redux/actions/user.action"
 
 const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
@@ -36,6 +37,8 @@ const TestScreen = (props) => {
     console.log("Link = ",link)
   };
 
+  const userReducer = useSelector(({userReducer}) => userReducer);
+  const dipatch = useDispatch();
   return (
     <SafeAreaView>
 
@@ -52,7 +55,8 @@ const TestScreen = (props) => {
         <Button title="Create Job" onPress={() => setVisible(true)} />
         <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
         <Text>{"\n"}</Text>
-        
+       <Text>{userReducer.name}</Text>
+       <Button title="rename" onPress={() => dipatch(action.update_user("Boat"))} />
       </View>
 
     </SafeAreaView>

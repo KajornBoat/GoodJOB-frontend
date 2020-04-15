@@ -7,7 +7,7 @@ import TestScreen from "./TestScreen";
 
 const Tab = createBottomTabNavigator();
 
-function TabsEmploye() {
+const TabsEmploye = () => {
   return (
     <Tab.Navigator>
 
@@ -18,7 +18,7 @@ function TabsEmploye() {
   );
 }
 
-const MainUser = (props) => {
+const MainUser = () => {
   return <TabsEmploye />;
 };
 
