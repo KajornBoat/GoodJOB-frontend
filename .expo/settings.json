@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "urlRandomness": "sq-ad7",
+=======
+  "urlRandomness": "yh-g2b",
+>>>>>>> 0505da1f21895f87a276ac1d58f64ef9852e19c4
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,

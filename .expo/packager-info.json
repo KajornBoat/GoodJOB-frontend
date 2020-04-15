@@ -2,8 +2,15 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
+<<<<<<< HEAD
   "packagerPid": 43080,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
   "ngrokPid": null
+=======
+  "packagerPid": 8156,
+  "expoServerNgrokUrl": "https://yh-g2b.tk6996.goodjob-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.yh-g2b.tk6996.goodjob-frontend.exp.direct",
+  "ngrokPid": 10312
+>>>>>>> 0505da1f21895f87a276ac1d58f64ef9852e19c4
 }

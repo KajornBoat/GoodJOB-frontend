@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { StyleSheet, Text, View, Modal, TouchableOpacity, Button } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,20 +8,7 @@ import API from "../API/API";
 import SettingUser from "./SettingUser";
 import BankScreen from "./BankScreen";
 import { ValueContext } from "../component/ValueContextProvider";
-
-
-
 const Stack = createStackNavigator();
-
-const HeaderBack = ({ onClickBackArrow }) => {
-  return (
-    <View style={{ ...styles.header, alignItems: "flex-start" }}>
-      <TouchableOpacity onPress={onClickBackArrow}>
-        <Ionicons name="ios-arrow-round-back" size={32} />
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
   return (
@@ -42,7 +29,7 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
           alignItems: "center",
         }}
       >
-        <Text style={[styles.labelFont]}>{title}</Text>
+        <Text style={styles.labelFont}>{title}</Text>
         {subtitle}
       </View>
     </TouchableOpacity>
@@ -51,8 +38,6 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
 
 const SettingMenu = ({ navigation }) => {
   const { role, setRole } = useContext(ValueContext);
-  const [page, setPage] = useState();
-  const [visible, setVisible] = useState(false);
   return (
     <View style={styles.container}>
       <MenuLabelComponent
@@ -64,7 +49,6 @@ const SettingMenu = ({ navigation }) => {
           // setVisible(true);
           // setPage("profile");
           navigation.navigate("SettingUser");
-
         }}
       />
       <MenuLabelComponent
@@ -98,52 +82,53 @@ const SettingMenu = ({ navigation }) => {
       <MenuLabelComponent
         title="ออกจากระบบ"
         icon={<Ionicons name="md-exit" size={28} style={styles.iconColor} />}
-        onPress={() => API.auth.signOut() }
+        onPress={() => API.auth.signOut()}
       />
-      <Modal
-        visible={visible}
-        onRequestClose={() => setVisible(false)}
-        animated="fade"
-      >
-        <HeaderBack onClickBackArrow={() => setVisible(false)} />
-        {page == "profile" ? <SettingUser /> : <BankScreen />}
-      </Modal>
     </View>
   );
 };
 
-const StackSetting = () => {
-  return (
-    <Stack.Navigator initialRouteName="SettingMenu">
-
-      <Stack.Screen 
-        name="SettingMenu" 
-        component={SettingMenu} 
-        options={{
-          headerShown : false,
-        }}
-      />
-      <Stack.Screen 
-        name="SettingUser" 
-        component={SettingUser} 
-        options={{
-          headerTitle : "ข้อมูลส่วนตัว",
-        }}
-      />
-      <Stack.Screen 
-        name="BankScreen" 
-        component={BankScreen} 
-        options={{
-          headerTitle : "บัญชีธนาคาร",
-        }}
-      />
-           
-    </Stack.Navigator>
-  )
-}
-
 export default () => {
-  return( <StackSetting /> );
+  return (
+    <Stack.Navigator
+      initialRouteName="SettingMenu"
+      screenOptions={{
+        headerLeft: ({ onPress }) => (
+          <TouchableOpacity onPress={onPress}>
+            <Ionicons
+              name="ios-arrow-round-back"
+              size={32}
+              style={styles.iconColor}
+            />
+          </TouchableOpacity>
+        ),
+        headerLeftContainerStyle: { paddingHorizontal: 20 },
+        headerTitleStyle: styles.labelFont,
+      }}
+    >
+      <Stack.Screen
+        name="SettingMenu"
+        component={SettingMenu}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SettingUser"
+        component={SettingUser}
+        options={{
+          headerTitle: "ข้อมูลส่วนตัว",
+        }}
+      />
+      <Stack.Screen
+        name="BankScreen"
+        component={BankScreen}
+        options={{
+          headerTitle: "บัญชีธนาคาร",
+        }}
+      />
+    </Stack.Navigator>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -158,14 +143,5 @@ const styles = StyleSheet.create({
     color: "#567091",
     fontWeight: "bold",
     fontSize: 16,
-  },
-  header: {
-    height: 40,
-    width: "100%",
-    borderBottomWidth: 0.5,
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    alignItems: "flex-end",
   },
 });
