@@ -46,8 +46,6 @@ const SettingMenu = ({ navigation }) => {
           <FontAwesome5 name="user" size={24} style={styles.iconColor} solid />
         }
         onPress={() => {
-          // setVisible(true);
-          // setPage("profile");
           navigation.navigate("SettingUser");
         }}
       />
@@ -55,8 +53,6 @@ const SettingMenu = ({ navigation }) => {
         title="บัญชีธนาคาร"
         icon={<Ionicons name="md-card" size={28} style={styles.iconColor} />}
         onPress={() => {
-          // setVisible(true);
-          // setPage("bank");
           navigation.navigate("BankScreen");
         }}
       />
@@ -88,48 +84,8 @@ const SettingMenu = ({ navigation }) => {
   );
 };
 
-export default () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="SettingMenu"
-      screenOptions={{
-        headerLeft: ({ onPress }) => (
-          <TouchableOpacity onPress={onPress}>
-            <Ionicons
-              name="ios-arrow-round-back"
-              size={32}
-              style={styles.iconColor}
-            />
-          </TouchableOpacity>
-        ),
-        headerLeftContainerStyle: { paddingHorizontal: 20 },
-        headerTitleStyle: styles.labelFont,
-      }}
-    >
-      <Stack.Screen
-        name="SettingMenu"
-        component={SettingMenu}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="SettingUser"
-        component={SettingUser}
-        options={{
-          headerTitle: "ข้อมูลส่วนตัว",
-        }}
-      />
-      <Stack.Screen
-        name="BankScreen"
-        component={BankScreen}
-        options={{
-          headerTitle: "บัญชีธนาคาร",
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
+export default SettingMenu;
+
 
 const styles = StyleSheet.create({
   container: {

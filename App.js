@@ -13,7 +13,7 @@ import { ValueContextProvider } from "./src/component/ValueContextProvider";
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+function MainStack() {
   return (
     <Stack.Navigator initialRouteName="Loading" headerMode="none">
 
@@ -31,7 +31,7 @@ export default function App() {
     <ValueContextProvider>
       <SafeAreaProvider>
         <NavigationContainer>
-          <MyStack />
+          <MainStack />
         </NavigationContainer>
       </SafeAreaProvider>
     </ValueContextProvider>
