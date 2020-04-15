@@ -3,6 +3,7 @@ import { Modal, View, Text, StyleSheet, Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import SettingMenu from "./SettingMenu";
+import SettingScreen from "./SettingUser";
 import TestScreen from "./TestScreen";
 const Tab = createBottomTabNavigator();
 
@@ -11,6 +12,7 @@ function MyTabs() {
     <Tab.Navigator>
       <Tab.Screen name="TestScreen" component={TestScreen} />
       <Tab.Screen name="SettingMenu" component={SettingMenu} />
+      <Tab.Screen name="SettingScreen" component={SettingScreen} />
     </Tab.Navigator>
   );
 }

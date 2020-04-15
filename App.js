@@ -4,11 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import LoginScreen from "./screens/LoginScreen";
-import LoadingScreen from "./screens/LoadingScreen";
-import SelectRoleScreen from "./screens/SelectRoleScreen";
-import MainUser from "./screens/MainUser";
-import { ValueContextProvider } from "./component/ValueContextProvider";
+import LoginScreen from "./src/screens/LoginScreen";
+import LoadingScreen from "./src/screens/LoadingScreen";
+import SelectRoleScreen from "./src/screens/SelectRoleScreen";
+import MainUser from "./src/screens/MainUser";
+import { ValueContextProvider } from "./src/component/ValueContextProvider";
 const Stack = createStackNavigator();
 
 function MyStack() {

@@ -4,7 +4,7 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
 import API from "../API/API";
-import SettingScreen from "./SettingScreen";
+import SettingScreen from "./SettingUser";
 import BankScreen from "./BankScreen";
 import { ValueContext } from "../component/ValueContextProvider";
 
