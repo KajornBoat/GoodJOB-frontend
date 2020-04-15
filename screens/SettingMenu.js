@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 
@@ -8,12 +15,25 @@ import SettingScreen from "./SettingScreen";
 import BankScreen from "./BankScreen";
 import { ValueContext } from "../component/ValueContextProvider";
 
-const HeaderBack = ({ onClickBackArrow }) => {
+const HeaderBack = ({ onClickBackArrow, title }) => {
   return (
-    <View style={{ ...styles.header, alignItems: "flex-start" }}>
+    <View
+      style={{
+        ...styles.header,
+        alignItems: "flex-start",
+        flexDirection: "row",
+      }}
+    >
       <TouchableOpacity onPress={onClickBackArrow}>
-        <Ionicons name="ios-arrow-round-back" size={32} />
+        <Ionicons
+          name="ios-arrow-round-back"
+          size={32}
+          style={styles.iconColor}
+        />
       </TouchableOpacity>
+      <Text style={[styles.labelFont, { marginLeft: 30, marginVertical: 3 }]}>
+        {title}
+      </Text>
     </View>
   );
 };
@@ -37,7 +57,7 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
           alignItems: "center",
         }}
       >
-        <Text style={[styles.labelFont]}>{title}</Text>
+        <Text style={styles.labelFont}>{title}</Text>
         {subtitle}
       </View>
     </TouchableOpacity>
@@ -49,57 +69,78 @@ const SettingMenu = () => {
   const [page, setPage] = useState();
   const [visible, setVisible] = useState(false);
   return (
-    <View style={styles.container}>
-      <MenuLabelComponent
-        title="ข้อมูลส่วนตัว"
-        icon={
-          <FontAwesome5 name="user" size={24} style={styles.iconColor} solid />
-        }
-        onPress={() => {
-          setVisible(true);
-          setPage("profile");
-        }}
-      />
-      <MenuLabelComponent
-        title="บัญชีธนาคาร"
-        icon={<Ionicons name="md-card" size={28} style={styles.iconColor} />}
-        onPress={() => {
-          setVisible(true);
-          setPage("bank");
-        }}
-      />
-      <MenuLabelComponent
-        title="สลับบทบาทเป็น"
-        icon={<Ionicons name="md-swap" size={28} style={styles.iconColor} />}
-        subtitle={
-          <Text
-            style={{
-              color: "#f3595a7f",
-              fontWeight: "bold",
-              fontSize: 16,
-              marginLeft: 10,
-            }}
-          >
-            {role}
-          </Text>
-        }
-        onPress={() => {
-          setRole(role == "นายจ้าง" ? "ลูกจ้าง" : "นายจ้าง");
-        }}
-      />
-      <MenuLabelComponent
-        title="ออกจากระบบ"
-        icon={<Ionicons name="md-exit" size={28} style={styles.iconColor} />}
-        onPress={() => API.auth.signOut()}
-      />
-      <Modal
-        visible={visible}
-        onRequestClose={() => setVisible(false)}
-        animated="fade"
-      >
-        <HeaderBack onClickBackArrow={() => setVisible(false)} />
-        {page == "profile" ? <SettingScreen /> : <BankScreen />}
-      </Modal>
+    <View>
+      <View style={styles.container}>
+        <MenuLabelComponent
+          title="ข้อมูลส่วนตัว"
+          icon={
+            <FontAwesome5
+              name="user"
+              size={24}
+              style={styles.iconColor}
+              solid
+            />
+          }
+          onPress={() => {
+            setVisible(true);
+            setPage("ข้อมูลส่วนตัว");
+          }}
+        />
+        <MenuLabelComponent
+          title="บัญชีธนาคาร"
+          icon={<Ionicons name="md-card" size={28} style={styles.iconColor} />}
+          onPress={() => {
+            setVisible(true);
+            setPage("บัญชีธนาคาร");
+          }}
+        />
+        <MenuLabelComponent
+          title="สลับบทบาทเป็น"
+          icon={<Ionicons name="md-swap" size={28} style={styles.iconColor} />}
+          subtitle={
+            <Text
+              style={{
+                color: "#f3595a7f",
+                fontWeight: "bold",
+                fontSize: 16,
+                marginLeft: 10,
+              }}
+            >
+              {role}
+            </Text>
+          }
+          onPress={() => {
+            setRole(role == "นายจ้าง" ? "ลูกจ้าง" : "นายจ้าง");
+          }}
+        />
+        <MenuLabelComponent
+          title="ออกจากระบบ"
+          icon={<Ionicons name="md-exit" size={28} style={styles.iconColor} />}
+          onPress={() => API.auth.signOut()}
+        />
+        <Modal
+          visible={visible}
+          onRequestClose={() => setVisible(false)}
+          transparent
+          animationType="fade"
+        >
+          <HeaderBack onClickBackArrow={() => setVisible(false)} title={page} />
+          <View style={{ flex: 1, backgroundColor: "#eee" }}>
+            {page == "ข้อมูลส่วนตัว" ? <SettingScreen /> : <BankScreen />}
+          </View>
+        </Modal>
+      </View>
+      {visible && (
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            backgroundColor: "white",
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -122,10 +163,10 @@ const styles = StyleSheet.create({
   header: {
     height: 40,
     width: "100%",
-    borderBottomWidth: 0.5,
     backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 5,
     alignItems: "flex-end",
+    elevation: 2,
   },
 });
