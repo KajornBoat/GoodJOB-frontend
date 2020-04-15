@@ -1,12 +1,17 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Button } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import API from "../API/API";
-import SettingScreen from "./SettingUser";
+import SettingUser from "./SettingUser";
 import BankScreen from "./BankScreen";
 import { ValueContext } from "../component/ValueContextProvider";
+
+
+
+const Stack = createStackNavigator();
 
 const HeaderBack = ({ onClickBackArrow }) => {
   return (
@@ -44,7 +49,7 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
   );
 };
 
-const SettingMenu = () => {
+const SettingMenu = ({ navigation }) => {
   const { role, setRole } = useContext(ValueContext);
   const [page, setPage] = useState();
   const [visible, setVisible] = useState(false);
@@ -56,16 +61,19 @@ const SettingMenu = () => {
           <FontAwesome5 name="user" size={24} style={styles.iconColor} solid />
         }
         onPress={() => {
-          setVisible(true);
-          setPage("profile");
+          // setVisible(true);
+          // setPage("profile");
+          navigation.navigate("SettingUser");
+
         }}
       />
       <MenuLabelComponent
         title="บัญชีธนาคาร"
         icon={<Ionicons name="md-card" size={28} style={styles.iconColor} />}
         onPress={() => {
-          setVisible(true);
-          setPage("bank");
+          // setVisible(true);
+          // setPage("bank");
+          navigation.navigate("BankScreen");
         }}
       />
       <MenuLabelComponent
@@ -90,7 +98,7 @@ const SettingMenu = () => {
       <MenuLabelComponent
         title="ออกจากระบบ"
         icon={<Ionicons name="md-exit" size={28} style={styles.iconColor} />}
-        onPress={() => API.auth.signOut()}
+        onPress={() => API.auth.signOut() }
       />
       <Modal
         visible={visible}
@@ -98,17 +106,49 @@ const SettingMenu = () => {
         animated="fade"
       >
         <HeaderBack onClickBackArrow={() => setVisible(false)} />
-        {page == "profile" ? <SettingScreen /> : <BankScreen />}
+        {page == "profile" ? <SettingUser /> : <BankScreen />}
       </Modal>
     </View>
   );
 };
 
-export default SettingMenu;
+const StackSetting = () => {
+  return (
+    <Stack.Navigator initialRouteName="SettingMenu">
+
+      <Stack.Screen 
+        name="SettingMenu" 
+        component={SettingMenu} 
+        options={{
+          headerShown : false,
+        }}
+      />
+      <Stack.Screen 
+        name="SettingUser" 
+        component={SettingUser} 
+        options={{
+          headerTitle : "ข้อมูลส่วนตัว",
+        }}
+      />
+      <Stack.Screen 
+        name="BankScreen" 
+        component={BankScreen} 
+        options={{
+          headerTitle : "บัญชีธนาคาร",
+        }}
+      />
+           
+    </Stack.Navigator>
+  )
+}
+
+export default () => {
+  return( <StackSetting /> );
+};
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight + 20,
+    marginTop: Constants.statusBarHeight + 10,
     marginHorizontal: 20,
   },
   iconColor: {

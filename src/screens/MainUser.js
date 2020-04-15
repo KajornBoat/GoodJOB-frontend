@@ -1,32 +1,27 @@
-import React, { useState } from "react";
-import { Modal, View, Text, StyleSheet, Button } from "react-native";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+
 import SettingMenu from "./SettingMenu";
 import SettingScreen from "./SettingUser";
 import TestScreen from "./TestScreen";
+
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+function TabsEmploye() {
   return (
     <Tab.Navigator>
+
       <Tab.Screen name="TestScreen" component={TestScreen} />
       <Tab.Screen name="SettingMenu" component={SettingMenu} />
-      <Tab.Screen name="SettingScreen" component={SettingScreen} />
+
     </Tab.Navigator>
   );
 }
 
 const MainUser = (props) => {
-  return <MyTabs />;
+  return <TabsEmploye />;
 };
 
 export default MainUser;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+
