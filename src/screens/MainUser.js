@@ -1,62 +1,21 @@
 import React, { useContext, useEffect } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SettingMenu from "./SettingMenu";
-import SettingScreen from "./SettingUser";
-import TestScreen from "./TestScreen";
-import { ValueContext } from "../component/ValueContextProvider";
-import { Image, View } from "react-native";
-const Tab = createBottomTabNavigator();
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import Constants from "expo-constants";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
-const TabsEmploye = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="หน้าหลัก"
-      tabBarOptions={{
-        activeTintColor: "#567091",
-        inactiveTintColor: "#bac6d39f",
-      }}
-    >
-      <Tab.Screen
-        name="หน้าหลัก"
-        component={TestScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/home.png")
-                    : require("../assets/home-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="ตั้งค่า"
-        component={SettingMenu}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/setting.png")
-                    : require("../assets/setting-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import SettingMenu from "./SettingMenu";
+import TestScreen from "./TestScreen";
+
+import SettingUser from "./SettingUser";
+import BankScreen from "./BankScreen";
+
+import BlankScreen from "./BankScreen";
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const JobEmployeeTab = () => {
   return (
@@ -217,8 +176,72 @@ const EmployeeTabs = () => {
   );
 };
 
+const UserStack = () => {
+  return(
+    <Stack.Navigator 
+      initialRouteName="EmployeeTabs"
+      screenOptions={{
+        headerLeft: ({ onPress }) => (
+          <TouchableOpacity onPress={onPress}>
+            <Ionicons
+              name="ios-arrow-round-back"
+              size={32}
+              style={styles.iconColor}
+            />
+          </TouchableOpacity>
+        ),
+        headerLeftContainerStyle: { paddingHorizontal: 20 },
+        headerTitleStyle: styles.labelFont,
+      }}
+    >
+      <Stack.Screen 
+        name="EmployeeTabs" 
+        component={EmployeeTabs} 
+        options={{
+          headerShown: false,
+        }}
+      /> 
+      <Stack.Screen 
+        name="JobEmployeeTab" 
+        component={JobEmployeeTab} 
+        options={{
+          headerShown: false,
+        }}
+      /> 
+      <Stack.Screen
+        name="SettingUser"
+        component={SettingUser}
+        options={{
+          headerTitle: "ข้อมูลส่วนตัว",
+        }}
+      />
+      <Stack.Screen
+        name="BankScreen"
+        component={BankScreen}
+        options={{
+          headerTitle: "บัญชีธนาคาร",
+        }}
+      />
+
+    </Stack.Navigator>
+  )
+}
+
 const MainUser = () => {
-  return <TabsEmploye />;
+  return ( 
+    <UserStack />
+  )
 };
 
 export default MainUser;
+
+const styles = StyleSheet.create({
+  iconColor: {
+    color: "#567091",
+  },
+  labelFont: {
+    color: "#567091",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});

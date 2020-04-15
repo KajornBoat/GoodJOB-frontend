@@ -50,20 +50,20 @@ const TestScreen = (props) => {
         <Button title="Get USer" onPress={() => getUser()} />
         
         <Text>{"\n"}</Text>
-        <Button title="Upload Image" onPress={() => uploadImage ()} />
+        <Button title="Upload Image" onPress={()  => uploadImage ()} />
         <Text>{"\n"}</Text>
         <Button title="Create Job" onPress={() => setVisible(true)} />
         <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
         <Text>{"\n"}</Text>
-       <Text>{userReducer.name}</Text>
-       <Button title="rename" onPress={() => dipatch(action.update_user("Boat"))} />
+       <Text>{userReducer.email}</Text>
+       <Button title="rename" onPress={() => dipatch(action.setUser("Boat"))} />
       </View>
 
     </SafeAreaView>
     
   );
 };
-export default TestScreen;
+export default TestScreen; 
 
 const styles = StyleSheet.create({
   container: {
