@@ -7,13 +7,7 @@ import { ValueContext } from "../component/ValueContextProvider";
 import { Image, View } from "react-native";
 const Tab = createBottomTabNavigator();
 
-<<<<<<< HEAD
 const TabsEmploye = () => {
-=======
-const BlankScreen = () => <View></View>;
-
-const EmployerTabs = () => {
->>>>>>> 0505da1f21895f87a276ac1d58f64ef9852e19c4
   return (
     <Tab.Navigator
       initialRouteName="หน้าหลัก"
@@ -223,14 +217,8 @@ const EmployeeTabs = () => {
   );
 };
 
-<<<<<<< HEAD
 const MainUser = () => {
   return <TabsEmploye />;
-=======
-const MainUser = ({ navigation }) => {
-  const { role } = useContext(ValueContext);
-  return role == "นายจ้าง" ? <EmployerTabs /> : <EmployeeTabs />;
->>>>>>> 0505da1f21895f87a276ac1d58f64ef9852e19c4
 };
 
 export default MainUser;
