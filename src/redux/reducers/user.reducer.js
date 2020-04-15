@@ -18,7 +18,19 @@ export default (state = initialState, { type, payload }) => {
     switch (type) {
 
     case ACTION_USER_SET:
-        return { ...state, email: payload }
+        return { ...state, 
+            email: payload.email ,
+            photoURL: payload.photoURL ,
+            firstname: payload.firstname,
+            lastname : payload.lastname ,
+            age : payload.age,
+            phone_number : payload.phone_number,
+            id_card : payload.id_card,
+            gender : payload.gender,
+            introduce : payload.introduce,
+            province : payload.province,
+            interested : payload.interested,
+        }
 
     case ACTION_USER_SET_PHOTO_URL:
         return { ...state, photoURL: payload }
