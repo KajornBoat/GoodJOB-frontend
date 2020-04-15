@@ -11,22 +11,26 @@ import {
   Modal,
 } from "react-native";
 import { Avatar, CheckBox } from "react-native-elements";
-import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
+
+import { useSelector, useDispatch } from "react-redux";
+import * as actionUser from "../redux/actions/user.action"
+
 import PopUpScreen from "../component/PopUpScreen";
 import PopUpLoading from "../component/PopupLoading";
 import api from "../API/API";
-import { set } from "react-native-reanimated";
+
+
+
 
 const AvatarComponent = ({ url, onChangeImage }) => {
+
   const [activeLoad, setActiveLoad] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <View style={{ alignItems: "center" }}>
-      <Text style={[styles.gapVertical, styles.labelFont, { fontSize: 16 }]}>
-        แก้ไขข้อมูลส่วนตัว
-      </Text>
       <Avatar
         containerStyle={styles.gapVertical}
         rounded
@@ -47,7 +51,8 @@ const AvatarComponent = ({ url, onChangeImage }) => {
             let link = await api.user.update
               .image(result)
               .catch((err) => console.log(err));
-            onChangeImage(link);
+              
+            dispatch(onChangeImage(link));
 
             setTimeout(() => {
               setActiveLoad(false);
@@ -84,6 +89,7 @@ const TextInputComponent = ({
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <View>
@@ -150,7 +156,7 @@ const TextInputComponent = ({
                 await updateData(text);
                 setActiveLoad(false);
                 setActive(false);
-                onSaved(text);
+                dispatch(onSaved(text));
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -172,6 +178,7 @@ const PickerComponent = ({
   updateData,
 }) => {
   const [activeLoad, setActiveLoad] = useState(false);
+  const dispatch = useDispatch();
   return (
     <View>
       <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
@@ -191,7 +198,7 @@ const PickerComponent = ({
               setActiveLoad(true);
               await updateData(itemValue);
               setActiveLoad(false);
-              onValueChange(itemValue);
+              dispatch(onValueChange(itemValue));
             }}
           >
             <Picker.Item
@@ -269,6 +276,7 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
 
   const [active, setActive] = useState(false);
   const [activeLoad, setActiveLoad] = useState(false);
+  const dispatch = useDispatch();
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -295,7 +303,7 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
               await updateData(list);
               setActiveLoad(false);
               setActive(false);
-              onChange(list);
+              dispatch(onChange(list));
             }}
             visible={active}
             animationType="fade"
@@ -342,6 +350,7 @@ const TextAreaComponent = ({
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
+  const dispatch = useDispatch();
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -416,7 +425,7 @@ const TextAreaComponent = ({
                 await updateData(text);
                 setActiveLoad(false);
                 setActive(false);
-                onSaved(text);
+                dispatch(onSaved(text));
               }}
             >
               <Text style={{ color: "#126f6f" }}>SAVE</Text>
@@ -432,7 +441,7 @@ const TextAreaComponent = ({
 const SettingScreen = () => {
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("cekmitl@kmitl.ac.th");
-  const [firstName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState("sadsad");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -441,6 +450,10 @@ const SettingScreen = () => {
   const [gender, setGender] = useState("");
   const [introduceText, setIntroduceText] = useState("");
   const [interestJob, setInterestJob] = useState([]);
+
+  const userReducer = useSelector( ( { userReducer } ) => userReducer );
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
@@ -450,7 +463,7 @@ const SettingScreen = () => {
       >
         <ScrollView>
           <View style={styles.formContainer}>
-            <AvatarComponent url={url} onChangeImage={setUrl} />
+            <AvatarComponent url={userReducer.photoURL} onChangeImage={setUrl} />
             <Text
               style={[
                 styles.gapVertical,
@@ -458,73 +471,71 @@ const SettingScreen = () => {
                 { textAlign: "center" },
               ]}
             >
-              {email}
+              {userReducer.email}
             </Text>
             <TextInputComponent
               title="ชื่อจริง"
-              value={firstName}
-              onSaved={setFirstName}
+              value={userReducer.firstname}
+              onSaved={actionUser.setFirstname}
               maxLength={20}
               updateData={api.user.update.firstname}
             />
             <TextInputComponent
               title="นามสกุล"
-              value={lastName}
-              onSaved={setLastName}
+              value={userReducer.lastname}
+              onSaved={actionUser.setLastname}
               maxLength={20}
               updateData={api.user.update.lastName}
             />
             <TextInputComponent
               title="อายุ"
-              value={age}
-              onSaved={setAge}
+              value={userReducer.age.toString()}
+              onSaved={actionUser.setAge}
               maxLength={2}
               keyboardType="numeric"
               updateData={api.user.update.age}
             />
             <TextInputComponent
               title="หมายเลขโทรศัพท์"
-              value={phoneNumber}
-              onSaved={setPhoneNumber}
+              value={userReducer.phone_number}
+              onSaved={actionUser.setPhoneNumber}
               maxLength={10}
               keyboardType="numeric"
               updateData={api.user.update.phoneNumber}
             />
             <TextInputComponent
               title="เลขประจำตัวประชาชน"
-              value={idCard}
-              onSaved={setIdCard}
+              value={userReducer.id_card}
+              onSaved={actionUser.setIDcard}
               maxLength={13}
               keyboardType="numeric"
               updateData={api.user.update.id_card}
             />
             <PickerComponent
               title="จังหวัดที่อยู่ปัจจุบัน"
-              value={currentProvince}
-              onValueChange={setCurrentProvince}
+              value={userReducer.province}
+              onValueChange={actionUser.setProvince}
               items={require("../assets/constValue").PROVINCE_TH}
               updateData={api.user.update.province}
             />
             <PickerComponent
               title="เพศ"
-              value={gender}
-              onValueChange={setGender}
+              value={userReducer.gender}
+              onValueChange={actionUser.setGenger}
               items={require("../assets/constValue").GENDER}
               updateData={api.user.update.gender}
             />
             <MultipleSelect
               title="ตำแหน่งงานที่สนใจ"
-              values={interestJob}
-              onChange={(value) => {
-                setInterestJob(value);
-              }}
+              values={userReducer.interested}
+              onChange={ actionUser.setInterested }
               items={require("../assets/constValue").JOB_POSITION}
               updateData={api.user.update.interested}
             />
             <TextAreaComponent
               title="แนะนำตัวเอง"
-              value={introduceText}
-              onSaved={setIntroduceText}
+              value={userReducer.introduce}
+              onSaved={actionUser.setIntroduce}
               maxLength={200}
               height={110}
               updateData={api.user.update.introduce}
