@@ -9,19 +9,15 @@ import SelectRoleScreen from "./src/screens/SelectRoleScreen";
 import MainUser from "./src/screens/MainUser";
 import { ValueContextProvider } from "./src/component/ValueContextProvider";
 
-
-
 const Stack = createStackNavigator();
 
 function MainStack() {
   return (
     <Stack.Navigator initialRouteName="Loading" headerMode="none">
-
       <Stack.Screen name="Loading" component={LoadingScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SelectRole" component={SelectRoleScreen} />
       <Stack.Screen name="MainUser" component={MainUser} />
-      
     </Stack.Navigator>
   );
 }

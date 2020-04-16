@@ -97,18 +97,14 @@ const TextInputComponent = ({
         }}
       >
         <View style={styles.popUpContainer}>
-          <Text
-            style={[{ fontSize: 18, fontWeight: "bold" }, styles.gapVertical]}
-          >
-            {title}
-          </Text>
+          <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
           <TextInput
             value={text}
             onChangeText={setText}
             style={[
               styles.inputContainer,
               styles.gapVertical,
-              { borderColor: "#126f6f", borderBottomWidth: 2 },
+              { borderColor: "gray", borderBottomWidth: 0.5 },
             ]}
             placeholder={"กรุณาใส่" + title}
             maxLength={maxLength}
@@ -127,7 +123,7 @@ const TextInputComponent = ({
                 setText(value);
               }}
             >
-              <Text style={{ color: "#126f6f" }}>CANCEL</Text>
+              <Text>ยกเลิก</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
@@ -136,7 +132,7 @@ const TextInputComponent = ({
                 onSaved(text);
               }}
             >
-              <Text style={{ color: "#126f6f" }}>SAVE</Text>
+              <Text>ตกลง</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -148,7 +144,7 @@ const TextInputComponent = ({
 const BankScreen = () => {
   const [bank, setBank] = useState({ name: "", id: "" });
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAvoidingView
         behavior="padding"
         keyboardVerticalOffset={-500}
@@ -196,6 +192,7 @@ const styles = StyleSheet.create({
     height: 30,
     paddingHorizontal: 5,
     textAlignVertical: "center",
+    borderColor: "gray",
   },
   popUpContainer: {
     margin: 10,

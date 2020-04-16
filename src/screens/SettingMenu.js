@@ -86,11 +86,12 @@ const SettingMenu = ({ navigation }) => {
 
 export default SettingMenu;
 
-
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight + 10,
-    marginHorizontal: 20,
+    flex: 1,
+    paddingTop: Constants.statusBarHeight + 10,
+    paddingHorizontal: 20,
+    backgroundColor: "white",
   },
   iconColor: {
     color: "#567091",

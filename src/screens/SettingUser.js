@@ -15,17 +15,13 @@ import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-import * as actionUser from "../redux/actions/user.action"
+import * as actionUser from "../redux/actions/user.action";
 
 import PopUpScreen from "../component/PopUpScreen";
 import PopUpLoading from "../component/PopupLoading";
 import api from "../API/API";
 
-
-
-
 const AvatarComponent = ({ url, onChangeImage }) => {
-
   const [activeLoad, setActiveLoad] = useState(false);
   const dispatch = useDispatch();
 
@@ -51,7 +47,7 @@ const AvatarComponent = ({ url, onChangeImage }) => {
             let link = await api.user.update
               .image(result)
               .catch((err) => console.log(err));
-              
+
             dispatch(onChangeImage(link));
 
             setTimeout(() => {
@@ -67,7 +63,7 @@ const AvatarComponent = ({ url, onChangeImage }) => {
           },
           size: 26,
           style: {
-            backgroundColor: "#b2d9fe",
+            backgroundColor: "#afd9ff",
           },
           underlayColor: "#c3eaff",
         }}
@@ -116,18 +112,14 @@ const TextInputComponent = ({
         }}
       >
         <View style={styles.popUpContainer}>
-          <Text
-            style={[{ fontSize: 18, fontWeight: "bold" }, styles.gapVertical]}
-          >
-            {title}
-          </Text>
+          <Text style={[styles.gapVertical, styles.labelFont]}>{title}</Text>
           <TextInput
             value={text}
             onChangeText={setText}
             style={[
               styles.inputContainer,
               styles.gapVertical,
-              { borderColor: "#126f6f", borderBottomWidth: 2 },
+              { borderColor: "gray", borderBottomWidth: 0.5 },
             ]}
             placeholder={"กรุณาใส่" + title}
             maxLength={maxLength}
@@ -146,7 +138,7 @@ const TextInputComponent = ({
                 setText(value);
               }}
             >
-              <Text style={{ color: "#126f6f" }}>CANCEL</Text>
+              <Text>ยกเลิก</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -159,7 +151,7 @@ const TextInputComponent = ({
                 dispatch(onSaved(text));
               }}
             >
-              <Text style={{ color: "#126f6f" }}>SAVE</Text>
+              <Text>ตกลง</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -299,6 +291,14 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
           <Modal
             transparent
             onRequestClose={async () => {
+              if (
+                list.length == values.length ||
+                list.filter((value) => values.indexOf(value) == -1).length == 0
+              )
+                {
+                  setActive(false);
+                  return;
+                }
               setActiveLoad(true);
               await updateData(list);
               setActiveLoad(false);
@@ -451,7 +451,7 @@ const SettingScreen = () => {
   const [introduceText, setIntroduceText] = useState("");
   const [interestJob, setInterestJob] = useState([]);
 
-  const userReducer = useSelector( ( { userReducer } ) => userReducer );
+  const userReducer = useSelector(({ userReducer }) => userReducer);
   const dispatch = useDispatch();
 
   return (
@@ -463,7 +463,10 @@ const SettingScreen = () => {
       >
         <ScrollView>
           <View style={styles.formContainer}>
-            <AvatarComponent url={userReducer.photoURL} onChangeImage={setUrl} />
+            <AvatarComponent
+              url={userReducer.photoURL}
+              onChangeImage={setUrl}
+            />
             <Text
               style={[
                 styles.gapVertical,
@@ -528,7 +531,7 @@ const SettingScreen = () => {
             <MultipleSelect
               title="ตำแหน่งงานที่สนใจ"
               values={userReducer.interested}
-              onChange={ actionUser.setInterested }
+              onChange={actionUser.setInterested}
               items={require("../assets/constValue").JOB_POSITION}
               updateData={api.user.update.interested}
             />
@@ -547,7 +550,7 @@ const SettingScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: { marginBottom: 40 },
+  container: { backgroundColor: "white" },
   formContainer: {
     flex: 1,
     marginTop: 15,
@@ -565,6 +568,7 @@ const styles = StyleSheet.create({
     height: 30,
     paddingHorizontal: 5,
     textAlignVertical: "center",
+    borderColor: "gray",
   },
   popUpContainer: {
     margin: 10,

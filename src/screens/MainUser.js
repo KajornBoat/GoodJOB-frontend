@@ -13,6 +13,9 @@ import SettingUser from "./SettingUser";
 import BankScreen from "./BankScreen";
 
 import BlankScreen from "./BankScreen";
+import TempScreen from "./TempScreen";
+import EmployeeListJob from "./EmployeeListJob";
+import JobDetail from "../component/JobDetail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -47,7 +50,7 @@ const JobEmployeeTab = () => {
       />
       <Tab.Screen
         name="งานที่ถูกเชิญ"
-        component={BlankScreen}
+        component={TempScreen}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -136,7 +139,8 @@ const EmployeeTabs = () => {
       />
       <Tab.Screen
         name="ประสบการณ์"
-        component={BlankScreen}
+        component={EmployeeListJob}
+        initialParams={{ routeName: "JobDetail" }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -177,8 +181,8 @@ const EmployeeTabs = () => {
 };
 
 const UserStack = () => {
-  return(
-    <Stack.Navigator 
+  return (
+    <Stack.Navigator
       initialRouteName="EmployeeTabs"
       screenOptions={{
         headerLeft: ({ onPress }) => (
@@ -194,20 +198,20 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
-      <Stack.Screen 
-        name="EmployeeTabs" 
-        component={EmployeeTabs} 
+      <Stack.Screen
+        name="EmployeeTabs"
+        component={EmployeeTabs}
         options={{
           headerShown: false,
         }}
-      /> 
-      <Stack.Screen 
-        name="JobEmployeeTab" 
-        component={JobEmployeeTab} 
+      />
+      <Stack.Screen
+        name="JobEmployeeTab"
+        component={JobEmployeeTab}
         options={{
           headerShown: false,
         }}
-      /> 
+      />
       <Stack.Screen
         name="SettingUser"
         component={SettingUser}
@@ -222,15 +226,19 @@ const UserStack = () => {
           headerTitle: "บัญชีธนาคาร",
         }}
       />
-
+      <Stack.Screen
+        name="JobDetail"
+        component={JobDetail}
+        options={{
+          headerTitle: "JobDetail",
+        }}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 const MainUser = () => {
-  return ( 
-    <UserStack />
-  )
+  return <UserStack />;
 };
 
 export default MainUser;
