@@ -70,19 +70,17 @@ const EmployeeListJob = ({ navigation, route }) => {
     location: [10, 13],
     onPress: () => navigation.navigate(route.params.routeName),
   };
+  console.log(route);
   return (
     <ScrollView
       style={[
         styles.container,
         {
-          paddingTop:
-            (route.params != undefined
-              ? require("expo-constants").default.statusBarHeight
-              : 0) + 15,
+          paddingTop: require("expo-constants").default.statusBarHeight + 15,
         },
       ]}
     >
-      <View style={{ marginBottom: route.params != undefined ? 40 : 15 }}>
+      <View style={{ marginBottom: 40 }}>
         <BoxList {...DataTemp} />
         <BoxList {...DataTemp} />
         <BoxList {...DataTemp} />

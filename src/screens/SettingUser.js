@@ -288,17 +288,15 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
             size={12}
             style={{ position: "absolute", top: "45%", right: "2%" }}
           />
-          <Modal
-            transparent
+          <PopUpScreen
             onRequestClose={async () => {
               if (
-                list.length == values.length ||
+                list.length == values.length &&
                 list.filter((value) => values.indexOf(value) == -1).length == 0
-              )
-                {
-                  setActive(false);
-                  return;
-                }
+              ) {
+                setActive(false);
+                return;
+              }
               setActiveLoad(true);
               await updateData(list);
               setActiveLoad(false);
@@ -306,32 +304,29 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
               dispatch(onChange(list));
             }}
             visible={active}
-            animationType="fade"
           >
-            <PopUpScreen>
-              <ScrollView
-                style={{
-                  backgroundColor: "white",
-                  maxHeight: 56.5 * (items.length < 10 ? items.length : 10),
-                }}
-              >
-                {items.map((value, index) => (
-                  <Item
-                    key={index}
-                    default={values.indexOf(value) > -1}
-                    label={value}
-                    value={value}
-                    addList={(value) => {
-                      list.push(value);
-                    }}
-                    removeList={(value) => {
-                      list.splice(list.indexOf(value), 1);
-                    }}
-                  />
-                ))}
-              </ScrollView>
-            </PopUpScreen>
-          </Modal>
+            <ScrollView
+              style={{
+                backgroundColor: "white",
+                maxHeight: 56.5 * (items.length < 10 ? items.length : 10),
+              }}
+            >
+              {items.map((value, index) => (
+                <Item
+                  key={index}
+                  default={values.indexOf(value) > -1}
+                  label={value}
+                  value={value}
+                  addList={(value) => {
+                    list.push(value);
+                  }}
+                  removeList={(value) => {
+                    list.splice(list.indexOf(value), 1);
+                  }}
+                />
+              ))}
+            </ScrollView>
+          </PopUpScreen>
         </View>
       </TouchableOpacity>
       <PopUpLoading active={activeLoad} setActive={setActiveLoad} />
@@ -366,10 +361,11 @@ const TextAreaComponent = ({
               padding: 5,
               borderRadius: 5,
               height: height,
+              color: value ? "black" : "gray",
             },
           ]}
         >
-          {value}
+          {value || "กรุณาใส่" + title}
         </Text>
       </TouchableOpacity>
       <PopUpScreen
@@ -380,22 +376,18 @@ const TextAreaComponent = ({
         }}
       >
         <View style={styles.popUpContainer}>
-          <Text
-            style={[{ fontSize: 18, fontWeight: "bold" }, styles.gapVertical]}
-          >
-            {title}
-          </Text>
+          <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
           <TextInput
             value={text}
             onChangeText={setText}
             style={[
               styles.gapVertical,
               {
-                borderColor: "#126f6f",
+                borderColor: "gray",
                 textAlignVertical: "top",
                 padding: 5,
                 borderRadius: 5,
-                borderWidth: 2,
+                borderWidth: 0.5,
                 height: height,
               },
             ]}
@@ -416,7 +408,7 @@ const TextAreaComponent = ({
                 setText(value);
               }}
             >
-              <Text style={{ color: "#126f6f" }}>CANCEL</Text>
+              <Text>ยกเลิก</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
@@ -428,7 +420,7 @@ const TextAreaComponent = ({
                 dispatch(onSaved(text));
               }}
             >
-              <Text style={{ color: "#126f6f" }}>SAVE</Text>
+              <Text>ตกลง</Text>
             </TouchableOpacity>
           </View>
         </View>

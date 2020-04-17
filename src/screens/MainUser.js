@@ -16,6 +16,7 @@ import BlankScreen from "./BankScreen";
 import TempScreen from "./TempScreen";
 import EmployeeListJob from "./EmployeeListJob";
 import JobDetail from "../component/JobDetail";
+import CreateJobScreen from "./CreateJobScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -231,6 +232,13 @@ const UserStack = () => {
         component={JobDetail}
         options={{
           headerTitle: "JobDetail",
+        }}
+      />
+      <Stack.Screen
+        name="CreateJobScreen"
+        component={CreateJobScreen}
+        options={{
+          headerTitle: null,
         }}
       />
     </Stack.Navigator>
