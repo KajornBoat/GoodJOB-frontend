@@ -1,21 +1,26 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
   Text,
   Dimensions,
 } from "react-native";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { CheckBox } from "react-native-elements";
-import JobDetail from "../component/JobDetail";
 import EmployeeListJob from "./EmployeeListJob";
 import PopUpScreen from "../component/PopUpScreen";
-const Page = createStackNavigator();
+const Stack = createStackNavigator();
 
-const MultiSelectPicker = ({ title, values, onChange, items, popUpState }) => {
+const MultiSelectPicker = ({
+  title,
+  values,
+  onChange,
+  items,
+  popUpState,
+  setTitle,
+}) => {
   const list = [...values];
   const Item = (props) => {
     const [state, setState] = useState(props.default);
@@ -60,7 +65,24 @@ const MultiSelectPicker = ({ title, values, onChange, items, popUpState }) => {
       <PopUpScreen
         onRequestClose={() => {
           setActive(false);
-          onChange(list);
+          if (
+            !(
+              list.length == values.length &&
+              list.filter((value) => values.indexOf(value) == -1).length == 0
+            )
+          ) {
+            onChange(list);
+            let str = "";
+            for (let i = 0; i < list.length; i++) {
+              if (str.length + list[i].length > 19) {
+                str += "...";
+                break;
+              }
+              str += list[i];
+              if (i + 1 < list.length) str += " , ";
+            }
+            setTitle(str === "" ? "ตำแหน่งงาน" : str);
+          }
         }}
         visible={active}
       >
@@ -90,29 +112,18 @@ const MultiSelectPicker = ({ title, values, onChange, items, popUpState }) => {
   );
 };
 
-const TempScreen = () => {
+const EmployeeListJobWithFilter = () => {
   const popUpState = useState(false);
   const [filterState, setFilterState] = useState([]);
   const [title, setTitle] = useState("");
-  useEffect(() => {
-    let str = "";
-    for (let i = 0; i < filterState.length; i++) {
-      if (str.length + filterState[i].length > 19) {
-        str += "...";
-        break;
-      }
-      str += filterState[i];
-      if (i + 1 < filterState.length) str += " , ";
-    }
-    setTitle(str === "" ? "ตำแหน่งงาน" : str);
-    return;
-  }, [filterState]);
-
+  const EmployeeJob = (props) => (
+    <EmployeeListJob {...props} filter={filterState} />
+  );
   return (
-    <Page.Navigator initialRouteName="EmployeeListJobWithHeader">
-      <Page.Screen
+    <Stack.Navigator initialRouteName="EmployeeListJobWithHeader">
+      <Stack.Screen
         name="EmployeeListJobWithHeader"
-        component={EmployeeListJob}
+        component={EmployeeJob}
         options={{
           headerRight: () => (
             <MultiSelectPicker
@@ -121,29 +132,15 @@ const TempScreen = () => {
               onChange={setFilterState}
               values={filterState}
               items={require("../assets/constValue").JOB_POSITION}
+              setTitle={setTitle}
             />
           ),
           headerTitle: null,
         }}
-        initialParams={{ filter: filterState, routeName: "JobDetail" }}
+        initialParams={{ routeName: "JobDetail" }}
       />
-    </Page.Navigator>
+    </Stack.Navigator>
   );
 };
 
-export default TempScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    marginHorizontal: 20,
-  },
-  iconColor: {
-    color: "#567091",
-  },
-  labelFont: {
-    color: "#567091",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-});
+export default EmployeeListJobWithFilter;

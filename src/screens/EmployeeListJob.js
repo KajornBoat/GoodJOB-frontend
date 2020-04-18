@@ -48,9 +48,19 @@ const LocationComponent = ({ location, style }) => {
   );
 };
 
-const BoxList = ({ title, startDate, finishDate, location, onPress }) => {
+export const BoxList = ({
+  title,
+  startDate,
+  finishDate,
+  location,
+  onPress,
+  style = {},
+}) => {
   return (
-    <TouchableOpacity style={styles.boxlist_container} onPress={onPress}>
+    <TouchableOpacity
+      style={{ ...styles.boxlist_container, ...style }}
+      onPress={onPress}
+    >
       <Text style={styles.boxlist_title}>{title}</Text>
       <DateComponet
         startDate={startDate}
@@ -62,7 +72,7 @@ const BoxList = ({ title, startDate, finishDate, location, onPress }) => {
   );
 };
 
-const EmployeeListJob = ({ navigation, route }) => {
+const EmployeeListJob = ({ navigation, route, filter }) => {
   const DataTemp = {
     title: "ABCDE",
     startDate: new Date(),
@@ -70,7 +80,6 @@ const EmployeeListJob = ({ navigation, route }) => {
     location: [10, 13],
     onPress: () => navigation.navigate(route.params.routeName),
   };
-  console.log(route);
   return (
     <ScrollView
       style={[
@@ -103,11 +112,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     marginVertical: 15,
+    elevation: 3,
   },
   boxlist_title: {
     borderBottomWidth: 0.5,
     paddingBottom: 10,
-    borderBottomColor: "gray",
+    borderBottomColor: "#aaa",
   },
   boxlist_date: {
     marginTop: 20,

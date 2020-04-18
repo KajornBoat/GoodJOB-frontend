@@ -1,90 +1,29 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import JobDetailAccept from "./JobDetailAccept";
-import PopUpScreen from "./PopUpScreen";
+import JobDetail, {
+  PopUpComponet,
+  FooterComment,
+  MyPositionComponent,
+} from "./JobDetail";
 
-const PopUpComponet = ({ visible, setVisible, title, position, callback }) => {
-  return (
-    <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
-      <View
-        style={{
-          marginVertical: 20,
-          marginHorizontal: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ textAlign: "center" }}>
-          คุณยืนยันที่จะ{title}ตำแหน่ง "{position}" หรือไม่?
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 30,
-            marginBottom: 10,
-            marginHorizontal: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "#13b319",
-              borderWidth: 0.5,
-              borderColor: "#13b319",
-              marginHorizontal: 10,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              setVisible(false);
-              callback();
-            }}
-          >
-            <Text style={{ color: "white", textAlign: "center" }}>ยืนยัน</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "white",
-              borderWidth: 0.5,
-              borderColor: "black",
-              marginHorizontal: 15,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => setVisible(false)}
-          >
-            <Text style={{ color: "black", textAlign: "center" }}>ยกเลิก</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </PopUpScreen>
-  );
-};
-
-const JobDetailInvite = ({
-  visible,
-  handleClosed,
-  job,
-  user,
-  position,
-  comments,
-  onAccept,
-  onDecline,
-}) => {
+const JobDetailInvite = ({ navigation }) => {
+  const position = "ช่างภาพ";
+  const job = {
+    position: ["ช่างภาพ", "สตาฟ"],
+    posWage: [1000, 500],
+    posReq: [3, 2],
+  };
   const [popUp, setPopUp] = useState(false);
   const [title, setTitle] = useState("");
-  const [callback, setCallback] = useState();
+  const [accept, setAccept] = useState(false);
   return (
-    <JobDetailAccept
-      visible={visible}
-      handleClosed={handleClosed}
-      job={job}
-      user={user}
-      position={position}
-      comments={comments}
-    >
-      <View style={{ height: 70, flexDirection: "row" }}>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 9.7 }}>
+        <JobDetail>
+          <MyPositionComponent position={position} job={job} />
+        </JobDetail>
+      </View>
+      <View style={{ flex: 1.3, flexDirection: "row" }}>
         <TouchableOpacity
           style={{
             flex: 1,
@@ -95,13 +34,10 @@ const JobDetailInvite = ({
           onPress={() => {
             setPopUp(true);
             setTitle("ตอบรับ");
-            setCallback(() => () => {
-              onAccept();
-              handleClosed();
-            });
+            setAccept(true);
           }}
         >
-          <Text style={{ color: "white", fontSize: 16 }}>ตอบรับ</Text>
+          <Text style={{ color: "white", fontSize: 20 }}>ตอบรับ</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -113,13 +49,10 @@ const JobDetailInvite = ({
           onPress={() => {
             setPopUp(true);
             setTitle("ปฏิเสธ");
-            setCallback(() => () => {
-              onDecline();
-              handleClosed();
-            });
+            setAccept(false);
           }}
         >
-          <Text style={{ color: "white", fontSize: 16 }}>ปฏิเสธ</Text>
+          <Text style={{ color: "white", fontSize: 20 }}>ปฏิเสธ</Text>
         </TouchableOpacity>
       </View>
       <PopUpComponet
@@ -127,9 +60,15 @@ const JobDetailInvite = ({
         setVisible={setPopUp}
         title={title}
         position={position}
-        callback={callback}
+        callback={
+          accept ? () => console.log("Accept") : () => console.log("Decline")
+        }
+        navigation={navigation}
       />
-    </JobDetailAccept>
+      <View style={{ flex: 1 }}>
+        <FooterComment />
+      </View>
+    </View>
   );
 };
 

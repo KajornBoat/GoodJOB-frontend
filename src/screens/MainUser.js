@@ -13,10 +13,11 @@ import SettingUser from "./SettingUser";
 import BankScreen from "./BankScreen";
 
 import BlankScreen from "./BankScreen";
-import TempScreen from "./TempScreen";
+import EmployeeListJobWithFilter from "./EmployeeListJobWithFilter";
 import EmployeeListJob from "./EmployeeListJob";
-import JobDetail from "../component/JobDetail";
+import JobDetail from "../component/JobDetailApply";
 import CreateJobScreen from "./CreateJobScreen";
+import EmployerListJob from "./EmployerListJob";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -51,7 +52,7 @@ const JobEmployeeTab = () => {
       />
       <Tab.Screen
         name="งานที่ถูกเชิญ"
-        component={TempScreen}
+        component={EmployeeListJobWithFilter}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -70,7 +71,7 @@ const JobEmployeeTab = () => {
       />
       <Tab.Screen
         name="สถานะงาน"
-        component={BlankScreen}
+        component={EmployerListJob}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (

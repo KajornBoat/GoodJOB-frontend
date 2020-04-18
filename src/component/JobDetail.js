@@ -12,6 +12,7 @@ import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
 import { Avatar } from "react-native-elements";
 import Geocoder from "react-native-geocoding";
 import MapView, { Marker } from "react-native-maps";
+import PopUpScreen from "./PopUpScreen";
 
 const HeaderComponent = ({ title, url, name }) => (
   <View
@@ -153,7 +154,9 @@ const JobDetail = ({ children }) => {
   const [startDate, setStartTime] = useState(new Date());
   const [finishDate, setFinishTime] = useState(new Date());
   const [location, setLocation] = useState([30, 120]);
-  const [description, setDescription] = useState("AV");
+  const [description, setDescription] = useState(
+    "AV\n\n\n\n\n\n\n\n\n\n\n\n\nAV"
+  );
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -188,3 +191,119 @@ const styles = StyleSheet.create({
 });
 
 export default JobDetail;
+
+export const PopUpComponet = ({
+  visible,
+  setVisible,
+  title,
+  position,
+  callback,
+  navigation,
+}) => {
+  return (
+    <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
+      <View
+        style={{
+          marginVertical: 20,
+          marginHorizontal: 10,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ textAlign: "center" }}>
+          คุณยืนยันที่จะ{title}ตำแหน่ง "{position}" หรือไม่?
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 30,
+            marginBottom: 10,
+            marginHorizontal: 10,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              backgroundColor: "#13b319",
+              borderWidth: 0.5,
+              borderColor: "#13b319",
+              marginHorizontal: 10,
+              paddingVertical: 15,
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              setVisible(false);
+              callback();
+              navigation.goBack();
+            }}
+          >
+            <Text style={{ color: "white", textAlign: "center" }}>ยืนยัน</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+              borderWidth: 0.5,
+              borderColor: "black",
+              marginHorizontal: 15,
+              paddingVertical: 15,
+              borderRadius: 10,
+            }}
+            onPress={() => setVisible(false)}
+          >
+            <Text style={{ color: "black", textAlign: "center" }}>ยกเลิก</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </PopUpScreen>
+  );
+};
+
+export const FooterComment = ({ comments }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "#b2d9fe",
+      }}
+      onPress={comments}
+    >
+      <Text style={{ color: "white", fontWeight: "bold" }}>ความคิดเห็น</Text>
+    </TouchableOpacity>
+  );
+};
+
+export const MyPositionComponent = ({ position, job }) => (
+  <View
+    style={{
+      marginHorizontal: 10,
+      marginBottom: 10,
+      paddingHorizontal: 15,
+      marginTop: 20,
+      paddingBottom: 15,
+    }}
+  >
+    <Text
+      style={[styles.titleFont, { textAlign: "center", marginBottom: 20 }]}
+      children="ตำแหน่งงาน"
+    />
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+      }}
+    >
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ตำแหน่ง</Text>
+        <Text>{position}</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ค่าจ้าง</Text>
+        <Text>{job.posWage[job.position.indexOf(position)]}฿</Text>
+      </View>
+    </View>
+  </View>
+);

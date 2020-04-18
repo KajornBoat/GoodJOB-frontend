@@ -666,20 +666,20 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
     <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
       <TouchableOpacity
         style={{
-          backgroundColor: selectMode == "Manual Search" ? "#567091" : "white",
-          borderColor: selectMode == "Manual Search" ? "#567091" : "gray",
+          backgroundColor: selectMode == "Manual" ? "#567091" : "white",
+          borderColor: selectMode == "Manual" ? "#567091" : "gray",
           marginRight: "1%",
           ...styles.selectMode,
         }}
         onPress={() => {
-          setSelectMode("Manual Search");
+          setSelectMode("Manual");
         }}
       >
         <Text
           style={[
             styles.textMode,
             {
-              color: selectMode == "Manual Search" ? "white" : "black",
+              color: selectMode == "Manual" ? "white" : "black",
             },
           ]}
         >
@@ -688,13 +688,13 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
       </TouchableOpacity>
       <TouchableOpacity
         style={{
-          backgroundColor: selectMode == "Auto Search" ? "#567091" : "white",
-          borderColor: selectMode == "Auto Search" ? "#567091" : "gray",
+          backgroundColor: selectMode == "Auto" ? "#567091" : "white",
+          borderColor: selectMode == "Auto" ? "#567091" : "gray",
           marginLeft: "1%",
           ...styles.selectMode,
         }}
         onPress={() => {
-          setSelectMode("Auto Search");
+          setSelectMode("Auto");
         }}
       >
         <Text
@@ -702,7 +702,7 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
             styles.textMode,
             ,
             {
-              color: selectMode == "Auto Search" ? "white" : "black",
+              color: selectMode == "Auto" ? "white" : "black",
             },
           ]}
         >
@@ -739,7 +739,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
           msg += newPosition.position == "" ? "ตำแหน่งไม่ถูกต้อง\n" : "";
           msg += Number(newPosition.amount) > 0 ? "" : "จำนวนไม่ถูกต้อง\n";
           msg +=
-            newPosition != "" && Number(newPosition.cost) >= 0
+            newPosition.cost != "" && Number(newPosition.cost) >= 0
               ? ""
               : "ค่าจ้างไม่ถูกต้อง\n";
           if (msg == "") {
@@ -891,7 +891,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
   );
 };
 
-const TextList = ({ positions }) => {
+export const TextList = ({ positions }) => {
   const SubList = ({ title, cal }) => (
     <View style={{ flexDirection: "row" }}>
       <View style={{ width: "60%" }}>
@@ -998,8 +998,6 @@ const Footer = ({ post }) => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        height: 60,
-        width: "100%",
         backgroundColor: "#b2d9fe",
       }}
       onPress={post}
@@ -1023,15 +1021,16 @@ const CreateJobScreen = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [positions, setPositions] = useState([]);
   const [selectJob, setSelectJob] = useState([]);
-  const [selectMode, setSelectMode] = useState("Manual Search");
+  const [selectMode, setSelectMode] = useState("Manual");
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <KeyboardAvoidingView
         behavior="height"
         keyboardVerticalOffset={-500}
         enabled
+        style={{ flex: 8 }}
       >
-        <ScrollView style={{ height: Dimensions.get("window").height - 160 }}>
+        <ScrollView>
           <View style={styles.container}>
             <TextInputComponent
               maxLength={40}
@@ -1170,6 +1169,7 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderWidth: 0.5,
     borderRadius: 5,
+    elevation: 2,
   },
   textMode: {
     textAlign: "center",

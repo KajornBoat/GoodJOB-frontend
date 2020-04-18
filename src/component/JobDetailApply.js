@@ -1,75 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import JobDetail from "./JobDetail";
-import PopUpScreen from "./PopUpScreen";
+import JobDetail, { FooterComment, PopUpComponet } from "./JobDetail";
 
-const PopUpComponet = ({ visible, setVisible, title, position, callback }) => {
-  return (
-    <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
-      <View
-        style={{
-          marginVertical: 20,
-          marginHorizontal: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ textAlign: "center" }}>
-          คุณยืนยันที่จะ{title}ตำแหน่ง "{position}" หรือไม่?
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 30,
-            marginBottom: 10,
-            marginHorizontal: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "#13b319",
-              borderWidth: 0.5,
-              borderColor: "#13b319",
-              marginHorizontal: 10,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              setVisible(false);
-              callback();
-            }}
-          >
-            <Text style={{ color: "white", textAlign: "center" }}>ยืนยัน</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "white",
-              borderWidth: 0.5,
-              borderColor: "black",
-              marginHorizontal: 15,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => setVisible(false)}
-          >
-            <Text style={{ color: "black", textAlign: "center" }}>ยกเลิก</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </PopUpScreen>
-  );
-};
-
-const PositionComponent = ({ employees, job, handleClosed, handleAccept }) => {
+const AddPositionComponent = ({ employees, job, navigation }) => {
   const [position, setPosition] = React.useState("");
   const [popUp, setPopUp] = React.useState(false);
-  const callback = () => {
-    handleClosed();
-    handleCancel();
-  };
   return (
     <View style={{ marginLeft: 10 }}>
       <Text
@@ -136,68 +72,38 @@ const PositionComponent = ({ employees, job, handleClosed, handleAccept }) => {
         setVisible={setPopUp}
         title="สมัคร"
         position={position}
-        callback={() => {
-          handleClosed();
-          handleAccept();
-        }}
+        callback={() => console.log(position)}
+        navigation={navigation}
       />
     </View>
   );
 };
 
-const Footer = ({ comments }) => {
+const JobDetailApply = ({ navigation }) => {
+  const job = {
+    position: ["ช่างภาพ", "สตาฟ"],
+    posWage: [1000, 500],
+    posReq: [3, 2],
+  };
+  const employees = [
+    { position: "ช่างภาพ", amount: 2 },
+    { position: "สตาฟ", amount: 0 },
+  ];
   return (
-    <TouchableOpacity
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        height: 60,
-        width: "100%",
-        backgroundColor: "#b2d9fe",
-      }}
-      onPress={comments}
-    >
-      <Text
-        style={{
-          color: "white",
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingRight: 15,
-        }}
-      >
-        ความคิดเห็น
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
-const JobDetailApply = ({
-  visible,
-  handleClosed,
-  job,
-  user,
-  employees,
-  comment,
-  handleAccept,
-}) => {
-  return (
-    <JobDetail
-      visible={visible}
-      handleClosed={handleClosed}
-      job={job}
-      user={user}
-    >
-      <View style={styles.container}>
-        <PositionComponent
-          employees={employees}
-          job={job}
-          handleClosed={handleClosed}
-          handleAccept={handleAccept}
-        />
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 11 }}>
+        <JobDetail>
+          <View style={styles.container}>
+            <AddPositionComponent
+              employees={employees}
+              job={job}
+              navigation={navigation}
+            />
+          </View>
+        </JobDetail>
       </View>
-      <Footer />
-    </JobDetail>
+      <FooterComment />
+    </View>
   );
 };
 
