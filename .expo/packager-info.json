@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 5132,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPid": 13820,
+  "expoServerNgrokUrl": "https://mj-pmd.anonymous.goodjob-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.mj-pmd.anonymous.goodjob-frontend.exp.direct",
+  "ngrokPid": 10960
 }

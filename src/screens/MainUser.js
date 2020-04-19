@@ -19,6 +19,14 @@ import JobDetail from "../component/JobDetailApply";
 import CreateJobScreen from "./CreateJobScreen";
 import EmployerListJob from "./EmployerListJob";
 
+import AutoEmployeeInfoScreen from "./AutoEmployeeInfoScreen";
+import ManualEmployeeInfoScreen from "./ManualEmployeeInfoScreen";
+import ManualApplicantInfoScreen from "./ManualApplicantInfoScreen";
+import IndividualEmployeeProfileScreen from "./IndividualEmployeeProfileScreen";
+import IndividualInviteEmployeeProfileScreen from "./IndividualInviteEmployeeProfileScreen";
+import SelectForInviteScreen from "./SelectForInviteScreen";
+import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -240,6 +248,36 @@ const UserStack = () => {
         component={CreateJobScreen}
         options={{
           headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="IndividualEmployeeProfileScreen"
+        component={IndividualEmployeeProfileScreen}
+        initialParams={{ itemId: 0 }}
+        options={{
+          headerTitle: "ข้อมูลลูกจ้าง",
+        }}
+      />
+      <Stack.Screen
+        name="IndividualInviteEmployeeProfileScreen"
+        component={IndividualInviteEmployeeProfileScreen}
+        initialParams={{ itemId: 0 }}
+        options={{
+          headerTitle: "ข้อมูลลูกจ้าง",
+        }}
+      />
+      <Stack.Screen
+        name="SelectForInviteScreen"
+        component={SelectForInviteScreen}
+        options={{
+          headerTitle: "ข้อมูลลูกจ้างที่เชิญได้",
+        }}
+      />
+      <Stack.Screen
+        name="IndividualApplicantProfileScreen"
+        component={IndividualApplicantProfileScreen}
+        options={{
+          headerTitle: "ข้อมูลผู้สมัครงาน",
         }}
       />
     </Stack.Navigator>
