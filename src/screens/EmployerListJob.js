@@ -129,23 +129,9 @@ export default ({ navigation }) => {
     },
   ];
   const [mode, setMode] = useState("Manual");
-  const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
-  const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
-  const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
+
   const EmployerJob = () => (
     <EmployerListJob navigation={navigation} dataLists={DataTemp} mode={mode} />
-  );
-  const AutoEmployeeInfo = () => (
-    <AutoEmployeeInfoScreen navigation={navigation} filter={autoPosition} />
-  );
-  const ManualEmployeeInfo = () => (
-    <ManualEmployeeInfoScreen navigation={navigation} filter={manualPosition} />
-  );
-  const ManualApplicantInfo = () => (
-    <ManualApplicantInfoScreen
-      navigation={navigation}
-      filter={applicantPosition}
-    />
   );
   return (
     <Stack.Navigator>
@@ -171,89 +157,11 @@ export default ({ navigation }) => {
                 name="pluscircle"
                 size={24}
                 style={{
-                  color: "#13b319",
+                  color: "#0bb203",
                 }}
               />
             </TouchableOpacity>
           ),
-        }}
-      />
-      <Stack.Screen
-        name="AutoEmployeeInfoScreen"
-        component={AutoEmployeeInfo}
-        options={{
-          headerLeft: ({ onPress }) => (
-            <TouchableOpacity onPress={onPress}>
-              <Ionicons
-                name="ios-arrow-round-back"
-                size={32}
-                style={styles.iconColor}
-              />
-            </TouchableOpacity>
-          ),
-          headerLeftContainerStyle: { paddingHorizontal: 20 },
-          headerTitleStyle: styles.labelFont,
-          headerRight: () => (
-            <PickerFilter
-              title="ตำแหน่ง"
-              value={autoPosition}
-              setOnValueChange={setAutoPosition}
-              items={require("../assets/constValue").JOB_POSITION}
-            />
-          ),
-          headerTitle: null,
-        }}
-      />
-      <Stack.Screen
-        name="ManualEmployeeInfoScreen"
-        component={ManualEmployeeInfo}
-        options={{
-          headerLeft: ({ onPress }) => (
-            <TouchableOpacity onPress={onPress}>
-              <Ionicons
-                name="ios-arrow-round-back"
-                size={32}
-                style={styles.iconColor}
-              />
-            </TouchableOpacity>
-          ),
-          headerLeftContainerStyle: { paddingHorizontal: 20 },
-          headerTitleStyle: styles.labelFont,
-          headerRight: () => (
-            <PickerFilter
-              title="ตำแหน่ง"
-              value={manualPosition}
-              setOnValueChange={setManualPosition}
-              items={require("../assets/constValue").JOB_POSITION}
-            />
-          ),
-          headerTitle: null,
-        }}
-      />
-      <Stack.Screen
-        name="ManualApplicantInfoScreen"
-        component={ManualApplicantInfo}
-        options={{
-          headerLeft: ({ onPress }) => (
-            <TouchableOpacity onPress={onPress}>
-              <Ionicons
-                name="ios-arrow-round-back"
-                size={32}
-                style={styles.iconColor}
-              />
-            </TouchableOpacity>
-          ),
-          headerLeftContainerStyle: { paddingHorizontal: 20 },
-          headerTitleStyle: styles.labelFont,
-          headerRight: () => (
-            <PickerFilter
-              title="ตำแหน่ง"
-              value={applicantPosition}
-              setOnValueChange={setApplicantPosition}
-              items={require("../assets/constValue").JOB_POSITION}
-            />
-          ),
-          headerTitle: null,
         }}
       />
     </Stack.Navigator>

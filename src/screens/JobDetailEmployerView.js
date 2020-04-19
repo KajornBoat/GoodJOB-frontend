@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import JobDetail, { FooterComment } from "./JobDetail";
-import { TextList } from "../screens/CreateJobScreen";
+import JobDetail, { FooterComment } from "../component/JobDetail";
+import { TextList } from "./CreateJobScreen";
 
 const PositionComponent = ({ employees, job }) => (
   <View style={{ marginHorizontal: 10 }}>

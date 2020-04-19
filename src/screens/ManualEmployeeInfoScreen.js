@@ -27,10 +27,9 @@ export default function ManualEmployeeInfoScreen({ navigation, filter }) {
       </ScrollView>
       <TouchableOpacity
         style={{ backgroundColor: "#afd9ff" }}
-        activeOpacity={filter != "ตำแหน่ง" ? 0.5 : 1}
-        onPress={() =>
-          filter != "ตำแหน่ง" && navigation.navigate("SelectForInviteScreen")
-        }
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate("SelectForInviteScreen")}
+        disabled={filter == "ตำแหน่ง"}
       >
         <View
           style={{

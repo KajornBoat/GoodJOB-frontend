@@ -39,7 +39,7 @@ const LocationComponent = ({ location, style }) => {
         name="md-pin"
         size={18}
         style={{ textAlignVertical: "top" }}
-        color="#f3595a"
+        color="#f65a5a"
       />
       <Text style={{ marginLeft: 10 }}>
         {place.length <= 40 ? place : place.slice(0, 40) + "..."}

@@ -1,6 +1,9 @@
 import React from "react";
 import { View } from "react-native";
-import JobDetail, { FooterComment, MyPositionComponent } from "./JobDetail";
+import JobDetail, {
+  FooterComment,
+  MyPositionComponent,
+} from "../component/JobDetail";
 
 const JobDetailAccept = () => {
   const job = {
@@ -8,7 +11,6 @@ const JobDetailAccept = () => {
     posWage: [1000, 500],
     posReq: [3, 2],
   };
-  const position = "ช่างภาพ";
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

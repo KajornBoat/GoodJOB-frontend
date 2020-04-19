@@ -106,7 +106,7 @@ const LocationComponent = ({ location }) => {
             name="md-pin"
             size={18}
             style={{ textAlignVertical: "top" }}
-            color="#f3595a"
+            color="#f65a5a"
           />
           <Text style={{ marginLeft: 10 }}>
             {name.length <= 40 ? name : name.slice(0, 40) + "..."}
@@ -192,73 +192,6 @@ const styles = StyleSheet.create({
 
 export default JobDetail;
 
-export const PopUpComponet = ({
-  visible,
-  setVisible,
-  title,
-  position,
-  callback,
-  navigation,
-}) => {
-  return (
-    <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
-      <View
-        style={{
-          marginVertical: 20,
-          marginHorizontal: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ textAlign: "center" }}>
-          คุณยืนยันที่จะ{title}ตำแหน่ง "{position}" หรือไม่?
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 30,
-            marginBottom: 10,
-            marginHorizontal: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "#13b319",
-              borderWidth: 0.5,
-              borderColor: "#13b319",
-              marginHorizontal: 10,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              setVisible(false);
-              callback();
-              navigation.goBack();
-            }}
-          >
-            <Text style={{ color: "white", textAlign: "center" }}>ยืนยัน</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: "white",
-              borderWidth: 0.5,
-              borderColor: "black",
-              marginHorizontal: 15,
-              paddingVertical: 15,
-              borderRadius: 10,
-            }}
-            onPress={() => setVisible(false)}
-          >
-            <Text style={{ color: "black", textAlign: "center" }}>ยกเลิก</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </PopUpScreen>
-  );
-};
-
 export const FooterComment = ({ comments }) => {
   return (
     <TouchableOpacity
@@ -267,11 +200,14 @@ export const FooterComment = ({ comments }) => {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        backgroundColor: "#b2d9fe",
+        backgroundColor: "#afd9ff",
       }}
+      activeOpacity={0.5}
       onPress={comments}
     >
-      <Text style={{ color: "white", fontWeight: "bold" }}>ความคิดเห็น</Text>
+      <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+        ความคิดเห็น
+      </Text>
     </TouchableOpacity>
   );
 };

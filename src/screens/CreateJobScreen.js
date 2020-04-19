@@ -617,7 +617,7 @@ const PostitionSeletion = ({
         name="md-trash"
         size={20}
         style={{
-          color: "#f3595a",
+          color: "#f65a5a",
         }}
       />
     </TouchableOpacity>
@@ -766,7 +766,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
           name="pluscircle"
           size={16}
           style={{
-            color: "#13b319",
+            color: "#0bb203",
           }}
         />
       </TouchableOpacity>
@@ -995,10 +995,10 @@ const Footer = ({ post }) => {
   return (
     <TouchableOpacity
       style={{
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#b2d9fe",
+        backgroundColor: "#afd9ff",
+        height: 64,
       }}
       onPress={post}
     >
@@ -1028,7 +1028,7 @@ const CreateJobScreen = ({ navigation }) => {
         behavior="height"
         keyboardVerticalOffset={-500}
         enabled
-        style={{ flex: 8 }}
+        style={{ flex: 1 }}
       >
         <ScrollView>
           <View style={styles.container}>

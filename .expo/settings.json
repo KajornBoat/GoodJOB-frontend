@@ -1,7 +1,7 @@
 {
   "dev": true,
   "minify": false,
-  "hostType": "lan",
+  "hostType": "localhost",
   "lanType": "ip",
   "urlRandomness": "mj-pmd",
   "https": false

@@ -3,7 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import PopUpScreen from "./PopUpScreen";
 
-const ConfirmPopUp = ({ visible, setVisible, textPopup, navigation }) => {
+const ConfirmPopUp = ({
+  visible,
+  setVisible,
+  textPopup,
+  navigation,
+  callback,
+}) => {
   return (
     <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
       <View style={styles.popUpStyle}>
@@ -18,8 +24,8 @@ const ConfirmPopUp = ({ visible, setVisible, textPopup, navigation }) => {
             style={styles.confirmButton}
             activeOpacity={0.4}
             onPress={() => {
-              console.log("confirm!");
               setVisible(false);
+              callback();
               navigation.goBack();
             }}
           >
@@ -28,7 +34,9 @@ const ConfirmPopUp = ({ visible, setVisible, textPopup, navigation }) => {
           <TouchableOpacity
             style={styles.cancelButton}
             activeOpacity={0.4}
-            onPress={() => setVisible(false)}
+            onPress={() => {
+              setVisible(false);
+            }}
           >
             <Text>ยกเลิก</Text>
           </TouchableOpacity>

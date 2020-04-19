@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import PopUpScreen from "../component/PopUpScreen";
-import HeaderWithBackArrow from "../component/HeaderWithBackArrow";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 import ConfirmPopUp from "../component/ConfirmPopUp";
@@ -29,7 +28,6 @@ export default function IndividualInviteEmployeeProfileScreen({
         onRequestClose={() => setImageVisible(false)}
       >
         <View style={{ justifyContent: "center" }}>
-          <HeaderWithBackArrow onPress={() => setImageVisible(false)} />
           <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
         </View>
       </PopUpScreen>

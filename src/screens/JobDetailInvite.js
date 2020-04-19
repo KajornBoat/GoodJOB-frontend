@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import JobDetail, {
-  PopUpComponet,
   FooterComment,
   MyPositionComponent,
-} from "./JobDetail";
+} from "../component/JobDetail";
+import ConfirmPopUp from "../component/ConfirmPopUp";
 
 const JobDetailInvite = ({ navigation }) => {
   const position = "ช่างภาพ";
@@ -23,11 +23,11 @@ const JobDetailInvite = ({ navigation }) => {
           <MyPositionComponent position={position} job={job} />
         </JobDetail>
       </View>
-      <View style={{ flex: 1.3, flexDirection: "row" }}>
+      <View style={{ height: 64, flexDirection: "row" }}>
         <TouchableOpacity
           style={{
             flex: 1,
-            backgroundColor: "#13b319",
+            backgroundColor: "#0bb203",
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -42,7 +42,7 @@ const JobDetailInvite = ({ navigation }) => {
         <TouchableOpacity
           style={{
             flex: 1,
-            backgroundColor: "#f3595a",
+            backgroundColor: "#f65a5a",
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -55,15 +55,14 @@ const JobDetailInvite = ({ navigation }) => {
           <Text style={{ color: "white", fontSize: 20 }}>ปฏิเสธ</Text>
         </TouchableOpacity>
       </View>
-      <PopUpComponet
-        visible={popUp}
+      <ConfirmPopUp
+        navigation={navigation}
         setVisible={setPopUp}
-        title={title}
-        position={position}
+        visible={popUp}
+        textPopup={`คุณยืนยันที่จะ${title}ตำแหน่ง "${position}" หรือไม่?`}
         callback={
           accept ? () => console.log("Accept") : () => console.log("Decline")
         }
-        navigation={navigation}
       />
       <View style={{ flex: 1 }}>
         <FooterComment />

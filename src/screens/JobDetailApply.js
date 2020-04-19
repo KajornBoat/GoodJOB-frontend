@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import JobDetail, { FooterComment, PopUpComponet } from "./JobDetail";
+import JobDetail, { FooterComment } from "../component/JobDetail";
+import ConfirmPopUp from "../component/ConfirmPopUp";
 
 const AddPositionComponent = ({ employees, job, navigation }) => {
   const [position, setPosition] = React.useState("");
@@ -67,13 +68,12 @@ const AddPositionComponent = ({ employees, job, navigation }) => {
           </TouchableOpacity>
         </View>
       ))}
-      <PopUpComponet
-        visible={popUp}
-        setVisible={setPopUp}
-        title="สมัคร"
-        position={position}
-        callback={() => console.log(position)}
+      <ConfirmPopUp
         navigation={navigation}
+        setVisible={setPopUp}
+        visible={popUp}
+        textPopup={`คุณยืนยันที่จะสมัครตำแหน่ง "${position}" หรือไม่?`}
+        callback={() => console.log(position)}
       />
     </View>
   );

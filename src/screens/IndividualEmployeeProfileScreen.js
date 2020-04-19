@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import PopUpScreen from "../component/PopUpScreen";
-import HeaderWithBackArrow from "../component/HeaderWithBackArrow";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 
@@ -19,13 +18,12 @@ export default function IndividualEmployeeProfileScreen({ route, navigation }) {
   const itemId = route.params.itemId;
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <PopUpScreen
         visible={imageVisible}
         onRequestClose={() => setImageVisible(false)}
       >
         <View style={{ justifyContent: "center" }}>
-          <HeaderWithBackArrow onPress={() => setImageVisible(false)} />
           <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
         </View>
       </PopUpScreen>

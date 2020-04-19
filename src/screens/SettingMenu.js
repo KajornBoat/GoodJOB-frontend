@@ -62,7 +62,7 @@ const SettingMenu = ({ navigation }) => {
         subtitle={
           <Text
             style={{
-              color: "#f3595a7f",
+              color: "#f65a5a7f",
               fontWeight: "bold",
               fontSize: 16,
               marginLeft: 10,

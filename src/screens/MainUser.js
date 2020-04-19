@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
@@ -15,7 +15,7 @@ import BankScreen from "./BankScreen";
 import BlankScreen from "./BankScreen";
 import EmployeeListJobWithFilter from "./EmployeeListJobWithFilter";
 import EmployeeListJob from "./EmployeeListJob";
-import JobDetail from "../component/JobDetailApply";
+import JobDetail from "./JobDetailStatus";
 import CreateJobScreen from "./CreateJobScreen";
 import EmployerListJob from "./EmployerListJob";
 
@@ -26,6 +26,7 @@ import IndividualEmployeeProfileScreen from "./IndividualEmployeeProfileScreen";
 import IndividualInviteEmployeeProfileScreen from "./IndividualInviteEmployeeProfileScreen";
 import SelectForInviteScreen from "./SelectForInviteScreen";
 import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
+import PickerFilter from "../component/PickerFilter";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -191,6 +192,21 @@ const EmployeeTabs = () => {
 };
 
 const UserStack = () => {
+  const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
+  const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
+  const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
+  const AutoEmployeeInfo = ({ navigation }) => (
+    <AutoEmployeeInfoScreen navigation={navigation} filter={autoPosition} />
+  );
+  const ManualEmployeeInfo = ({ navigation }) => (
+    <ManualEmployeeInfoScreen navigation={navigation} filter={manualPosition} />
+  );
+  const ManualApplicantInfo = ({ navigation }) => (
+    <ManualApplicantInfoScreen
+      navigation={navigation}
+      filter={applicantPosition}
+    />
+  );
   return (
     <Stack.Navigator
       initialRouteName="EmployeeTabs"
@@ -278,6 +294,51 @@ const UserStack = () => {
         component={IndividualApplicantProfileScreen}
         options={{
           headerTitle: "ข้อมูลผู้สมัครงาน",
+        }}
+      />
+      <Stack.Screen
+        name="AutoEmployeeInfoScreen"
+        component={AutoEmployeeInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={autoPosition}
+              setOnValueChange={setAutoPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="ManualEmployeeInfoScreen"
+        component={ManualEmployeeInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={manualPosition}
+              setOnValueChange={setManualPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="ManualApplicantInfoScreen"
+        component={ManualApplicantInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={applicantPosition}
+              setOnValueChange={setApplicantPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
+          headerTitle: null,
         }}
       />
     </Stack.Navigator>

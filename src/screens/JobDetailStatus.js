@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import JobDetail, {
   FooterComment,
   MyPositionComponent,
-  PopUpComponet,
-} from "./JobDetail";
+} from "../component/JobDetail";
 import { AntDesign } from "@expo/vector-icons";
+import ConfirmPopUp from "../component/ConfirmPopUp";
 
 const JobDetailStatus = ({ navigation }) => {
   const position = "ช่างภาพ";
@@ -27,20 +27,17 @@ const JobDetailStatus = ({ navigation }) => {
             <AntDesign
               name="closecircle"
               size={18}
-              style={{ color: "#f3595a" }}
+              style={{ color: "#f65a5a" }}
             />
           </TouchableOpacity>
         </JobDetail>
       </View>
-      <PopUpComponet
-        visible={popUp}
-        setVisible={setPopUp}
-        title="ยกเลิก"
-        position={position}
-        callback={() => {
-          console.log("Cancel");
-        }}
+      <ConfirmPopUp
         navigation={navigation}
+        setVisible={setPopUp}
+        visible={popUp}
+        textPopup={`คุณยืนยันที่จะยกเลิกตำแหน่ง "${position}" หรือไม่?`}
+        callback={() => console.log("Cancel")}
       />
       <View style={{ flex: 1 }}>
         <FooterComment />
