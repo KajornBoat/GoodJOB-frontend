@@ -3,10 +3,17 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 
+import {useDispatch} from "react-redux"
+import * as action from "../redux/actions/user.action"
+
 import { ValueContext } from "../component/ValueContextProvider";
+import api from "../API/API";
 
 const SelectRoleScreen = ({ navigation }) => {
+
   const { role, setRole } = useContext(ValueContext);
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <View
@@ -53,10 +60,10 @@ const SelectRoleScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.selectRole}
             onPress={() => {
-              setRole("นายจ้าง");
+              setRole("Employer");
             }}
           >
-            {role == "นายจ้าง" ? (
+            {role == "Employer" ? (
               <View>
                 <Image
                   source={require("../assets/role_employer.png")}
@@ -88,10 +95,10 @@ const SelectRoleScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.selectRole}
             onPress={() => {
-              setRole("ลูกจ้าง");
+              setRole("Employee");
             }}
           >
-            {role == "ลูกจ้าง" ? (
+            {role == "Employee" ? (
               <View>
                 <Image
                   source={require("../assets/role_employee.png")}
@@ -132,7 +139,10 @@ const SelectRoleScreen = ({ navigation }) => {
             elevation: 2,
             opacity: 0.5,
           }}
-          onPress={() => navigation.navigate("MainUser", { role: role })}
+          onPress={() => {
+            navigation.navigate("MainUser")
+            dispatch(action.setRole(role));
+        }}
           disabled={role == undefined}
         >
           <Text style={{ fontWeight: "bold", color: "white", fontSize: 16 }}>

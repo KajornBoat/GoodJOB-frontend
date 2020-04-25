@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {SafeAreaView } from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from "react-redux"
 import * as action from "../redux/actions/user.action"
+import api from "../API/API";
 
 const TestScreen = (props) => {
   const [visible, setVisible] = useState(false);
@@ -22,7 +23,7 @@ const TestScreen = (props) => {
       console.log("User = ", user);
       // this.user = user.email
       //this.state = false;
-      alert("UserEmail = " + user.email);
+      alert("UserEmail = " + user.lastname);
     });
   };
   const getIdToken = () => {
@@ -56,7 +57,9 @@ const TestScreen = (props) => {
         <CreateJobScreen visible={visible} onClosed={() => setVisible(false)} />
         <Text>{"\n"}</Text>
        <Text>{userReducer.email}</Text>
+        <Text>{userReducer.role}</Text>
        <Button title="rename" onPress={() => dipatch(action.setUser("Boat"))} />
+       <Button title="test update Role" onPress={() => api.user.update.role("Employee")} />
       </View>
 
     </SafeAreaView>

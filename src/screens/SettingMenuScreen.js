@@ -1,14 +1,11 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { createStackNavigator } from "@react-navigation/stack";
+import {useSelector, useDispatch} from "react-redux"
+import * as action from "../redux/actions/user.action"
 
 import API from "../API/API";
-import SettingUser from "./SettingUser";
-import BankScreen from "./BankScreen";
-import { ValueContext } from "../component/ValueContextProvider";
-const Stack = createStackNavigator();
 
 const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
   return (
@@ -37,7 +34,16 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
 };
 
 const SettingMenu = ({ navigation }) => {
-  const { role, setRole } = useContext(ValueContext);
+  
+  const userReducer = useSelector(({userReducer}) => userReducer);
+  const dipatch = useDispatch();
+
+  let value = "";
+  if(userReducer.role === "Employee") value = "นายจ้าง";
+  else if(userReducer.role === "Employer") value = "ลูกจ้าง";
+  
+  const [ inverseRole, setInverseRole ] = useState(value);
+
   return (
     <View style={styles.container}>
       <MenuLabelComponent
@@ -68,11 +74,12 @@ const SettingMenu = ({ navigation }) => {
               marginLeft: 10,
             }}
           >
-            {role}
+            {inverseRole}
           </Text>
         }
         onPress={() => {
-          setRole(role == "นายจ้าง" ? "ลูกจ้าง" : "นายจ้าง");
+          setInverseRole(inverseRole == "นายจ้าง" ? "ลูกจ้าง" : "นายจ้าง");
+          dipatch(action.setRole(userReducer.role == "Employee" ? "Employer" : "Employee"))
         }}
       />
       <MenuLabelComponent

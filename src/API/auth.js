@@ -8,15 +8,19 @@ const config = require("./config.json")
 
 
 class Auth {
-    async __loginApi(){
+    async login(){
       const idToken = await manageUser.getIdToken();
-      console.log("IDTOKEN = ",idToken)
-      fetch(config.hostname+'/auth/login', {
+      //console.log("Login IDTOKEN = ",idToken)
+      return await fetch(config.hostname+'/auth/login', {
         method: 'GET',
         headers: {
           "idtoken" : idToken
         },
       })
+      .then( res => res.json()
+      .then( result => {
+        return result;
+      }))
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -57,7 +61,6 @@ class Auth {
                 .signInWithCredential(credential)
                 .then( result =>  {
                   console.log('user signed in ');
-                  this.__loginApi();
                 })
                 .catch(function(error) {
                   var errorCode = error.code;
@@ -111,8 +114,6 @@ class Auth {
               .signInWithCredential(credential)
               .then(result => {
                 console.log('user signed in ');
-
-                this.__loginApi();
 
               }).catch((error) => {
                     console.log(error)

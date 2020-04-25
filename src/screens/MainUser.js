@@ -1,185 +1,54 @@
-import React, { useContext, useEffect } from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import Constants from "expo-constants";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import React  from "react";
+import { StyleSheet, TouchableOpacity, Text} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator  } from "@react-navigation/stack";
+import { StackActions ,CommonActions  } from '@react-navigation/native';
 
-import SettingMenu from "./SettingMenu";
-import TestScreen from "./TestScreen";
+import {useSelector} from "react-redux"
 
-import SettingUser from "./SettingUser";
-import BankScreen from "./BankScreen";
+import EmployeeTabs from "../component/EmployeeTAB"
+import EmployerTabs from "../component/EmployerTAB"
 
-import BlankScreen from "./BankScreen";
+import SettingUser from "./SettingUserScreen";
+import BankScreen from "./SettingBankScreen";
+import SplashScreen from "./SplashScreen"
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const JobEmployeeTab = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="งานที่ได้รับ"
-      tabBarOptions={{
-        activeTintColor: "#567091",
-        inactiveTintColor: "#bac6d39f",
-      }}
-    >
-      <Tab.Screen
-        name="งานที่ได้รับ"
-        component={BlankScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/check-circle.png")
-                    : require("../assets/check-circle-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="งานที่ถูกเชิญ"
-        component={BlankScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/user-check.png")
-                    : require("../assets/user-check-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="สถานะงาน"
-        component={BlankScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/clipboard-text.png")
-                    : require("../assets/clipboard-text-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
+const resetStack = (navigation) => {
+  navigation
+    .dispatch(StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'EmployeeTabs'
+        }),
+      ],
+    }))
+ }
 
-const EmployeeTabs = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="หน้าหลัก"
-      tabBarOptions={{
-        activeTintColor: "#567091",
-        inactiveTintColor: "#bac6d39f",
-      }}
-    >
-      <Tab.Screen
-        name="หน้าหลัก"
-        component={TestScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/home.png")
-                    : require("../assets/home-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="งานที่มีส่วนร่วม"
-        component={JobEmployeeTab}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/job.png")
-                    : require("../assets/job-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="ประสบการณ์"
-        component={BlankScreen}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/history.png")
-                    : require("../assets/history-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="ตั้งค่า"
-        component={SettingMenu}
-        options={{
-          tabBarIcon: ({ focused, size }) => {
-            return (
-              <Image
-                source={
-                  focused
-                    ? require("../assets/setting.png")
-                    : require("../assets/setting-outline.png")
-                }
-                style={{ width: size * 1.25, height: size * 1.25 }}
-                resizeMode="contain"
-              />
-            );
-          },
-        }}
-      />
-    </Tab.Navigator>
-  );
+
+const SelectRole = ({ navigation }) => {
+  
+  const userReducer = useSelector(({userReducer}) => userReducer);
+
+  if(userReducer.role === "Employee"){
+    navigation.navigate("EmployeeTabs");
+  }
+  else if(userReducer.role === "Employer"){
+    navigation.navigate("EmployerTabs");
+  }
+  return(
+    <SplashScreen />
+  )
+  
 };
 
 const UserStack = () => {
   return(
     <Stack.Navigator 
-      initialRouteName="EmployeeTabs"
+      initialRouteName="SelectRole"
       screenOptions={{
         headerLeft: ({ onPress }) => (
           <TouchableOpacity onPress={onPress}>
@@ -195,6 +64,14 @@ const UserStack = () => {
       }}
     >
       <Stack.Screen 
+        name="SelectRole" 
+        component={SelectRole} 
+        options={{
+          headerShown: false,
+        }}
+      /> 
+
+      <Stack.Screen 
         name="EmployeeTabs" 
         component={EmployeeTabs} 
         options={{
@@ -202,8 +79,8 @@ const UserStack = () => {
         }}
       /> 
       <Stack.Screen 
-        name="JobEmployeeTab" 
-        component={JobEmployeeTab} 
+        name="EmployerTabs" 
+        component={EmployerTabs} 
         options={{
           headerShown: false,
         }}
@@ -226,6 +103,7 @@ const UserStack = () => {
     </Stack.Navigator>
   )
 }
+
 
 const MainUser = () => {
   return ( 

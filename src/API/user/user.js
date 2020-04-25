@@ -8,13 +8,14 @@ export default class User {
   async getUser(){
       let IDtoken = await manage.getIdToken();
       
-      const user = await fetch(config.hostname+'/auth/getUser', {
-          headers: { idtoken: `${IDtoken} ` },
+      const user = await fetch(config.hostname+'/user', {
+          headers: { idtoken: `${IDtoken}` },
         }).then((res) => res.json()
         .then(function(response){
           return response;
         })
         .catch(error => console.log("there was an error --> " + error)));;
+        console.log(user)
       return user;
   }
   

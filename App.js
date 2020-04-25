@@ -1,39 +1,31 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import LoginScreen from "./src/screens/LoginScreen";
-import LoadingScreen from "./src/screens/LoadingScreen";
-import SelectRoleScreen from "./src/screens/SelectRoleScreen";
-import MainUser from "./src/screens/MainUser";
+//Redux
+import { Provider } from 'react-redux';
+import { createStore,applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import reducers from "./src/redux/reducers"
+
 import { ValueContextProvider } from "./src/component/ValueContextProvider";
 
+import AuthStack from "./src/screens/AuthenStrack"
 
-
-const Stack = createStackNavigator();
-
-function MainStack() {
-  return (
-    <Stack.Navigator initialRouteName="Loading" headerMode="none">
-
-      <Stack.Screen name="Loading" component={LoadingScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="SelectRole" component={SelectRoleScreen} />
-      <Stack.Screen name="MainUser" component={MainUser} />
-      
-    </Stack.Navigator>
-  );
-}
+const stores = createStore(reducers,applyMiddleware(thunk));
 
 export default function App() {
   return (
-    <ValueContextProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <MainStack />
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </ValueContextProvider>
+    <Provider store={stores}>
+
+      <ValueContextProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <AuthStack />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </ValueContextProvider>
+      
+    </Provider>
   );
 }

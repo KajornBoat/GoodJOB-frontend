@@ -86,6 +86,8 @@ const TextInputComponent = ({
   keyboardType,
   updateData,
 }) => {
+  if(keyboardType === "numeric") value = String(value);
+
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
@@ -122,6 +124,7 @@ const TextInputComponent = ({
             {title}
           </Text>
           <TextInput
+            
             value={text}
             onChangeText={setText}
             style={[
@@ -489,7 +492,7 @@ const SettingScreen = () => {
             />
             <TextInputComponent
               title="อายุ"
-              value={userReducer.age.toString()}
+              value={userReducer.age}
               onSaved={actionUser.setAge}
               maxLength={2}
               keyboardType="numeric"

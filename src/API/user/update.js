@@ -2,6 +2,28 @@ import firebase from '../firebase/firebase';
 import manageUser from "./manage"
 const config  = require('../config.json');
 
+const updateData = async (data) => {
+  const idToken = await manageUser.getIdToken();
+  return new Promise((resolve, reject) => {
+    fetch(config.hostname+'/user', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "idtoken" : idToken
+      },
+      body: JSON.stringify({ 
+          "info": data
+      }),
+    }).then(result => {
+      if(result.status < 300) resolve(result);
+      else reject("Result status fail !!!")
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      reject(error);
+    });
+  })
+}
 
 class Update {
 
@@ -69,180 +91,38 @@ class Update {
 
     }
   }
-  async firstname(firstname){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idtoken" : idToken
-      },
-      body: JSON.stringify({ 
-          "info": {
-               "firstname" : firstname
-                  }
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
+  async firstname(data){
+    return await updateData({"firstname" : data});
   }
-  async lastName(lastname){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "lastname": lastname,
-             }
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
+  async lastName(data){
+    return await updateData({"lastname" : data});
   }
-  async gender(gender){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "gender": gender,
-             }
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
+  async gender(data){
+    return await updateData({"gender" : data});
   }
-  async province(currentProvince){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "current_province": currentProvince,
-             }   
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
+  async province(data){
+    return await updateData({"current_province" : data});
+  }
+  async interested(data){
+    return await updateData({"interested" : data});
+  }
+  async introduce(data){
+    return await updateData({"introduce_text" : data});
+  }
+  async phoneNumber(data){
+    return await updateData({"phone_number" : data});
+  }
+  async id_card(data){
+    return await updateData({"id_card" : data});
+  }
+  async age(data){
+    return await updateData({"age" : data});
+  }
+  async role(data){
+    return await updateData({"current_role" : data});
+  }
 
-  }
-  async interested(interested){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "interested": interested,
-             }   
-        
-        
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
-  }
-  async introduce(introduce_text){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-           "introduce_text": introduce_text,
-         }   
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
-  }
-  async phoneNumber(phone_number){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "phone_number": phone_number,
-         }   
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
-  }
-  async id_card(id_card){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "id_card": id_card,
-         }         
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
-  }
-  async age(age){
-    const idToken = await manageUser.getIdToken();
-    const result = await fetch(config.hostname+'/user', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "idToken" : idToken
-      },
-      body: JSON.stringify({
-        "info": {
-          "age": age,
-         }     
-      }),
-    }) 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    if(result.status < 300) return result;
-  }
 }
+
 const update = new Update();
 export default update;
