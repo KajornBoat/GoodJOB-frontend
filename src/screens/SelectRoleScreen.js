@@ -132,7 +132,7 @@ const SelectRoleScreen = ({ navigation }) => {
         <TouchableOpacity
           style={{
             margin: "10%",
-            backgroundColor: role ? "#f3595a" : "gray",
+            backgroundColor: role ? "#f65a5a" : "gray",
             paddingVertical: 15,
             paddingHorizontal: 30,
             borderRadius: 10,
@@ -157,6 +157,7 @@ const SelectRoleScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   selectRole: {
     width: "35%",

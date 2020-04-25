@@ -67,7 +67,7 @@ const SettingMenu = ({ navigation }) => {
         subtitle={
           <Text
             style={{
-              color: "#f3595a7f",
+              color: "#f65a5a7f",
               fontWeight: "bold",
               fontSize: 16,
               marginLeft: 10,
@@ -98,8 +98,10 @@ export default SettingMenu;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight + 10,
-    marginHorizontal: 20,
+    flex: 1,
+    paddingTop: Constants.statusBarHeight + 10,
+    paddingHorizontal: 20,
+    backgroundColor: "white",
   },
   iconColor: {
     color: "#567091",

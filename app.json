@@ -16,7 +16,7 @@
     "icon": "./src/assets/Logo.png",
     "splash": {
       "image": "./src/assets/Cover.png",
-      "resizeMode": "contain"
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

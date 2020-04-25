@@ -19,7 +19,6 @@ const PopUpScreen = ({ children, visible, onRequestClose }) => {
         <View
           style={{
             marginHorizontal: 25,
-            backgroundColor: "white",
           }}
         >
           {children}
