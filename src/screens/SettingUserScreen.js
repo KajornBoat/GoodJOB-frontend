@@ -220,7 +220,7 @@ const PickerComponent = ({
         <AntDesign
           name="down"
           size={12}
-          style={{ position: "absolute", top: "45%", right: "2%" }}
+          style={{ position: "absolute", top: 10, right: "2%" }}
         />
       </View>
       <PopUpLoading active={activeLoad} setActive={setActiveLoad} />

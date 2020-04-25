@@ -144,7 +144,7 @@ const DateInputComponent = ({
         <AntDesign
           name="down"
           size={12}
-          style={{ ...styles.pickArrow, top: "25%" }}
+          style={{ ...styles.pickArrow, top: 12.5 }}
         />
       </TouchableOpacity>
       <Text style={[styles.labelFont, styles.gapVertical]}>
