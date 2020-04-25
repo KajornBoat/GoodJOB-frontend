@@ -109,7 +109,7 @@ const EmployerListJob = ({ navigation, route, dataLists, mode }) => {
   );
 };
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
   const DataTemp = [
     {
       title: "ABCDE",

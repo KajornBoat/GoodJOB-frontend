@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -18,6 +18,16 @@ import JobDetailAccept from "../screens/JobDetailAccept";
 import JobDetailInvite from "../screens/JobDetailInvite";
 import JobDetailStatus from "../screens/JobDetailStatus";
 import JobDetailHistory from "../screens/JobDetailHistory";
+import JobDetailEmployerView from "../screens/JobDetailEmployerView";
+import CreateJobScreen from "./CreateJobScreen";
+import AutoEmployeeInfoScreen from "./AutoEmployeeInfoScreen";
+import ManualEmployeeInfoScreen from "./ManualEmployeeInfoScreen";
+import ManualApplicantInfoScreen from "./ManualApplicantInfoScreen";
+import IndividualEmployeeProfileScreen from "./IndividualEmployeeProfileScreen";
+import IndividualInviteEmployeeProfileScreen from "./IndividualInviteEmployeeProfileScreen";
+import SelectForInviteScreen from "./SelectForInviteScreen";
+import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
+import PickerFilter from "../component/PickerFilter";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +56,22 @@ const SelectRole = ({ navigation }) => {
 };
 
 const UserStack = () => {
+  //--- setup employer screen ---//
+  const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
+  const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
+  const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
+  const AutoEmployeeInfo = ({ navigation }) => (
+    <AutoEmployeeInfoScreen navigation={navigation} filter={autoPosition} />
+  );
+  const ManualEmployeeInfo = ({ navigation }) => (
+    <ManualEmployeeInfoScreen navigation={navigation} filter={manualPosition} />
+  );
+  const ManualApplicantInfo = ({ navigation }) => (
+    <ManualApplicantInfoScreen
+      navigation={navigation}
+      filter={applicantPosition}
+    />
+  );
   return (
     <Stack.Navigator
       initialRouteName="SelectRole"
@@ -131,6 +157,95 @@ const UserStack = () => {
         name="JobDetailHistory"
         component={JobDetailHistory}
         options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="JobDetailEmployerView"
+        component={JobDetailEmployerView}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="CreateJobScreen"
+        component={CreateJobScreen}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="IndividualEmployeeProfileScreen"
+        component={IndividualEmployeeProfileScreen}
+        initialParams={{ itemId: 0 }}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="IndividualInviteEmployeeProfileScreen"
+        component={IndividualInviteEmployeeProfileScreen}
+        initialParams={{ itemId: 0 }}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="SelectForInviteScreen"
+        component={SelectForInviteScreen}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="IndividualApplicantProfileScreen"
+        component={IndividualApplicantProfileScreen}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="AutoEmployeeInfoScreen"
+        component={AutoEmployeeInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={autoPosition}
+              setOnValueChange={setAutoPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="ManualEmployeeInfoScreen"
+        component={ManualEmployeeInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={manualPosition}
+              setOnValueChange={setManualPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="ManualApplicantInfoScreen"
+        component={ManualApplicantInfo}
+        options={{
+          headerRight: () => (
+            <PickerFilter
+              title="ตำแหน่ง"
+              value={applicantPosition}
+              setOnValueChange={setApplicantPosition}
+              items={require("../assets/constValue").JOB_POSITION}
+            />
+          ),
           headerTitle: null,
         }}
       />

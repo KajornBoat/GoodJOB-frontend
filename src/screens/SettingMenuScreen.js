@@ -38,8 +38,8 @@ const SettingMenu = ({ navigation }) => {
   const dipatch = useDispatch();
 
   let value = "";
-  if (userReducer.role === "Employee") value = "ลูกจ้าง";
-  else if (userReducer.role === "Employer") value = "นายจ้าง";
+  if (userReducer.role === "Employer") value = "ลูกจ้าง";
+  else if (userReducer.role === "Employee") value = "นายจ้าง";
 
   const [inverseRole, setInverseRole] = useState(value);
 

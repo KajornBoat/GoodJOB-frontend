@@ -6,6 +6,7 @@ import JobDetail, {
 } from "../component/JobDetail";
 
 const JobDetailAccept = () => {
+  const position = "ช่างภาพ";
   const job = {
     position: ["ช่างภาพ", "สตาฟ"],
     posWage: [1000, 500],

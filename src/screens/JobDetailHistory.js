@@ -3,6 +3,7 @@ import { View } from "react-native";
 import JobDetail, { MyPositionComponent } from "../component/JobDetail";
 
 const JobDetailHistory = () => {
+  const position = "ช่างภาพ";
   const job = {
     position: ["ช่างภาพ", "สตาฟ"],
     posWage: [1000, 500],
@@ -12,7 +13,7 @@ const JobDetailHistory = () => {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
         <JobDetail>
-          <MyPositionComponent position={"ช่างภาพ"} job={job} />
+          <MyPositionComponent position={position} job={job} />
         </JobDetail>
       </View>
     </View>

@@ -112,10 +112,10 @@ const MultiSelectPicker = ({
   );
 };
 
-const EmployeeListJobWithFilter = () => {
+const EmployeeListJobWithFilter = ({ route }) => {
   const popUpState = useState(false);
   const [filterState, setFilterState] = useState([]);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("ตำแหน่ง");
   const EmployeeJob = (props) => (
     <EmployeeListJob {...props} filter={filterState} />
   );
@@ -124,6 +124,7 @@ const EmployeeListJobWithFilter = () => {
       <Stack.Screen
         name="EmployeeListJobWithHeader"
         component={EmployeeJob}
+        initialParams={route.params}
         options={{
           headerRight: () => (
             <MultiSelectPicker
@@ -137,7 +138,6 @@ const EmployeeListJobWithFilter = () => {
           ),
           headerTitle: null,
         }}
-        initialParams={{ routeName: "JobDetail" }}
       />
     </Stack.Navigator>
   );
