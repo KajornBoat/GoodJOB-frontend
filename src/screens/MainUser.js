@@ -1,53 +1,53 @@
-import React  from "react";
-import { StyleSheet, TouchableOpacity, Text} from "react-native";
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { createStackNavigator  } from "@react-navigation/stack";
-import { StackActions ,CommonActions  } from '@react-navigation/native';
+import { createStackNavigator } from "@react-navigation/stack";
+import { StackActions } from "@react-navigation/native";
 
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
-import EmployeeTabs from "../component/EmployeeTAB"
-import EmployerTabs from "../component/EmployerTAB"
+import EmployeeTabs from "../component/EmployeeTAB";
+import EmployerTabs from "../component/EmployerTAB";
 
 import SettingUser from "./SettingUserScreen";
 import BankScreen from "./SettingBankScreen";
-import SplashScreen from "./SplashScreen"
+import SplashScreen from "./SplashScreen";
+import JobDetailApply from "../screens/JobDetailApply";
+import JobDetailAccept from "../screens/JobDetailAccept";
+import JobDetailInvite from "../screens/JobDetailInvite";
+import JobDetailStatus from "../screens/JobDetailStatus";
+import JobDetailHistory from "../screens/JobDetailHistory";
 
 const Stack = createStackNavigator();
 
 const resetStack = (navigation) => {
-  navigation
-    .dispatch(StackActions.reset({
+  navigation.dispatch(
+    StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({
-          routeName: 'EmployeeTabs'
+          routeName: "EmployeeTabs",
         }),
       ],
-    }))
- }
-
+    })
+  );
+};
 
 const SelectRole = ({ navigation }) => {
-  
-  const userReducer = useSelector(({userReducer}) => userReducer);
+  const userReducer = useSelector(({ userReducer }) => userReducer);
 
-  if(userReducer.role === "Employee"){
+  if (userReducer.role === "Employee") {
     navigation.navigate("EmployeeTabs");
-  }
-  else if(userReducer.role === "Employer"){
+  } else if (userReducer.role === "Employer") {
     navigation.navigate("EmployerTabs");
   }
-  return(
-    <SplashScreen />
-  )
-  
+  return <SplashScreen />;
 };
 
 const UserStack = () => {
-  return(
-    <Stack.Navigator 
+  return (
+    <Stack.Navigator
       initialRouteName="SelectRole"
       screenOptions={{
         headerLeft: ({ onPress }) => (
@@ -63,28 +63,28 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
-      <Stack.Screen 
-        name="SelectRole" 
-        component={SelectRole} 
+      <Stack.Screen
+        name="SelectRole"
+        component={SelectRole}
         options={{
           headerShown: false,
         }}
-      /> 
+      />
 
-      <Stack.Screen 
-        name="EmployeeTabs" 
-        component={EmployeeTabs} 
+      <Stack.Screen
+        name="EmployeeTabs"
+        component={EmployeeTabs}
         options={{
           headerShown: false,
         }}
-      /> 
-      <Stack.Screen 
-        name="EmployerTabs" 
-        component={EmployerTabs} 
+      />
+      <Stack.Screen
+        name="EmployerTabs"
+        component={EmployerTabs}
         options={{
           headerShown: false,
         }}
-      /> 
+      />
       <Stack.Screen
         name="SettingUser"
         component={SettingUser}
@@ -99,16 +99,47 @@ const UserStack = () => {
           headerTitle: "บัญชีธนาคาร",
         }}
       />
-
+      <Stack.Screen
+        name="JobDetailApply"
+        component={JobDetailApply}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="JobDetailAccept"
+        component={JobDetailAccept}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="JobDetailInvite"
+        component={JobDetailInvite}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="JobDetailStatus"
+        component={JobDetailStatus}
+        options={{
+          headerTitle: null,
+        }}
+      />
+      <Stack.Screen
+        name="JobDetailHistory"
+        component={JobDetailHistory}
+        options={{
+          headerTitle: null,
+        }}
+      />
     </Stack.Navigator>
-  )
-}
-
+  );
+};
 
 const MainUser = () => {
-  return ( 
-    <UserStack />
-  )
+  return <UserStack />;
 };
 
 export default MainUser;
