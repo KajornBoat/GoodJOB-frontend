@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import {useSelector, useDispatch} from "react-redux"
-import * as action from "../redux/actions/user.action"
+import { useSelector, useDispatch } from "react-redux";
+import * as action from "../redux/actions/user.action";
 
 import API from "../API/API";
 
@@ -34,15 +34,14 @@ const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
 };
 
 const SettingMenu = ({ navigation }) => {
-  
-  const userReducer = useSelector(({userReducer}) => userReducer);
+  const userReducer = useSelector(({ userReducer }) => userReducer);
   const dipatch = useDispatch();
 
   let value = "";
-  if(userReducer.role === "Employee") value = "นายจ้าง";
-  else if(userReducer.role === "Employer") value = "ลูกจ้าง";
-  
-  const [ inverseRole, setInverseRole ] = useState(value);
+  if (userReducer.role === "Employee") value = "ลูกจ้าง";
+  else if (userReducer.role === "Employer") value = "นายจ้าง";
+
+  const [inverseRole, setInverseRole] = useState(value);
 
   return (
     <View style={styles.container}>
@@ -79,7 +78,11 @@ const SettingMenu = ({ navigation }) => {
         }
         onPress={() => {
           setInverseRole(inverseRole == "นายจ้าง" ? "ลูกจ้าง" : "นายจ้าง");
-          dipatch(action.setRole(userReducer.role == "Employee" ? "Employer" : "Employee"))
+          dipatch(
+            action.setRole(
+              userReducer.role == "Employee" ? "Employer" : "Employee"
+            )
+          );
         }}
       />
       <MenuLabelComponent
@@ -92,7 +95,6 @@ const SettingMenu = ({ navigation }) => {
 };
 
 export default SettingMenu;
-
 
 const styles = StyleSheet.create({
   container: {

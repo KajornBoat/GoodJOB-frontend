@@ -15,17 +15,13 @@ import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-import * as actionUser from "../redux/actions/user.action"
+import * as actionUser from "../redux/actions/user.action";
 
 import PopUpScreen from "../component/PopUpScreen";
 import PopUpLoading from "../component/PopupLoading";
 import api from "../API/API";
 
-
-
-
 const AvatarComponent = ({ url, onChangeImage }) => {
-
   const [activeLoad, setActiveLoad] = useState(false);
   const dispatch = useDispatch();
 
@@ -51,7 +47,7 @@ const AvatarComponent = ({ url, onChangeImage }) => {
             let link = await api.user.update
               .image(result)
               .catch((err) => console.log(err));
-              
+
             dispatch(onChangeImage(link));
 
             setTimeout(() => {
@@ -86,8 +82,6 @@ const TextInputComponent = ({
   keyboardType,
   updateData,
 }) => {
-  if(keyboardType === "numeric") value = String(value);
-
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
@@ -124,7 +118,6 @@ const TextInputComponent = ({
             {title}
           </Text>
           <TextInput
-            
             value={text}
             onChangeText={setText}
             style={[
@@ -454,7 +447,7 @@ const SettingScreen = () => {
   const [introduceText, setIntroduceText] = useState("");
   const [interestJob, setInterestJob] = useState([]);
 
-  const userReducer = useSelector( ( { userReducer } ) => userReducer );
+  const userReducer = useSelector(({ userReducer }) => userReducer);
   const dispatch = useDispatch();
 
   return (
@@ -466,7 +459,10 @@ const SettingScreen = () => {
       >
         <ScrollView>
           <View style={styles.formContainer}>
-            <AvatarComponent url={userReducer.photoURL} onChangeImage={setUrl} />
+            <AvatarComponent
+              url={userReducer.photoURL}
+              onChangeImage={setUrl}
+            />
             <Text
               style={[
                 styles.gapVertical,
@@ -531,7 +527,7 @@ const SettingScreen = () => {
             <MultipleSelect
               title="ตำแหน่งงานที่สนใจ"
               values={userReducer.interested}
-              onChange={ actionUser.setInterested }
+              onChange={actionUser.setInterested}
               items={require("../assets/constValue").JOB_POSITION}
               updateData={api.user.update.interested}
             />
