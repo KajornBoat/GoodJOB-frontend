@@ -82,11 +82,11 @@ const TextInputComponent = ({
   keyboardType,
   updateData,
 }) => {
+  if (keyboardType === "numeric" && value != undefined) value = String(value);
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
   const [activeLoad, setActiveLoad] = useState(false);
   const dispatch = useDispatch();
-
   return (
     <View>
       <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
@@ -431,20 +431,7 @@ const TextAreaComponent = ({
 };
 
 const SettingScreen = () => {
-  const [url, setUrl] = useState("");
-  const [email, setEmail] = useState("cekmitl@kmitl.ac.th");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [idCard, setIdCard] = useState("");
-  const [currentProvince, setCurrentProvince] = useState("");
-  const [gender, setGender] = useState("");
-  const [introduceText, setIntroduceText] = useState("");
-  const [interestJob, setInterestJob] = useState([]);
-
   const userReducer = useSelector(({ userReducer }) => userReducer);
-  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -457,7 +444,7 @@ const SettingScreen = () => {
           <View style={styles.formContainer}>
             <AvatarComponent
               url={userReducer.photoURL}
-              onChangeImage={setUrl}
+              onChangeImage={actionUser.setPhotoURL}
             />
             <Text
               style={[

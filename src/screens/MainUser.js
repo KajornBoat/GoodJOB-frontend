@@ -29,6 +29,8 @@ import SelectForInviteScreen from "./SelectForInviteScreen";
 import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
 import PickerFilter from "../component/PickerFilter";
 
+import TestScreen from "./TestScreen";
+
 const Stack = createStackNavigator();
 
 const resetStack = (navigation) => {
@@ -89,6 +91,14 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
+      <Stack.Screen
+        name="TestScreen"
+        component={TestScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name="SelectRole"
         component={SelectRole}

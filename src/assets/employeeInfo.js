@@ -9,7 +9,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -26,7 +26,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -43,7 +43,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -60,7 +60,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -77,7 +77,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -94,7 +94,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
@@ -111,7 +111,7 @@ const employees = [
     introduceText: "...\n...\n...\n...",
     experience: [
       { work: "รับสมัคร staff งานเลี้ยงบริษัทแมวเหมียว ", position: "สตาฟ" },
-      { work: "work11234", position: "ผู้ดูแลรักษาความปลอดภัย" },
+      { work: "work11234", position: "รักษาความปลอดภัย" },
       { work: "work11234", position: "พนักงานต้อนรับ" },
       { work: "work11234", position: "บริกร" },
       { work: "work11234", position: "ช่างภาพ" },
