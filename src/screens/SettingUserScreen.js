@@ -433,7 +433,7 @@ const TextAreaComponent = ({
 const SettingScreen = () => {
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("cekmitl@kmitl.ac.th");
-  const [firstName, setFirstName] = useState("sadsad");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

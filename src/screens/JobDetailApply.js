@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import ConfirmPopUp from "../component/ConfirmPopUp";
 
-const AddPositionComponent = ({ employees, job, navigation }) => {
+const AddPositionComponent = ({ job, navigation }) => {
   const [position, setPosition] = React.useState("");
   const [popUp, setPopUp] = React.useState(false);
   return (
@@ -23,10 +23,10 @@ const AddPositionComponent = ({ employees, job, navigation }) => {
         </Text>
         <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }} />
       </View>
-      {employees.map((value, index) => (
+      {job.position.map((value, index) => (
         <View key={index} style={{ flexDirection: "row", marginBottom: 10 }}>
           <Text style={{ flex: 3, fontSize: 13, textAlign: "left" }}>
-            {value.position}
+            {job.position[index]}
           </Text>
           <View
             style={{
@@ -37,20 +37,18 @@ const AddPositionComponent = ({ employees, job, navigation }) => {
               textAlign: "right",
             }}
           >
-            <Text children={value.amount} style={{ color: "#567091" }} />
+            <Text children={job.posHave[index]} style={{ color: "#567091" }} />
             <Text children="/" />
-            <Text children={job.posReq[job.position.indexOf(value.position)]} />
+            <Text children={job.posReq[index]} />
           </View>
           <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>
-            {job.posWage[job.position.indexOf(value.position)]}฿
+            {job.posWage[index]}฿
           </Text>
           <TouchableOpacity
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-            disabled={
-              value.amount == job.posReq[job.position.indexOf(value.position)]
-            }
+            disabled={job.posHave[index] == job.posReq[index]}
             onPress={() => {
-              setPosition(value.position);
+              setPosition(value);
               setPopUp(true);
             }}
           >
@@ -59,8 +57,7 @@ const AddPositionComponent = ({ employees, job, navigation }) => {
               size={18}
               style={{
                 color:
-                  value.amount ==
-                  job.posReq[job.position.indexOf(value.position)]
+                  job.posHave[index] == job.posReq[index]
                     ? "#80808080"
                     : "#567091",
               }}
@@ -79,30 +76,18 @@ const AddPositionComponent = ({ employees, job, navigation }) => {
   );
 };
 
-const JobDetailApply = ({ navigation }) => {
-  const job = {
-    position: ["ช่างภาพ", "สตาฟ"],
-    posWage: [1000, 500],
-    posReq: [3, 2],
-  };
-  const employees = [
-    { position: "ช่างภาพ", amount: 2 },
-    { position: "สตาฟ", amount: 0 },
-  ];
+const JobDetailApply = ({ navigation, route }) => {
+  const { job } = route.params;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
-        <JobDetail>
+        <JobDetail job={job}>
           <View style={styles.container}>
-            <AddPositionComponent
-              employees={employees}
-              job={job}
-              navigation={navigation}
-            />
+            <AddPositionComponent job={job} navigation={navigation} />
           </View>
         </JobDetail>
       </View>
-      <FooterComment />
+      <FooterComment navigation={navigation} job={job} />
     </View>
   );
 };

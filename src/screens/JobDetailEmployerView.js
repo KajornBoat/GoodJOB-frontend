@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import { TextList } from "./CreateJobScreen";
 
-const PositionComponent = ({ employees, job }) => (
+const PositionComponent = ({ job }) => (
   <View style={{ marginHorizontal: 10 }}>
     <Text
       style={[styles.titleFont, { textAlign: "center", marginBottom: 20 }]}
@@ -14,10 +14,10 @@ const PositionComponent = ({ employees, job }) => (
       <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>จำนวน</Text>
       <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>ค่าจ้าง</Text>
     </View>
-    {employees.map((value, index) => (
+    {job.position.map((value, index) => (
       <View key={index} style={{ flexDirection: "row", marginBottom: 10 }}>
         <Text style={{ flex: 3, fontSize: 13, textAlign: "left" }}>
-          {value.position}
+          {job.position[index]}
         </Text>
         <View
           style={{
@@ -28,39 +28,31 @@ const PositionComponent = ({ employees, job }) => (
             textAlign: "right",
           }}
         >
-          <Text children={value.amount} style={{ color: "#567091" }} />
+          <Text children={job.posHave[index]} style={{ color: "#567091" }} />
           <Text children="/" />
-          <Text children={job.posReq[job.position.indexOf(value.position)]} />
+          <Text children={job.posReq[index]} />
         </View>
         <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>
-          {job.posWage[job.position.indexOf(value.position)]}฿
+          {job.posWage[index]}฿
         </Text>
       </View>
     ))}
   </View>
 );
 
-const JobDetailEmployerView = () => {
-  const job = {
-    position: ["ช่างภาพ", "สตาฟ"],
-    posWage: [1000, 500],
-    posReq: [3, 2],
-  };
-  const employees = [
-    { position: "ช่างภาพ", amount: 2 },
-    { position: "สตาฟ", amount: 0 },
-  ];
+const JobDetailEmployerView = ({ navigation, route }) => {
+  const { job } = route.params;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
-        <JobDetail>
+        <JobDetail job={job}>
           <View
             style={[
               styles.container,
               { borderBottomWidth: 0.5, borderColor: "#ccc" },
             ]}
           >
-            <PositionComponent employees={employees} job={job} />
+            <PositionComponent job={job} />
           </View>
           <View
             style={{ marginHorizontal: 20, marginTop: 10, paddingVertical: 15 }}
@@ -75,7 +67,7 @@ const JobDetailEmployerView = () => {
           </View>
         </JobDetail>
       </View>
-      <FooterComment />
+      <FooterComment navigation={navigation} job={job} />
     </View>
   );
 };

@@ -13,7 +13,7 @@ const ConfirmPopUp = ({
   return (
     <PopUpScreen visible={visible} onRequestClose={() => setVisible(false)}>
       <View style={styles.popUpStyle}>
-        <Text style={{ marginTop: 10 }}>{textPopup}</Text>
+        <Text style={{ marginTop: 10, lineHeight: 20 }}>{textPopup}</Text>
         <View
           style={{
             flexDirection: "row",

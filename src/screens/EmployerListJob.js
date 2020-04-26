@@ -8,12 +8,7 @@ import {
 } from "react-native";
 import { BoxList } from "./EmployeeListJob";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-
-import AutoEmployeeInfoScreen from "./AutoEmployeeInfoScreen";
-import ManualEmployeeInfoScreen from "./ManualEmployeeInfoScreen";
-import ManualApplicantInfoScreen from "./ManualApplicantInfoScreen";
-import PickerFilter from "../component/PickerFilter";
+import { AntDesign } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 
@@ -21,7 +16,7 @@ const BoxListWithEmployeeData = ({
   title,
   startDate,
   finishDate,
-  location,
+  place,
   onPress,
   onBottomLeftPress,
   onBottomRightPress,
@@ -34,7 +29,7 @@ const BoxListWithEmployeeData = ({
         title={title}
         startDate={startDate}
         finishDate={finishDate}
-        location={location}
+        place={place}
         onPress={onPress}
         style={styles.boxlist_container_edit}
       />
@@ -74,7 +69,7 @@ const BoxListWithEmployeeData = ({
   );
 };
 
-const EmployerListJob = ({ navigation, route, dataLists, mode }) => {
+const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
   return (
     <ScrollView
       style={[
@@ -85,10 +80,18 @@ const EmployerListJob = ({ navigation, route, dataLists, mode }) => {
       ]}
     >
       <View style={{ marginBottom: 40 }}>
-        {dataLists.map((value, index) => {
+        {job_lists.map((value, index) => {
           return (
             value.mode == mode && (
               <BoxListWithEmployeeData
+                key={index}
+                title={value.title}
+                startDate={value.start_date}
+                finishDate={value.finish_date}
+                place={value.place}
+                onPress={() => {
+                  navigation.navigate(route.params.routeName, { job: value });
+                }}
                 key={index}
                 {...value}
                 onBottomMiddlePress={() =>
@@ -110,28 +113,16 @@ const EmployerListJob = ({ navigation, route, dataLists, mode }) => {
 };
 
 export default ({ navigation, route }) => {
-  const DataTemp = [
-    {
-      title: "ABCDE",
-      startDate: new Date(),
-      finishDate: new Date(Date.now() + 600000),
-      location: [10, 13],
-      onPress: () => navigation.navigate(route.params.routeName),
-      mode: "Manual",
-    },
-    {
-      title: "BCDE",
-      startDate: new Date(),
-      finishDate: new Date(Date.now() + 6000000),
-      location: [10, 10],
-      onPress: () => navigation.navigate(route.params.routeName),
-      mode: "Auto",
-    },
-  ];
+  const job_lists = route.params.jobs;
   const [mode, setMode] = useState("Manual");
 
   const EmployerJob = () => (
-    <EmployerListJob navigation={navigation} dataLists={DataTemp} mode={mode} />
+    <EmployerListJob
+      navigation={navigation}
+      job_lists={job_lists}
+      mode={mode}
+      route={route}
+    />
   );
   return (
     <Stack.Navigator>

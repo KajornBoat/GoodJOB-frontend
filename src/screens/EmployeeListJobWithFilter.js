@@ -81,7 +81,7 @@ const MultiSelectPicker = ({
               str += list[i];
               if (i + 1 < list.length) str += " , ";
             }
-            setTitle(str === "" ? "ตำแหน่งงาน" : str);
+            setTitle(str);
           }
         }}
         visible={active}
@@ -115,7 +115,7 @@ const MultiSelectPicker = ({
 const EmployeeListJobWithFilter = ({ route }) => {
   const popUpState = useState(false);
   const [filterState, setFilterState] = useState([]);
-  const [title, setTitle] = useState("ตำแหน่ง");
+  const [title, setTitle] = useState("");
   const EmployeeJob = (props) => (
     <EmployeeListJob {...props} filter={filterState} />
   );
@@ -128,7 +128,7 @@ const EmployeeListJobWithFilter = ({ route }) => {
         options={{
           headerRight: () => (
             <MultiSelectPicker
-              title={title}
+              title={title || "ตำแหน่งงาน"}
               popUpState={popUpState}
               onChange={setFilterState}
               values={filterState}

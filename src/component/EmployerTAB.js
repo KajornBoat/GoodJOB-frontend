@@ -9,7 +9,12 @@ import SettingMenu from "../screens/SettingMenuScreen";
 import TestScreen from "../screens/TestScreen";
 import EmployerListJob from "../screens/EmployerListJob";
 
+import { useSelector } from "react-redux";
+
 const EmployerTabs = () => {
+  const jobEmployerReducer = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  );
   return (
     <Tab.Navigator
       initialRouteName="หน้าหลัก"
@@ -21,7 +26,10 @@ const EmployerTabs = () => {
       <Tab.Screen
         name="หน้าหลัก"
         component={EmployerListJob}
-        initialParams={{ routeName: "JobDetailEmployerView" }}
+        initialParams={{
+          routeName: "JobDetailEmployerView",
+          jobs: jobEmployerReducer,
+        }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (

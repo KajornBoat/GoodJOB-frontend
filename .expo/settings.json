@@ -1,6 +1,6 @@
 {
   "urlRandomness": "tq-2n2",
-  "hostType": "localhost",
+  "hostType": "lan",
   "lanType": "ip",
   "dev": true,
   "minify": false,

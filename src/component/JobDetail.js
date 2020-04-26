@@ -10,9 +10,7 @@ import {
 } from "react-native";
 import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
 import { Avatar } from "react-native-elements";
-import Geocoder from "react-native-geocoding";
 import MapView, { Marker } from "react-native-maps";
-import PopUpScreen from "./PopUpScreen";
 
 const HeaderComponent = ({ title, url, name }) => (
   <View
@@ -65,11 +63,9 @@ export const DateComponet = ({ startDate, finishDate, style }) => (
   </View>
 );
 
-const LocationComponent = ({ location }) => {
-  Geocoder.init("AIzaSyAIJcF0gx85hBRcIs3wNVuZ6a7WQqgta20", { language: "th" });
+const LocationComponent = ({ location, place }) => {
   const [showMap, setShowMap] = useState(false);
-  const [name, setName] = useState("");
-  const [marker, setMarker] = useState();
+  const marker = { latitude: location[0], longitude: location[1] };
   const { width, height } = Dimensions.get("window");
   const [region, setRegion] = useState();
   useEffect(() => {
@@ -79,16 +75,6 @@ const LocationComponent = ({ location }) => {
       latitudeDelta: 0.0022,
       longitudeDelta: 0.0022 * (width / height),
     });
-    setMarker({ latitude: location[0], longitude: location[1] });
-    Geocoder.from(location)
-      .then((json) => {
-        var addressComponent = json.results[0].formatted_address.replace(
-          "Unnamed Road,",
-          ""
-        );
-        setName(addressComponent);
-      })
-      .catch((error) => console.warn(error));
   }, []);
   return (
     <View>
@@ -109,7 +95,7 @@ const LocationComponent = ({ location }) => {
             color="#f65a5a"
           />
           <Text style={{ marginLeft: 10 }}>
-            {name.length <= 40 ? name : name.slice(0, 40) + "..."}
+            {place.length <= 40 ? place : place.slice(0, 40) + "..."}
           </Text>
           <AntDesign
             name="right"
@@ -140,35 +126,27 @@ const LocationComponent = ({ location }) => {
             margin: "5%",
           }}
         >
-          {name}
+          {place}
         </Text>
       </Modal>
     </View>
   );
 };
 
-const JobDetail = ({ children }) => {
-  const [title, setTitle] = useState("ABC");
-  const [url, setUrl] = useState("#");
-  const [name, setName] = useState("A");
-  const [startDate, setStartTime] = useState(new Date());
-  const [finishDate, setFinishTime] = useState(new Date());
-  const [location, setLocation] = useState([30, 120]);
-  const [description, setDescription] = useState(
-    "AV\n\n\n\n\n\n\n\n\n\n\n\n\nAV"
-  );
-
+const JobDetail = ({ children, job }) => {
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
-      <HeaderComponent title={title} url={url} name={name} />
+      <HeaderComponent title={job.title} url={job.url} name={job.name} />
       <View style={styles.container}>
         <Text
           style={[styles.titleFont, { textAlign: "center", marginBottom: 20 }]}
           children="รายละเอียด"
         />
-        <DateComponet startDate={startDate} finishDate={finishDate} />
-        <LocationComponent location={location} />
-        <Text style={{ lineHeight: 20, marginBottom: 10 }}>{description}</Text>
+        <DateComponet startDate={job.start_date} finishDate={job.finish_date} />
+        <LocationComponent location={job.location} place={job.place} />
+        <Text style={{ lineHeight: 20, marginBottom: 10 }}>
+          {job.description}
+        </Text>
       </View>
       {children}
     </ScrollView>
@@ -192,7 +170,7 @@ const styles = StyleSheet.create({
 
 export default JobDetail;
 
-export const FooterComment = ({ comments }) => {
+export const FooterComment = ({ job, navigation }) => {
   return (
     <TouchableOpacity
       style={{
@@ -203,7 +181,7 @@ export const FooterComment = ({ comments }) => {
         backgroundColor: "#afd9ff",
       }}
       activeOpacity={0.5}
-      onPress={comments}
+      onPress={() => navigation.navigate("CreateJobScreen")}
     >
       <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
         ความคิดเห็น
@@ -212,7 +190,7 @@ export const FooterComment = ({ comments }) => {
   );
 };
 
-export const MyPositionComponent = ({ position, job }) => (
+export const MyPositionComponent = ({ job }) => (
   <View
     style={{
       marginHorizontal: 10,
@@ -234,11 +212,11 @@ export const MyPositionComponent = ({ position, job }) => (
     >
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ตำแหน่ง</Text>
-        <Text>{position}</Text>
+        <Text>{job.myPosition}</Text>
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ค่าจ้าง</Text>
-        <Text>{job.posWage[job.position.indexOf(position)]}฿</Text>
+        <Text>{job.posWage[job.position.indexOf(job.myPosition)]}฿</Text>
       </View>
     </View>
   </View>

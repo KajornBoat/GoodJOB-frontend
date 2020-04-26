@@ -7,24 +7,8 @@ import {
   ScrollView,
 } from "react-native";
 import { DateComponet } from "../component/JobDetail";
-import Geocoder from "react-native-geocoding";
 import { Ionicons } from "@expo/vector-icons";
-const LocationComponent = ({ location, style }) => {
-  // Geocoder.init("AIzaSyAIJcF0gx85hBRcIs3wNVuZ6a7WQqgta20", {
-  //   language: "th",
-  // });
-  const [place, setPlace] = React.useState("");
-  // React.useEffect(() => {
-  //   Geocoder.from(location)
-  //     .then((json) => {
-  //       var addressComponent = json.results[0].formatted_address.replace(
-  //         "Unnamed Road,",
-  //         ""
-  //       );
-  //       setPlace(addressComponent);
-  //     })
-  //     .catch((error) => console.warn(error));
-  // }, []);
+const LocationComponent = ({ place, style }) => {
   return (
     <View
       style={{
@@ -52,7 +36,7 @@ export const BoxList = ({
   title,
   startDate,
   finishDate,
-  location,
+  place,
   onPress,
   style = {},
 }) => {
@@ -67,19 +51,24 @@ export const BoxList = ({
         finishDate={finishDate}
         style={styles.boxlist_date}
       />
-      <LocationComponent location={location} />
+      <LocationComponent place={place} />
     </TouchableOpacity>
   );
 };
 
 const EmployeeListJob = ({ navigation, route, filter }) => {
-  const DataTemp = {
-    title: "ABCDE",
-    startDate: new Date(),
-    finishDate: new Date(Date.now() + 60000),
-    location: [10, 13],
-    onPress: () => navigation.navigate(route.params.routeName),
-  };
+  const job_lists =
+    filter === undefined
+      ? route.params.jobs
+      : route.params.jobs.filter((job) => {
+          if (filter === undefined || filter.length == 0) return true;
+          else
+            return (
+              filter.filter((select) => job.position.indexOf(select) > -1)
+                .length > 0
+            );
+        });
+
   return (
     <ScrollView
       style={[
@@ -90,10 +79,18 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
       ]}
     >
       <View style={{ marginBottom: 40 }}>
-        <BoxList {...DataTemp} />
-        <BoxList {...DataTemp} />
-        <BoxList {...DataTemp} />
-        <BoxList {...DataTemp} />
+        {job_lists.map((value, index) => (
+          <BoxList
+            key={index}
+            title={value.title}
+            startDate={value.start_date}
+            finishDate={value.finish_date}
+            place={value.place}
+            onPress={() => {
+              navigation.navigate(route.params.routeName, { job: value });
+            }}
+          />
+        ))}
       </View>
     </ScrollView>
   );
