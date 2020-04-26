@@ -9,6 +9,7 @@ import {
 import { BoxList } from "./EmployeeListJob";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
@@ -90,7 +91,9 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
                 finishDate={value.finish_date}
                 place={value.place}
                 onPress={() => {
-                  navigation.navigate(route.params.routeName, { job: value });
+                  navigation.navigate(route.params.routeName, {
+                    itemId: index,
+                  });
                 }}
                 key={index}
                 {...value}
@@ -113,7 +116,7 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
 };
 
 export default ({ navigation, route }) => {
-  const job_lists = route.params.jobs;
+  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer);
   const [mode, setMode] = useState("Manual");
 
   const EmployerJob = () => (

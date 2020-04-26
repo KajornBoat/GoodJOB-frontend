@@ -6,9 +6,12 @@ import JobDetail, {
 } from "../component/JobDetail";
 import { AntDesign } from "@expo/vector-icons";
 import ConfirmPopUp from "../component/ConfirmPopUp";
+import { useSelector } from "react-redux";
 
 const JobDetailStatus = ({ navigation, route }) => {
-  const { job } = route.params;
+  const job = useSelector(({ jobStatusReducer }) => jobStatusReducer)[
+    route.params.itemId
+  ];
   const [popUp, setPopUp] = useState(false);
   return (
     <View style={{ flex: 1 }}>

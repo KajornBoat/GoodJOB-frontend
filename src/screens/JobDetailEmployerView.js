@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import { TextList } from "./CreateJobScreen";
+import { useSelector } from "react-redux";
 
 const PositionComponent = ({ job }) => (
   <View style={{ marginHorizontal: 10 }}>
@@ -41,7 +42,9 @@ const PositionComponent = ({ job }) => (
 );
 
 const JobDetailEmployerView = ({ navigation, route }) => {
-  const { job } = route.params;
+  const job = useSelector(({ jobEmployerReducer }) => jobEmployerReducer)[
+    route.params.itemId
+  ];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

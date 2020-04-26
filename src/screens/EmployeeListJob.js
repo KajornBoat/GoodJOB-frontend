@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { DateComponet } from "../component/JobDetail";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+
 const LocationComponent = ({ place, style }) => {
   return (
     <View
@@ -57,10 +59,35 @@ export const BoxList = ({
 };
 
 const EmployeeListJob = ({ navigation, route, filter }) => {
+  const jobs = useSelector(
+    ({
+      jobAcceptReducer,
+      jobInviteReducer,
+      jobStatusReducer,
+      jobApplyReducer,
+      jobHistoryReducer,
+    }) => {
+      switch (route.params.jobs) {
+        case "jobAcceptReducer":
+          return jobAcceptReducer;
+        case "jobInviteReducer":
+          return jobInviteReducer;
+        case "jobStatusReducer":
+          return jobStatusReducer;
+        case "jobApplyReducer":
+          return jobApplyReducer;
+        case "jobHistoryReducer":
+          return jobHistoryReducer;
+        default:
+          break;
+      }
+    }
+  );
+
   const job_lists =
     filter === undefined
-      ? route.params.jobs
-      : route.params.jobs.filter((job) => {
+      ? jobs
+      : jobs.filter((job) => {
           if (filter === undefined || filter.length == 0) return true;
           else
             return (
@@ -87,7 +114,7 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
             finishDate={value.finish_date}
             place={value.place}
             onPress={() => {
-              navigation.navigate(route.params.routeName, { job: value });
+              navigation.navigate(route.params.routeName, { itemId: index });
             }}
           />
         ))}

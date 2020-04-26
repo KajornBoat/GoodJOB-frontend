@@ -5,9 +5,12 @@ import JobDetail, {
   MyPositionComponent,
 } from "../component/JobDetail";
 import ConfirmPopUp from "../component/ConfirmPopUp";
+import { useSelector } from "react-redux";
 
 const JobDetailInvite = ({ navigation, route }) => {
-  const { job } = route.params;
+  const job = useSelector(({ jobInviteReducer }) => jobInviteReducer)[
+    route.params.itemId
+  ];
   const [popUp, setPopUp] = useState(false);
   const [title, setTitle] = useState("");
   const [accept, setAccept] = useState(false);

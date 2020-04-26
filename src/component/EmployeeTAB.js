@@ -10,18 +10,8 @@ const Tab = createBottomTabNavigator();
 
 import EmployeeListJob from "../screens/EmployeeListJob";
 import EmployeeListJobWithFilter from "../screens/EmployeeListJobWithFilter";
-import { useSelector } from "react-redux";
 
 const JobEmployeeTab = () => {
-  const jobAcceptReducer = useSelector(
-    ({ jobAcceptReducer }) => jobAcceptReducer
-  );
-  const jobInviteReducer = useSelector(
-    ({ jobInviteReducer }) => jobInviteReducer
-  );
-  const jobStatusReducer = useSelector(
-    ({ jobStatusReducer }) => jobStatusReducer
-  );
   return (
     <Tab.Navigator
       initialRouteName="งานที่ได้รับ"
@@ -33,7 +23,10 @@ const JobEmployeeTab = () => {
       <Tab.Screen
         name="งานที่ได้รับ"
         component={EmployeeListJob}
-        initialParams={{ routeName: "JobDetailAccept", jobs: jobAcceptReducer }}
+        initialParams={{
+          routeName: "JobDetailAccept",
+          jobs: "jobAcceptReducer",
+        }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -53,7 +46,10 @@ const JobEmployeeTab = () => {
       <Tab.Screen
         name="งานที่ถูกเชิญ"
         component={EmployeeListJob}
-        initialParams={{ routeName: "JobDetailInvite", jobs: jobInviteReducer }}
+        initialParams={{
+          routeName: "JobDetailInvite",
+          jobs: "jobInviteReducer",
+        }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -73,7 +69,10 @@ const JobEmployeeTab = () => {
       <Tab.Screen
         name="สถานะงาน"
         component={EmployeeListJob}
-        initialParams={{ routeName: "JobDetailStatus", jobs: jobStatusReducer }}
+        initialParams={{
+          routeName: "JobDetailStatus",
+          jobs: "jobStatusReducer",
+        }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -95,10 +94,6 @@ const JobEmployeeTab = () => {
 };
 
 const EmployeeTabs = () => {
-  const jobApplyReducer = useSelector(({ jobApplyReducer }) => jobApplyReducer);
-  const jobHistoryReducer = useSelector(
-    ({ jobHistoryReducer }) => jobHistoryReducer
-  );
   return (
     <Tab.Navigator
       initialRouteName="หน้าหลัก"
@@ -110,7 +105,7 @@ const EmployeeTabs = () => {
       <Tab.Screen
         name="หน้าหลัก"
         component={EmployeeListJobWithFilter}
-        initialParams={{ routeName: "JobDetailApply", jobs: jobApplyReducer }}
+        initialParams={{ routeName: "JobDetailApply", jobs: "jobApplyReducer" }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (
@@ -151,7 +146,7 @@ const EmployeeTabs = () => {
         component={EmployeeListJobWithFilter}
         initialParams={{
           routeName: "JobDetailHistory",
-          jobs: jobHistoryReducer,
+          jobs: "jobHistoryReducer",
         }}
         options={{
           tabBarIcon: ({ focused, size }) => {

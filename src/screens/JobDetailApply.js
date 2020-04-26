@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import ConfirmPopUp from "../component/ConfirmPopUp";
+import { useSelector } from "react-redux";
 
 const AddPositionComponent = ({ job, navigation }) => {
   const [position, setPosition] = React.useState("");
@@ -77,7 +78,9 @@ const AddPositionComponent = ({ job, navigation }) => {
 };
 
 const JobDetailApply = ({ navigation, route }) => {
-  const { job } = route.params;
+  const job = useSelector(({ jobApplyReducer }) => jobApplyReducer)[
+    route.params.itemId
+  ];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

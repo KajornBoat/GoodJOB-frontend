@@ -4,9 +4,12 @@ import JobDetail, {
   FooterComment,
   MyPositionComponent,
 } from "../component/JobDetail";
+import { useSelector } from "react-redux";
 
 const JobDetailAccept = ({ navigation, route }) => {
-  const { job } = route.params;
+  const job = useSelector(({ jobAcceptReducer }) => jobAcceptReducer)[
+    route.params.itemId
+  ];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
