@@ -8,8 +8,6 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./src/redux/reducers";
 
-import { ValueContextProvider } from "./src/component/ValueContextProvider";
-
 import AuthStack from "./src/screens/AuthenStrack";
 
 const stores = createStore(reducers, applyMiddleware(thunk));
@@ -17,13 +15,11 @@ const stores = createStore(reducers, applyMiddleware(thunk));
 export default function App() {
   return (
     <Provider store={stores}>
-      <ValueContextProvider>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <AuthStack />
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </ValueContextProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <AuthStack />
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 }

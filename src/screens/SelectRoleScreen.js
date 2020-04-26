@@ -1,17 +1,15 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 
-import {useDispatch} from "react-redux"
-import * as action from "../redux/actions/user.action"
+import { useDispatch } from "react-redux";
+import * as action from "../redux/actions/user.action";
 
-import { ValueContext } from "../component/ValueContextProvider";
 import api from "../API/API";
 
 const SelectRoleScreen = ({ navigation }) => {
-
-  const { role, setRole } = useContext(ValueContext);
+  const [role, setRole] = useState("");
   const dispatch = useDispatch();
 
   return (
@@ -140,9 +138,9 @@ const SelectRoleScreen = ({ navigation }) => {
             opacity: 0.5,
           }}
           onPress={() => {
-            navigation.navigate("MainUser")
+            navigation.navigate("MainUser");
             dispatch(action.setRole(role));
-        }}
+          }}
           disabled={role == undefined}
         >
           <Text style={{ fontWeight: "bold", color: "white", fontSize: 16 }}>
