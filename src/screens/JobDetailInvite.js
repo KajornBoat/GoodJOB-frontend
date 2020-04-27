@@ -8,9 +8,9 @@ import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
 
 const JobDetailInvite = ({ navigation, route }) => {
-  const job = useSelector(({ jobInviteReducer }) => jobInviteReducer)[
-    route.params.itemId
-  ];
+  const job = useSelector(
+    ({ jobInviteReducer }) => jobInviteReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0];
   const [popUp, setPopUp] = useState(false);
   const [title, setTitle] = useState("");
   const [accept, setAccept] = useState(false);

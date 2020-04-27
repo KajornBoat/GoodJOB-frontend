@@ -92,19 +92,25 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
                 place={value.place}
                 onPress={() => {
                   navigation.navigate(route.params.routeName, {
-                    itemId: index,
+                    itemId: value.id,
                   });
                 }}
                 key={index}
                 {...value}
                 onBottomMiddlePress={() =>
-                  navigation.navigate("AutoEmployeeInfoScreen")
+                  navigation.navigate("AutoEmployeeInfoScreen", {
+                    itemId: value.id,
+                  })
                 }
                 onBottomLeftPress={() =>
-                  navigation.navigate("ManualEmployeeInfoScreen")
+                  navigation.navigate("ManualEmployeeInfoScreen", {
+                    itemId: value.id,
+                  })
                 }
                 onBottomRightPress={() =>
-                  navigation.navigate("ManualApplicantInfoScreen")
+                  navigation.navigate("ManualApplicantInfoScreen", {
+                    itemId: value.id,
+                  })
                 }
               />
             )
@@ -116,7 +122,8 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
 };
 
 export default ({ navigation, route }) => {
-  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer);
+  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer)
+    .data;
   const [mode, setMode] = useState("Manual");
 
   const EmployerJob = () => (

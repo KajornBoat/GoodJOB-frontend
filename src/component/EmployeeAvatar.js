@@ -9,7 +9,7 @@ const EmployeeAvatar = ({ uri, size, onPress }) => {
       <Avatar
         rounded
         containerStyle={{ marginVertical: 10 }}
-        source={uri}
+        source={{ uri: uri }}
         size={size}
         activeOpacity={0.5}
         onPress={onPress}

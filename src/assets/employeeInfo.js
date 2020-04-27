@@ -1,4 +1,5 @@
-const employeeImage = require("./รูปลูกจ้าง.png");
+const employeeImage =
+  "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT";
 const employees = [
   {
     id: 0,

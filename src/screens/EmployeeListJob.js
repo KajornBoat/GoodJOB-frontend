@@ -82,7 +82,7 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
           break;
       }
     }
-  );
+  ).data;
 
   const job_lists =
     filter === undefined
@@ -114,7 +114,7 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
             finishDate={value.finish_date}
             place={value.place}
             onPress={() => {
-              navigation.navigate(route.params.routeName, { itemId: index });
+              navigation.navigate(route.params.routeName, { itemId: value.id });
             }}
           />
         ))}

@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Modal } from "react-native";
 
 import EmployeeProfile from "../component/EmployeeProfile";
+import { useSelector } from "react-redux";
 
-export default function SelectForInviteScreen({ navigation }) {
-  const employee = require("../assets/employeeInfo").employees;
-
+export default function SelectForInviteScreen({ navigation, route }) {
+  const employee_all = useSelector(
+    ({ inviteEmployeeReducer }) => inviteEmployeeReducer
+  ).data;
+  const employee = employee_all.filter(
+    (value) =>
+      value.position == route.params.filter &&
+      route.params.relative.indexOf(value.firstName + " " + value.lastName) ==
+        -1
+  );
   return (
-    <View>
+    <View style={{ backgroundColor: "white", flex: 1 }}>
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={styles.container}>
           {employee.map((value, index) => (

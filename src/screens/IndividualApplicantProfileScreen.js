@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-
+import { useSelector } from "react-redux";
 import PopUpScreen from "../component/PopUpScreen";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
@@ -16,7 +16,10 @@ export default function IndividualApplicantProfileScreen({
   route,
   navigation,
 }) {
-  const employeeInfo = require("../assets/employeeInfo").employees;
+  const employeeInfo = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.parentItemId)[0]
+    .applicantsapplicant;
   const [imageVisible, setImageVisible] = useState(false);
   const [showAcceptPopUp, setShowAcceptPopUp] = useState(false);
   const [showDenyPopUp, setShowDenyPopUp] = useState(false);
@@ -27,6 +30,7 @@ export default function IndividualApplicantProfileScreen({
       <PopUpScreen
         visible={imageVisible}
         onRequestClose={() => setImageVisible(false)}
+        transparent
       >
         <View style={{ justifyContent: "center" }}>
           <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
@@ -44,6 +48,9 @@ export default function IndividualApplicantProfileScreen({
           '" หรือไม่?'
         }
         navigation={navigation}
+        callback={() => {
+          console.log("Accept");
+        }}
       />
 
       <ConfirmPopUp
@@ -57,6 +64,9 @@ export default function IndividualApplicantProfileScreen({
           '" หรือไม่?'
         }
         navigation={navigation}
+        callback={() => {
+          console.log("Decline");
+        }}
       />
 
       <ScrollView style={{ backgroundColor: "white" }}>

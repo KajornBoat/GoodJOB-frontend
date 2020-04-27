@@ -7,9 +7,9 @@ import JobDetail, {
 import { useSelector } from "react-redux";
 
 const JobDetailAccept = ({ navigation, route }) => {
-  const job = useSelector(({ jobAcceptReducer }) => jobAcceptReducer)[
-    route.params.itemId
-  ];
+  const job = useSelector(
+    ({ jobAcceptReducer }) => jobAcceptReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

@@ -10,12 +10,18 @@ import {
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { useSelector } from "react-redux";
 import EmployeeProfile from "../component/EmployeeProfile";
 
-export default function ManualEmployeeInfoScreen({ navigation, filter }) {
-  const employee = require("../assets/employeeInfo").employees;
-
+export default function ManualEmployeeInfoScreen({
+  navigation,
+  route,
+  filter,
+}) {
+  const job_data = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0];
+  const employee = job_data.myEmployee;
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
@@ -23,18 +29,42 @@ export default function ManualEmployeeInfoScreen({ navigation, filter }) {
           employee={employee}
           filter={filter}
           navigation={navigation}
+          route={route}
         />
       </ScrollView>
       <TouchableOpacity
         style={{ backgroundColor: "#afd9ff" }}
         activeOpacity={0.5}
-        onPress={() => navigation.navigate("SelectForInviteScreen")}
-        disabled={filter == "ตำแหน่ง"}
+        onPress={() =>
+          navigation.navigate("SelectForInviteScreen", {
+            filter: filter,
+            relative: [
+              ...new Set([
+                ...job_data.myEmployee.map(
+                  (value) => value.firstName + " " + value.lastName
+                ),
+                ...job_data.applicantsapplicant.map(
+                  (value) => value.firstName + " " + value.lastName
+                ),
+              ]),
+            ],
+          })
+        }
+        disabled={
+          filter == "ตำแหน่ง" ||
+          job_data.posReq[job_data.position.indexOf(filter)] ==
+            job_data.posHave[job_data.position.indexOf(filter)]
+        }
       >
         <View
           style={{
             ...styles.footerView,
-            backgroundColor: filter != "ตำแหน่ง" ? "#afd9ff" : "#dfdede",
+            backgroundColor:
+              filter == "ตำแหน่ง" ||
+              job_data.posReq[job_data.position.indexOf(filter)] ==
+                job_data.posHave[job_data.position.indexOf(filter)]
+                ? "#dfdede"
+                : "#afd9ff",
           }}
         >
           <MaterialCommunityIcons
@@ -49,7 +79,7 @@ export default function ManualEmployeeInfoScreen({ navigation, filter }) {
   );
 }
 
-const ShowEmployeeProfileList = ({ employee, filter, navigation }) => {
+const ShowEmployeeProfileList = ({ employee, route, filter, navigation }) => {
   return (
     <View style={styles.container}>
       {employee
@@ -66,6 +96,7 @@ const ShowEmployeeProfileList = ({ employee, filter, navigation }) => {
               onPress={() => {
                 console.log("selected");
                 navigation.navigate("IndividualEmployeeProfileScreen", {
+                  parentItemId: route.params.itemId,
                   itemId: value.id,
                 });
               }}

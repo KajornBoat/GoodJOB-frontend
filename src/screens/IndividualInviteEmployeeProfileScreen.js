@@ -11,12 +11,15 @@ import PopUpScreen from "../component/PopUpScreen";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 import ConfirmPopUp from "../component/ConfirmPopUp";
+import { useSelector } from "react-redux";
 
 export default function IndividualInviteEmployeeProfileScreen({
   route,
   navigation,
 }) {
-  const employeeInfo = require("../assets/employeeInfo").employees;
+  const employeeInfo = useSelector(
+    ({ inviteEmployeeReducer }) => inviteEmployeeReducer
+  ).data;
   const [imageVisible, setImageVisible] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const itemId = route.params.itemId;
@@ -26,6 +29,7 @@ export default function IndividualInviteEmployeeProfileScreen({
       <PopUpScreen
         visible={imageVisible}
         onRequestClose={() => setImageVisible(false)}
+        transparent
       >
         <View style={{ justifyContent: "center" }}>
           <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
@@ -43,6 +47,9 @@ export default function IndividualInviteEmployeeProfileScreen({
           '" หรือไม่?'
         }
         navigation={navigation}
+        callback={() => {
+          console.log("Sent Invite");
+        }}
       />
 
       <ScrollView style={{ backgroundColor: "white" }}>

@@ -42,9 +42,9 @@ const PositionComponent = ({ job }) => (
 );
 
 const JobDetailEmployerView = ({ navigation, route }) => {
-  const job = useSelector(({ jobEmployerReducer }) => jobEmployerReducer)[
-    route.params.itemId
-  ];
+  const job = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Modal } from "react-native";
-
+import { useSelector } from "react-redux";
 import EmployeeProfile from "../component/EmployeeProfile";
 
-export default function AutoEmployeeInfoScreen({ navigation, filter }) {
-  const employee = require("../assets/employeeInfo").employees;
+export default function AutoEmployeeInfoScreen({ navigation, route, filter }) {
+  const employee = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0].myEmployee;
 
   return (
     <View style={{ flex: 1 }}>
@@ -26,6 +28,7 @@ export default function AutoEmployeeInfoScreen({ navigation, filter }) {
                   onPress={() => {
                     console.log("selected");
                     navigation.navigate("IndividualEmployeeProfileScreen", {
+                      parentItemId: route.params.itemId,
                       itemId: value.id,
                     });
                   }}

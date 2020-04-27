@@ -7,6 +7,7 @@ import jobInviteReducer from "./jobinvite.reducer";
 import jobStatusReducer from "./jobstatus.reducer";
 import jobHistoryReducer from "./jobhistory.reducer";
 import jobEmployerReducer from "./jobemployer.reducer";
+import inviteEmployeeReducer from "./inviteemployee.reducer";
 export default combineReducers({
   userReducer,
   jobApplyReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   jobStatusReducer,
   jobHistoryReducer,
   jobEmployerReducer,
+  inviteEmployeeReducer,
 });

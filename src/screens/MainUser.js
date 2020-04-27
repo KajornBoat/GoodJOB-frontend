@@ -59,20 +59,20 @@ const SelectRole = ({ navigation }) => {
 
 const UserStack = () => {
   //--- setup employer screen ---//
+  const jobEmployerReducer = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data;
   const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
   const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
   const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
-  const AutoEmployeeInfo = ({ navigation }) => (
-    <AutoEmployeeInfoScreen navigation={navigation} filter={autoPosition} />
+  const AutoEmployeeInfo = (props) => (
+    <AutoEmployeeInfoScreen {...props} filter={autoPosition} />
   );
-  const ManualEmployeeInfo = ({ navigation }) => (
-    <ManualEmployeeInfoScreen navigation={navigation} filter={manualPosition} />
+  const ManualEmployeeInfo = (props) => (
+    <ManualEmployeeInfoScreen {...props} filter={manualPosition} />
   );
-  const ManualApplicantInfo = ({ navigation }) => (
-    <ManualApplicantInfoScreen
-      navigation={navigation}
-      filter={applicantPosition}
-    />
+  const ManualApplicantInfo = (props) => (
+    <ManualApplicantInfoScreen {...props} filter={applicantPosition} />
   );
   return (
     <Stack.Navigator
@@ -217,47 +217,59 @@ const UserStack = () => {
       <Stack.Screen
         name="AutoEmployeeInfoScreen"
         component={AutoEmployeeInfo}
-        options={{
+        options={({ route }) => ({
           headerRight: () => (
             <PickerFilter
               title="ตำแหน่ง"
               value={autoPosition}
               setOnValueChange={setAutoPosition}
-              items={require("../assets/constValue").JOB_POSITION}
+              items={
+                jobEmployerReducer.filter(
+                  (value) => value.id == route.params.itemId
+                )[0].position
+              }
             />
           ),
           headerTitle: null,
-        }}
+        })}
       />
       <Stack.Screen
         name="ManualEmployeeInfoScreen"
         component={ManualEmployeeInfo}
-        options={{
+        options={({ route }) => ({
           headerRight: () => (
             <PickerFilter
               title="ตำแหน่ง"
               value={manualPosition}
               setOnValueChange={setManualPosition}
-              items={require("../assets/constValue").JOB_POSITION}
+              items={
+                jobEmployerReducer.filter(
+                  (value) => value.id == route.params.itemId
+                )[0].position
+              }
             />
           ),
           headerTitle: null,
-        }}
+        })}
       />
       <Stack.Screen
         name="ManualApplicantInfoScreen"
         component={ManualApplicantInfo}
-        options={{
+        options={({ route }) => ({
           headerRight: () => (
             <PickerFilter
               title="ตำแหน่ง"
               value={applicantPosition}
               setOnValueChange={setApplicantPosition}
-              items={require("../assets/constValue").JOB_POSITION}
+              items={
+                jobEmployerReducer.filter(
+                  (value) => value.id == route.params.itemId
+                )[0].position
+              }
             />
           ),
           headerTitle: null,
-        }}
+        })}
       />
     </Stack.Navigator>
   );

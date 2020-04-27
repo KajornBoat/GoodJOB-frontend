@@ -78,9 +78,9 @@ const AddPositionComponent = ({ job, navigation }) => {
 };
 
 const JobDetailApply = ({ navigation, route }) => {
-  const job = useSelector(({ jobApplyReducer }) => jobApplyReducer)[
-    route.params.itemId
-  ];
+  const job = useSelector(({ jobApplyReducer }) => jobApplyReducer).data.filter(
+    (value) => value.id == route.params.itemId
+  )[0];
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

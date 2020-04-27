@@ -9,9 +9,9 @@ import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
 
 const JobDetailStatus = ({ navigation, route }) => {
-  const job = useSelector(({ jobStatusReducer }) => jobStatusReducer)[
-    route.params.itemId
-  ];
+  const job = useSelector(
+    ({ jobStatusReducer }) => jobStatusReducer
+  ).data.filter((value) => value.id == route.params.itemId)[0];
   const [popUp, setPopUp] = useState(false);
   return (
     <View style={{ flex: 1 }}>

@@ -6,13 +6,15 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-
+import { useSelector } from "react-redux";
 import PopUpScreen from "../component/PopUpScreen";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 
 export default function IndividualEmployeeProfileScreen({ route, navigation }) {
-  const employeeInfo = require("../assets/employeeInfo").employees;
+  const employeeInfo = useSelector(
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.parentItemId)[0].myEmployee;
   const [imageVisible, setImageVisible] = useState(false);
 
   const itemId = route.params.itemId;
@@ -22,6 +24,7 @@ export default function IndividualEmployeeProfileScreen({ route, navigation }) {
       <PopUpScreen
         visible={imageVisible}
         onRequestClose={() => setImageVisible(false)}
+        transparent
       >
         <View style={{ justifyContent: "center" }}>
           <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />

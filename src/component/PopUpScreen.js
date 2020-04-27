@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Modal } from "react-native";
 
-const PopUpScreen = ({ children, visible, onRequestClose }) => {
+const PopUpScreen = ({ children, visible, onRequestClose, transparent }) => {
   return (
     <Modal
       transparent
@@ -19,7 +19,7 @@ const PopUpScreen = ({ children, visible, onRequestClose }) => {
         <View
           style={{
             marginHorizontal: 25,
-            backgroundColor: "white",
+            backgroundColor: transparent ? "transparent" : "white",
           }}
         >
           {children}
