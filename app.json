@@ -2,7 +2,13 @@
   "expo": {
     "android": {
       "package": "com.kmitl.goodjob",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyBDnEvPhhRUs17XzCALWXKLdnztviENgFM",
+          "certificateHash": "6F:95:57:ED:D6:22:5E:72:97:5F:3D:DE:E8:1A:3C:1C:B7:56:EC:C1"
+        }
+      }
     },
     "name": "GoodJob",
     "slug": "GoodJob",
