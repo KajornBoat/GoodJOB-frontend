@@ -254,6 +254,10 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
   };
 
   useEffect(() => {
+    if (values.length == items.length) {
+      setMessage("ทั้งหมด");
+      return;
+    }
     let str = "";
     for (let i = 0; i < values.length; i++) {
       if (str.length + values[i].length > 39) {

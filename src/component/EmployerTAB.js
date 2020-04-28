@@ -21,10 +21,7 @@ const EmployerTabs = () => {
       <Tab.Screen
         name="หน้าหลัก"
         component={EmployerListJob}
-        initialParams={{
-          routeName: "JobDetailAccept",
-          jobs: "jobAcceptReducer",
-        }}
+        initialParams={{ routeName: "JobDetailApply", jobs: "jobApplyReducer" }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (

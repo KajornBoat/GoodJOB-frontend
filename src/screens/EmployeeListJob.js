@@ -88,7 +88,7 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
     filter === undefined
       ? jobs
       : jobs.filter((job) => {
-          if (filter === undefined || filter.length == 0) return true;
+          if (filter === undefined) return true;
           else
             return (
               filter.filter((select) => job.position.indexOf(select) > -1)
