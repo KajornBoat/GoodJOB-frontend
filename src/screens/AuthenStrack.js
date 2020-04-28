@@ -8,7 +8,7 @@ import * as action from "../redux/actions/user.action";
 import {
   setAvailable,
   setLogin,
-  update,
+  setLoading,
 } from "../redux/actions/pagestatus.action";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
@@ -30,6 +30,7 @@ export const CheckIfLoggedIn = ({ children }) => {
       console.log("AUTH STATE CHANGED CALLED ");
       if (user) {
         console.log("SignIn");
+        dispatch(setLoading());
         const user = await api.auth.login();
         console.log(user.current_role);
         dispatch(action.setUser(user));

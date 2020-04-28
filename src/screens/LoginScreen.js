@@ -5,11 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import API from "../API/API";
 
-import { setLoading } from "../redux/actions/pagestatus.action";
-import { useDispatch } from "react-redux";
-
 const LoginScreen = () => {
-  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View
@@ -83,10 +79,7 @@ const LoginScreen = () => {
             elevation: 2,
             width: 240,
           }}
-          onPress={() => {
-            API.auth.signInWithGoogleAsync();
-            dispatch(setLoading());
-          }}
+          onPress={() => API.auth.signInWithGoogleAsync()}
         >
           <Image
             source={require("../assets/googleIcon.png")}
