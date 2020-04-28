@@ -18,8 +18,9 @@ export default function IndividualInviteEmployeeProfileScreen({
   navigation,
 }) {
   const employeeInfo = useSelector(
-    ({ inviteEmployeeReducer }) => inviteEmployeeReducer
-  ).data;
+    ({ jobEmployerReducer }) => jobEmployerReducer
+  ).data.filter((value) => value.id == route.params.parentItemId)[0]
+    .inviteEmployee;
   const [imageVisible, setImageVisible] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const itemId = route.params.itemId;

@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { CheckBox } from "react-native-elements";
 import EmployeeListJob from "./EmployeeListJob";
 import PopUpScreen from "../component/PopUpScreen";
+import { useSelector } from "react-redux";
 const Stack = createStackNavigator();
 
 const MultiSelectPicker = ({
@@ -20,11 +21,13 @@ const MultiSelectPicker = ({
   items,
   popUpState,
   setTitle,
+  setValue,
+  lastValue,
 }) => {
+  const { interested } = useSelector(({ userReducer }) => userReducer);
   const list = [...values];
   const Item = (props) => {
     const [state, setState] = useState(props.default);
-
     return (
       <View style={{ width: "100%" }}>
         <CheckBox
@@ -77,6 +80,66 @@ const MultiSelectPicker = ({
             },
           ]}
         >
+          <View
+            style={[{ flexDirection: "row", justifyContent: "space-between" }]}
+          >
+            <TouchableOpacity
+              style={{
+                marginVertical: 5,
+                marginHorizontal: 10,
+                flex: 1,
+                padding: 5,
+                borderWidth: 0.5,
+                borderRadius: 5,
+                borderColor: "#0bb203",
+                backgroundColor: "#0bb203",
+                elevation: 2,
+              }}
+              onPress={() => {
+                setValue(items);
+              }}
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>
+                ทั้งหมด
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginVertical: 5,
+                marginHorizontal: 10,
+                flex: 1,
+                padding: 5,
+                borderWidth: 0.5,
+                borderRadius: 5,
+                borderColor: "#567091",
+                backgroundColor: "#567091",
+                elevation: 2,
+              }}
+              onPress={() => {
+                setValue(interested);
+              }}
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>สนใจ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginVertical: 5,
+                marginHorizontal: 10,
+                flex: 1,
+                padding: 5,
+                borderWidth: 0.5,
+                borderRadius: 5,
+                borderColor: "#f65a5a",
+                backgroundColor: "#f65a5a",
+                elevation: 2,
+              }}
+              onPress={() => {
+                setValue([]);
+              }}
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>ล้าง</Text>
+            </TouchableOpacity>
+          </View>
           {items.map((value, index) => (
             <Item
               key={index}
@@ -95,6 +158,7 @@ const MultiSelectPicker = ({
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={() => {
+                setValue(lastValue);
                 setActive(false);
               }}
             >
@@ -104,7 +168,12 @@ const MultiSelectPicker = ({
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={() => {
                 setActive(false);
+                setValue(list);
                 onChange(list);
+                if (list.length == items.length) {
+                  setTitle("ทั้งหมด");
+                  return;
+                }
                 let str = "";
                 for (let i = 0; i < list.length; i++) {
                   if (str.length + list[i].length > 19) {
@@ -114,7 +183,7 @@ const MultiSelectPicker = ({
                   str += list[i];
                   if (i + 1 < list.length) str += " , ";
                 }
-                setTitle(str);
+                setTitle(str == "" ? "ตำแหน่ง" : str);
               }}
             >
               <Text>ตกลง</Text>
@@ -127,9 +196,30 @@ const MultiSelectPicker = ({
 };
 
 const EmployeeListJobWithFilter = ({ route }) => {
+  const items = require("../assets/constValue").JOB_POSITION;
+  const { interested } = useSelector(({ userReducer }) => userReducer);
   const popUpState = useState(false);
-  const [filterState, setFilterState] = useState([]);
-  const [title, setTitle] = useState("");
+  const [filter, setFilter] = useState(interested);
+  const [filterState, setFilterState] = useState(interested);
+  const [title, setTitle] = useState(
+    (() => {
+      if (filterState.length == items.length) {
+        return "ทั้งหมด";
+      } else {
+        let str = "";
+        for (let i = 0; i < filterState.length; i++) {
+          if (str.length + filterState[i].length > 19) {
+            str += "...";
+            break;
+          }
+          str += filterState[i];
+          if (i + 1 < filterState.length) str += " , ";
+        }
+        return str == "" ? "ตำแหน่ง" : str;
+      }
+    })()
+  );
+
   const EmployeeJob = (props) => (
     <EmployeeListJob {...props} filter={filterState} />
   );
@@ -142,12 +232,14 @@ const EmployeeListJobWithFilter = ({ route }) => {
         options={{
           headerRight: () => (
             <MultiSelectPicker
-              title={title || "ตำแหน่งงาน"}
+              title={title}
               popUpState={popUpState}
               onChange={setFilterState}
-              values={filterState}
-              items={require("../assets/constValue").JOB_POSITION}
+              values={filter}
+              items={items}
               setTitle={setTitle}
+              setValue={setFilter}
+              lastValue={filterState}
             />
           ),
           headerTitle: null,

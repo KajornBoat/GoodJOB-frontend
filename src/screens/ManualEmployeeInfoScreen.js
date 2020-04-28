@@ -38,16 +38,7 @@ export default function ManualEmployeeInfoScreen({
         onPress={() =>
           navigation.navigate("SelectForInviteScreen", {
             filter: filter,
-            relative: [
-              ...new Set([
-                ...job_data.myEmployee.map(
-                  (value) => value.firstName + " " + value.lastName
-                ),
-                ...job_data.applicantsapplicant.map(
-                  (value) => value.firstName + " " + value.lastName
-                ),
-              ]),
-            ],
+            itemId: route.params.itemId,
           })
         }
         disabled={

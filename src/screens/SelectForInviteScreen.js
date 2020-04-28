@@ -5,15 +5,9 @@ import EmployeeProfile from "../component/EmployeeProfile";
 import { useSelector } from "react-redux";
 
 export default function SelectForInviteScreen({ navigation, route }) {
-  const employee_all = useSelector(
-    ({ inviteEmployeeReducer }) => inviteEmployeeReducer
-  ).data;
-  const employee = employee_all.filter(
-    (value) =>
-      value.position == route.params.filter &&
-      route.params.relative.indexOf(value.firstName + " " + value.lastName) ==
-        -1
-  );
+  const employee = useSelector(({ jobEmployerReducer }) => jobEmployerReducer)
+    .data.filter((value) => value.id == route.params.itemId)[0]
+    .inviteEmployee.filter((value) => value.position == route.params.filter);
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <ScrollView style={{ backgroundColor: "white" }}>
@@ -28,6 +22,7 @@ export default function SelectForInviteScreen({ navigation, route }) {
                 onPress={() => {
                   console.log("selected");
                   navigation.navigate("IndividualInviteEmployeeProfileScreen", {
+                    parentItemId: route.params.itemId,
                     itemId: value.id,
                   });
                 }}

@@ -10,8 +10,7 @@ export default function ManualApplicantInfoScreen({
 }) {
   const employee = useSelector(
     ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.itemId)[0]
-    .applicantsapplicant;
+  ).data.filter((value) => value.id == route.params.itemId)[0].applicant;
 
   return (
     <View style={{ flex: 1 }}>

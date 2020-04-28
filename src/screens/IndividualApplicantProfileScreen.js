@@ -18,8 +18,7 @@ export default function IndividualApplicantProfileScreen({
 }) {
   const employeeInfo = useSelector(
     ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.parentItemId)[0]
-    .applicantsapplicant;
+  ).data.filter((value) => value.id == route.params.parentItemId)[0].applicant;
   const [imageVisible, setImageVisible] = useState(false);
   const [showAcceptPopUp, setShowAcceptPopUp] = useState(false);
   const [showDenyPopUp, setShowDenyPopUp] = useState(false);
