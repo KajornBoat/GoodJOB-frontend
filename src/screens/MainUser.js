@@ -33,19 +33,6 @@ import TestScreen from "./TestScreen";
 
 const Stack = createStackNavigator();
 
-// const resetStack = (navigation) => {
-//   navigation.dispatch(
-//     StackActions.reset({
-//       index: 0,
-//       actions: [
-//         NavigationActions.navigate({
-//           routeName: "EmployeeTabs",
-//         }),
-//       ],
-//     })
-//   );
-// };
-
 const UserStack = () => {
   const { role } = useSelector(({ userReducer }) => userReducer);
   //--- setup employer screen ---//
@@ -66,7 +53,6 @@ const UserStack = () => {
   );
   return (
     <Stack.Navigator
-      initialRouteName={"Tabs"}
       screenOptions={{
         headerLeft: ({ onPress }) => (
           <TouchableOpacity onPress={onPress}>
@@ -81,20 +67,25 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
-      <Stack.Screen
-        name="TestScreen"
-        component={TestScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Tabs"
-        component={role == "Employer" ? EmployerTabs : EmployeeTabs}
-        options={{
-          headerShown: false,
-        }}
-      />
+      { role === "Employer" && (
+        <Stack.Screen
+          name="EmployerTabs"
+          component={EmployerTabs}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
+      { role === "Employee" && (
+        <Stack.Screen
+          name="EmployeeTabs"
+          component={EmployeeTabs}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
+
       <Stack.Screen
         name="SettingUser"
         component={SettingUser}
@@ -245,6 +236,15 @@ const UserStack = () => {
           headerTitle: null,
         })}
       />
+{/*.......................................... Test ..........................................*/}
+      <Stack.Screen
+        name="TestScreen"
+        component={TestScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+{/*.......................................... test ..........................................*/}
     </Stack.Navigator>
   );
 };

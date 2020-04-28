@@ -19,6 +19,7 @@ const JobEmployeeTab = () => {
         activeTintColor: "#567091",
         inactiveTintColor: "#bac6d39f",
       }}
+      backBehavior = "none"
     >
       <Tab.Screen
         name="งานที่ได้รับ"
@@ -101,6 +102,7 @@ const EmployeeTabs = () => {
         activeTintColor: "#567091",
         inactiveTintColor: "#bac6d39f",
       }}
+      backBehavior = "none"
     >
       <Tab.Screen
         name="หน้าหลัก"

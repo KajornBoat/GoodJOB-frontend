@@ -4,8 +4,9 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useSelector, useDispatch } from "react-redux";
 import * as action from "../redux/actions/user.action";
-
+import { StackActions } from "@react-navigation/native";
 import API from "../API/API";
+
 
 const MenuLabelComponent = ({ title, icon, onPress, subtitle = undefined }) => {
   return (
@@ -83,7 +84,6 @@ const SettingMenu = ({ navigation }) => {
               userReducer.role == "Employee" ? "Employer" : "Employee"
             )
           );
-          navigation.goBack();
         }}
       />
       <MenuLabelComponent
