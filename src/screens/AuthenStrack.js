@@ -60,16 +60,20 @@ const AuthStack = () => {
           <Stack.Screen name="Login" component={LoginScreen} />
         </Stack.Navigator>
       )}
-      {status == "available" && role == null && (
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="SelectRole" component={SelectRoleScreen} />
-        </Stack.Navigator>
-      )}
-      {status == "available" && role != null && (
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="MainUser" component={MainUser} />
-        </Stack.Navigator>
-      )}
+      {status == "available" &&
+        (role == null || role == "" || role == undefined) && (
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name="SelectRole" component={SelectRoleScreen} />
+          </Stack.Navigator>
+        )}
+      {status == "available" &&
+        role != null &&
+        role != "" &&
+        role != undefined && (
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name="MainUser" component={MainUser} />
+          </Stack.Navigator>
+        )}
     </NavigationContainer>
   );
 };
