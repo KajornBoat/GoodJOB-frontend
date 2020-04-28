@@ -138,7 +138,6 @@ const SelectRoleScreen = ({ navigation }) => {
             opacity: 0.5,
           }}
           onPress={() => {
-            navigation.navigate("MainUser");
             dispatch(action.setRole(role));
           }}
           disabled={role == undefined}
