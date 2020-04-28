@@ -22,7 +22,8 @@ const EmployerTabs = () => {
         name="หน้าหลัก"
         component={EmployerListJob}
         initialParams={{
-          routeName: "JobDetailEmployerView",
+          routeName: "JobDetailAccept",
+          jobs: "jobAcceptReducer",
         }}
         options={{
           tabBarIcon: ({ focused, size }) => {

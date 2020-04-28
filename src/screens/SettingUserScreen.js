@@ -244,6 +244,7 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
             if (!state == true) props.addList(props.value);
             else props.removeList(props.value);
           }}
+          containerStyle={{ backgroundColor: "white", borderWidth: 0 }}
           checkedIcon="check-square"
           checkedColor="#404040"
           uncheckedColor="#404040"
@@ -289,26 +290,15 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
             style={{ position: "absolute", top: "45%", right: "2%" }}
           />
           <PopUpScreen
-            onRequestClose={async () => {
-              if (
-                list.length == values.length &&
-                list.filter((value) => values.indexOf(value) == -1).length == 0
-              ) {
-                setActive(false);
-                return;
-              }
-              setActiveLoad(true);
-              await updateData(list);
-              setActiveLoad(false);
+            onRequestClose={() => {
               setActive(false);
-              dispatch(onChange(list));
             }}
             visible={active}
           >
-            <ScrollView
+            <View
               style={{
                 backgroundColor: "white",
-                maxHeight: 56.5 * (items.length < 10 ? items.length : 10),
+                margin: 10,
               }}
             >
               {items.map((value, index) => (
@@ -325,7 +315,31 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
                   }}
                 />
               ))}
-            </ScrollView>
+              <View
+                style={[{ flexDirection: "row", justifyContent: "flex-end" }]}
+              >
+                <TouchableOpacity
+                  style={{ marginVertical: 5, marginHorizontal: 10 }}
+                  onPress={() => {
+                    setActive(false);
+                  }}
+                >
+                  <Text>ยกเลิก</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ marginVertical: 5, marginHorizontal: 10 }}
+                  onPress={async () => {
+                    dispatch(onChange(list));
+                    setActiveLoad(true);
+                    await updateData(list);
+                    setActiveLoad(false);
+                    setActive(false);
+                  }}
+                >
+                  <Text>ตกลง</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </PopUpScreen>
         </View>
       </TouchableOpacity>

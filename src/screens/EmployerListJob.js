@@ -91,7 +91,7 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
                 finishDate={value.finish_date}
                 place={value.place}
                 onPress={() => {
-                  navigation.navigate(route.params.routeName, {
+                  navigation.navigate("JobDetailEmployerView", {
                     itemId: value.id,
                   });
                 }}

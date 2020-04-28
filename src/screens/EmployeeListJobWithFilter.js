@@ -35,6 +35,7 @@ const MultiSelectPicker = ({
             if (!state == true) props.addList(props.value);
             else props.removeList(props.value);
           }}
+          containerStyle={{ backgroundColor: "white", borderWidth: 0 }}
           checkedIcon="check-square"
           checkedColor="#404040"
           uncheckedColor="#404040"
@@ -65,32 +66,16 @@ const MultiSelectPicker = ({
       <PopUpScreen
         onRequestClose={() => {
           setActive(false);
-          if (
-            !(
-              list.length == values.length &&
-              list.filter((value) => values.indexOf(value) == -1).length == 0
-            )
-          ) {
-            onChange(list);
-            let str = "";
-            for (let i = 0; i < list.length; i++) {
-              if (str.length + list[i].length > 19) {
-                str += "...";
-                break;
-              }
-              str += list[i];
-              if (i + 1 < list.length) str += " , ";
-            }
-            setTitle(str);
-          }
         }}
         visible={active}
       >
-        <ScrollView
-          style={{
-            backgroundColor: "white",
-            maxHeight: 56.5 * (items.length < 10 ? items.length : 10),
-          }}
+        <View
+          style={[
+            {
+              backgroundColor: "white",
+              margin: 10,
+            },
+          ]}
         >
           {items.map((value, index) => (
             <Item
@@ -106,7 +91,36 @@ const MultiSelectPicker = ({
               }}
             />
           ))}
-        </ScrollView>
+          <View style={[{ flexDirection: "row", justifyContent: "flex-end" }]}>
+            <TouchableOpacity
+              style={{ marginVertical: 5, marginHorizontal: 10 }}
+              onPress={() => {
+                setActive(false);
+              }}
+            >
+              <Text>ยกเลิก</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ marginVertical: 5, marginHorizontal: 10 }}
+              onPress={() => {
+                setActive(false);
+                onChange(list);
+                let str = "";
+                for (let i = 0; i < list.length; i++) {
+                  if (str.length + list[i].length > 19) {
+                    str += "...";
+                    break;
+                  }
+                  str += list[i];
+                  if (i + 1 < list.length) str += " , ";
+                }
+                setTitle(str);
+              }}
+            >
+              <Text>ตกลง</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </PopUpScreen>
     </TouchableOpacity>
   );

@@ -83,6 +83,7 @@ const SettingMenu = ({ navigation }) => {
               userReducer.role == "Employee" ? "Employer" : "Employee"
             )
           );
+          navigation.goBack();
         }}
       />
       <MenuLabelComponent

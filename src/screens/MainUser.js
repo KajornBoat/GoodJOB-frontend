@@ -88,7 +88,6 @@ const UserStack = () => {
           headerShown: false,
         }}
       />
-
       <Stack.Screen
         name="Tabs"
         component={role == "Employer" ? EmployerTabs : EmployeeTabs}
