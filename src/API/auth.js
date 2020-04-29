@@ -102,7 +102,7 @@ class Auth {
               permissions,
               declinedPermissions,
             } = await Facebook.logInWithReadPermissionsAsync({
-              permissions: ['public_profile'],
+              permissions: ['email','public_profile'],
             });
             if (type === 'success') {
               // Get the user's name using Facebook's Graph API
