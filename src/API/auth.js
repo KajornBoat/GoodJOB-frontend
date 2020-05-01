@@ -10,7 +10,6 @@ const config = require("./config.json")
 class Auth {
     async login(){
       const idToken = await manageUser.getIdToken();
-      //console.log("Login IDTOKEN = ",idToken)
       return await fetch(config.hostname+'/auth/login', {
         method: 'GET',
         headers: {
