@@ -21,6 +21,7 @@ import Geocoder from "react-native-geocoding";
 import PopUpScreen from "../component/PopUpScreen";
 // Constant Import
 import { JOB_POSITION, MONTH_TH } from "../assets/constValue";
+import api from "../API/API";
 
 const TextInputComponent = ({
   value,
@@ -1119,6 +1120,7 @@ const CreateJobScreen = ({ navigation }) => {
             alert(msg);
           } else {
             console.log("Saving...");
+
             let job = {
               title: jobName,
               description: description,
@@ -1126,11 +1128,14 @@ const CreateJobScreen = ({ navigation }) => {
               finish_date: fd,
               location: [location.latitude, location.longitude],
               mode: selectMode,
-              position: positions.map((value) => value.position),
+              positions: positions.map((value) => value.position),
               posWage: positions.map((value) => value.cost),
               posReq: positions.map((value) => value.amount),
             };
-            console.log(JSON.stringify(job));
+
+            api.job.createJob(JSON.stringify(job));
+            //console.log(JSON.stringify(job));
+
             navigation.goBack();
           }
         }}
