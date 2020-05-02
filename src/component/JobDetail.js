@@ -181,7 +181,9 @@ export const FooterComment = ({ job, navigation }) => {
         backgroundColor: "#afd9ff",
       }}
       activeOpacity={0.5}
-      onPress={() => navigation.navigate("TestScreen")}
+      onPress={() =>
+        navigation.navigate("CommentScreen", { comment: job.comment })
+      }
     >
       <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
         ความคิดเห็น

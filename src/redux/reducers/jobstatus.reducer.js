@@ -21,6 +21,57 @@ const initialState = {
 อาหารกลางวันและเย็นฟรี`,
       position: ["ช่างภาพ", "สตาฟ"],
       posWage: [1000, 500],
+      comment: [
+        {
+          id: 0,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy",
+          content: "asdasd",
+          replyer: "has",
+          reply: "asddas",
+        },
+        {
+          id: 1,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy2",
+          content: "awed",
+        },
+        {
+          id: 2,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy",
+          content: "asdasd",
+          replyer: "has",
+          reply: "asddas",
+        },
+        {
+          id: 3,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy2",
+          content: "awed",
+        },
+        {
+          id: 4,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy",
+          content:
+            "asdasdasddasasddasasddasasddasasddasasddasasddasasddasasddas",
+          replyer: "has",
+          reply: "asddasasddasasddasasddasasddasasddasasddasasddas",
+        },
+        {
+          id: 5,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy2",
+          content: "awed",
+        },
+      ],
       myPosition: "ช่างภาพ",
     },
   ],

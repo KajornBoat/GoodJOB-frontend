@@ -21,6 +21,7 @@ const initialState = {
   อาหารกลางวันและเย็นฟรี`,
       position: ["ช่างภาพ", "สตาฟ"],
       posWage: [1000, 500],
+      comment: [],
       myPosition: "ช่างภาพ",
     },
   ],

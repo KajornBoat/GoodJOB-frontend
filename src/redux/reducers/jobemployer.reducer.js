@@ -25,6 +25,24 @@ const initialState = {
       posWage: [1000, 500],
       posReq: [3, 2],
       posHave: [2, 2],
+      comment: [
+        {
+          id: 0,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy",
+          content: "asdasd",
+          replyer: "has",
+          reply: "asddas",
+        },
+        {
+          id: 1,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy2",
+          content: "awed",
+        },
+      ],
       mode: "Auto",
       myEmployee: [
         {
@@ -253,6 +271,24 @@ const initialState = {
       posWage: [1000, 500, 800],
       posReq: [3, 2, 1],
       posHave: [2, 2, 0],
+      comment: [
+        {
+          id: 0,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy",
+          content: "asdasd",
+          replyer: "has",
+          reply: "asddas",
+        },
+        {
+          id: 1,
+          url:
+            "https://drive.google.com/uc?id=10KxXNBYgwiTGCmYdl-h3rUpn_7isA0rT",
+          commenter: "Jimmy2",
+          content: "awed",
+        },
+      ],
       mode: "Manual",
       myEmployee: [
         {

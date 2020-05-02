@@ -28,6 +28,7 @@ import IndividualInviteEmployeeProfileScreen from "./IndividualInviteEmployeePro
 import SelectForInviteScreen from "./SelectForInviteScreen";
 import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
 import PickerFilter from "../component/PickerFilter";
+import CommentScreen from "../screens/CommentScreen";
 
 import TestScreen from "./TestScreen";
 
@@ -67,7 +68,7 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
-      { role === "Employer" && (
+      {role === "Employer" && (
         <Stack.Screen
           name="EmployerTabs"
           component={EmployerTabs}
@@ -76,7 +77,7 @@ const UserStack = () => {
           }}
         />
       )}
-      { role === "Employee" && (
+      {role === "Employee" && (
         <Stack.Screen
           name="EmployeeTabs"
           component={EmployeeTabs}
@@ -236,7 +237,14 @@ const UserStack = () => {
           headerTitle: null,
         })}
       />
-{/*.......................................... Test ..........................................*/}
+      <Stack.Screen
+        name="CommentScreen"
+        component={CommentScreen}
+        options={{
+          headerTitle: "ความคิดเห็น",
+        }}
+      />
+      {/*.......................................... Test ..........................................*/}
       <Stack.Screen
         name="TestScreen"
         component={TestScreen}
@@ -244,7 +252,7 @@ const UserStack = () => {
           headerShown: false,
         }}
       />
-{/*.......................................... test ..........................................*/}
+      {/*.......................................... test ..........................................*/}
     </Stack.Navigator>
   );
 };
