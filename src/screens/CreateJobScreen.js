@@ -630,7 +630,7 @@ const PostitionSeletion = ({
         marginRight: "2%",
       }}
     >
-      {value.position}
+      {value.name}
     </Text>
     <Text
       style={[
@@ -642,7 +642,7 @@ const PostitionSeletion = ({
         },
       ]}
     >
-      {value.amount}
+      {value.required}
     </Text>
     <Text
       style={[
@@ -654,7 +654,7 @@ const PostitionSeletion = ({
         },
       ]}
     >
-      {value.cost}฿
+      {value.wage}฿
     </Text>
   </View>
 );
@@ -716,9 +716,9 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
 
 const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
   const [newPosition, setNewPosition] = useState({
-    position: "",
-    amount: "",
-    cost: "",
+    name: "",
+    required: "",
+    wage: "",
   });
   const [active, setActive] = useState(false);
   const [inputType, setInputType] = useState("");
@@ -737,26 +737,26 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
         }}
         onPress={() => {
           let msg = "";
-          msg += newPosition.position == "" ? "ตำแหน่งไม่ถูกต้อง\n" : "";
-          msg += Number(newPosition.amount) > 0 ? "" : "จำนวนไม่ถูกต้อง\n";
+          msg += newPosition.name == "" ? "ตำแหน่งไม่ถูกต้อง\n" : "";
+          msg += Number(newPosition.required) > 0 ? "" : "จำนวนไม่ถูกต้อง\n";
           msg +=
-            newPosition.cost != "" && Number(newPosition.cost) >= 0
+            newPosition.wage != "" && Number(newPosition.wage) >= 0
               ? ""
               : "ค่าจ้างไม่ถูกต้อง\n";
           if (msg == "") {
             setPositions([
               ...positions,
               {
-                position: newPosition.position,
-                amount: Number(newPosition.amount),
-                cost: Number(newPosition.cost),
+                name: newPosition.name,
+                required: Number(newPosition.required),
+                wage: Number(newPosition.wage),
               },
             ]);
-            setSelectJob([...selectJob, newPosition.position]);
+            setSelectJob([...selectJob, newPosition.name]);
             setNewPosition({
-              position: "",
-              amount: "",
-              cost: "",
+              name: "",
+              required: "",
+              wage: "",
             });
           } else {
             alert(msg);
@@ -773,10 +773,10 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
       </TouchableOpacity>
       <View style={[styles.pickerBorder, { width: "50%", marginRight: "2%" }]}>
         <Picker
-          selectedValue={newPosition.position}
+          selectedValue={newPosition.name}
           style={styles.pickerInBox}
           onValueChange={(itemValue, itemIndex) => {
-            setNewPosition({ ...newPosition, position: itemValue });
+            setNewPosition({ ...newPosition, name: itemValue });
           }}
         >
           <Picker.Item
@@ -797,34 +797,34 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
         style={[styles.inputContainer, { width: "19%", marginRight: "1%" }]}
         onPress={() => {
           setActive(true);
-          setText(newPosition.amount);
-          setInputType("amount");
+          setText(newPosition.required);
+          setInputType("required");
         }}
       >
         <Text
           style={{
             textAlign: "right",
-            color: newPosition.amount ? "black" : "gray",
+            color: newPosition.required ? "black" : "gray",
           }}
         >
-          {newPosition.amount || "จำนวน"}
+          {newPosition.required || "จำนวน"}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.inputContainer, { width: "19%", marginLeft: "1%" }]}
         onPress={() => {
           setActive(true);
-          setText(newPosition.cost);
-          setInputType("cost");
+          setText(newPosition.wage);
+          setInputType("wage");
         }}
       >
         <Text
           style={{
             textAlign: "right",
-            color: newPosition.cost ? "black" : "gray",
+            color: newPosition.wage ? "black" : "gray",
           }}
         >
-          {newPosition.cost || "ค่าจ้าง"}
+          {newPosition.wage || "ค่าจ้าง"}
         </Text>
       </TouchableOpacity>
       <PopUpScreen
@@ -832,13 +832,13 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
         onRequestClose={() => {
           setActive(false);
           setText(
-            inputType === "amount" ? newPosition.amount : newPosition.cost
+            inputType === "required" ? newPosition.required : newPosition.wage
           );
         }}
       >
         <View style={styles.popUpContainer}>
           <Text style={[styles.gapVertical, styles.labelFont]}>
-            {inputType === "amount" ? "กรุณาใส่จำนวน" : "กรุณาใส่ค่าจ้าง"}
+            {inputType === "required" ? "กรุณาใส่จำนวน" : "กรุณาใส่ค่าจ้าง"}
           </Text>
           <TextInput
             value={text}
@@ -849,9 +849,9 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               { borderColor: "gray", borderBottomWidth: 0.5 },
             ]}
             placeholder={
-              "กรุณาใส่" + inputType === "amount" ? "จำนวน" : "ค่าจ้าง"
+              inputType === "required" ? "จำนวน" : "ค่าจ้าง"
             }
-            maxLength={inputType === "amount" ? 2 : 5}
+            maxLength={inputType === "required" ? 2 : 5}
             keyboardType="numeric"
           />
           <View
@@ -865,7 +865,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               onPress={() => {
                 setActive(false);
                 setText(
-                  inputType === "amount" ? newPosition.amount : newPosition.cost
+                  inputType === "required" ? newPosition.required : newPosition.wage
                 );
               }}
             >
@@ -877,9 +877,9 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               onPress={() => {
                 setActive(false);
                 setNewPosition({
-                  position: newPosition.position,
-                  amount: inputType === "amount" ? text : newPosition.amount,
-                  cost: inputType === "cost" ? text : newPosition.cost,
+                  name: newPosition.name,
+                  required: inputType === "required" ? text : newPosition.required,
+                  wage: inputType === "wage" ? text : newPosition.wage,
                 });
               }}
             >
@@ -909,7 +909,7 @@ export const TextList = ({ positions }) => {
                 }}
               >
                 <Text style={styles.listFont}>
-                  {value.amount + " x " + cal(value.cost) + "฿"}
+                  {value.required + " x " + cal(value.wage) + "฿"}
                 </Text>
               </View>
               <View
@@ -919,7 +919,7 @@ export const TextList = ({ positions }) => {
                 }}
               >
                 <Text style={styles.listFont}>
-                  {value.amount * cal(value.cost) + "฿"}
+                  {value.required * cal(value.wage) + "฿"}
                 </Text>
               </View>
             </View>
@@ -943,7 +943,7 @@ export const TextList = ({ positions }) => {
           },
         ]}
       >
-        {positions.reduce((prev, curr) => prev + curr.amount * curr.cost, 0) +
+        {positions.reduce((prev, curr) => prev + curr.required * curr.wage, 0) +
           "฿"}
       </Text>
       <SubList
@@ -963,7 +963,7 @@ export const TextList = ({ positions }) => {
       >
         {positions.reduce(
           (prev, curr) =>
-            prev + curr.amount * Math.ceil((curr.cost * 30) / 100),
+            prev + curr.required * Math.ceil((curr.wage * 30) / 100),
           0
         ) + "฿"}
       </Text>
@@ -984,7 +984,7 @@ export const TextList = ({ positions }) => {
       >
         {positions.reduce(
           (prev, curr) =>
-            prev + curr.amount * Math.floor((curr.cost * 70) / 100),
+            prev + curr.required * Math.floor((curr.wage * 70) / 100),
           0
         ) + "฿"}
       </Text>
@@ -1128,15 +1128,12 @@ const CreateJobScreen = ({ navigation }) => {
               finish_date: fd,
               location: [location.latitude, location.longitude],
               mode: selectMode,
-              positions: positions.map((value) => value.position),
-              posWage: positions.map((value) => value.cost),
-              posReq: positions.map((value) => value.amount),
-            };
+              positions: positions
+            };            
 
             api.job.createJob(JSON.stringify(job));
-            //console.log(JSON.stringify(job));
-
             navigation.goBack();
+            
           }
         }}
       />
