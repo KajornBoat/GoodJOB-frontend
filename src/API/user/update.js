@@ -11,9 +11,7 @@ const updateData = async (data) => {
         'Content-Type': 'application/json',
         "idtoken" : idToken
       },
-      body: JSON.stringify({ 
-          "info": data
-      }),
+      body: JSON.stringify(data),
     }).then(result => {
       if(result.status < 300) resolve(result);
       else reject("Result status fail !!!")

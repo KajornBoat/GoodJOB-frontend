@@ -1,31 +1,27 @@
-import firebase from '../firebase/firebase';
 import manageUser from "../user/manage";
 
 import config from "../config.json"
 
 class Job {
     async createJob(data){
-        let token = manageUser.getIdToken();
+        const idtoken = await manageUser.getIdToken();
         console.log("Send = ",data)
+        console.log(idtoken)
         let job = await fetch(config.hostname+'/job', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "idtoken" : token
+                "idtoken" : idtoken
             },
-            body: JSON.stringify({ 
-                "info": data
-            }),
+            body: JSON.stringify(data),
           })
           .then( res => res.json()
           .then( result => {
-            console.log("Result = ",result);
             return result;
           }))
           .catch((error) => {
             console.error('Error:', error);
           });
-        console.log("JOB = ",job)
         return job;
     }
 

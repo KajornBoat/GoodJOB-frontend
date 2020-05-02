@@ -1,4 +1,5 @@
-import * as React from "react";
+import  React , { useState} from "react";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "../API/firebase/firebase";
 import api from "../API/API";
@@ -16,7 +17,6 @@ import SelectRoleScreen from "./SelectRoleScreen";
 import MainUser from "./MainUser";
 import SplashScreen from "./SplashScreen";
 
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -28,17 +28,17 @@ export const CheckIfLoggedIn = ({ children }) => {
     .auth()
     .onAuthStateChanged(async function (user) {
       console.log("AUTH STATE CHANGED CALLED ");
-      if (user) {
-        console.log("SignIn");
-        dispatch(setLoading());
-        const user = await api.auth.login();
-        console.log(user.current_role);
-        dispatch(action.setUser(user));
-        dispatch(setAvailable());
+      if (user) {    
+          console.log("SignIn..............");
+          dispatch(setLoading());
+          const user = await api.auth.login();
+          dispatch(action.setUser(user));
+          dispatch(setAvailable());
       } else {
-        console.log("SignOut");
-        dispatch(setLogin());
+        console.log("SignOut...");
+        dispatch(setLogin());  
       }
+      
     })
     .bind(this);
 

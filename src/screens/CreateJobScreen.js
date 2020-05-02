@@ -667,20 +667,20 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
     <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
       <TouchableOpacity
         style={{
-          backgroundColor: selectMode == "Manual" ? "#567091" : "white",
-          borderColor: selectMode == "Manual" ? "#567091" : "gray",
+          backgroundColor: selectMode == "manual" ? "#567091" : "white",
+          borderColor: selectMode == "manual" ? "#567091" : "gray",
           marginRight: "1%",
           ...styles.selectMode,
         }}
         onPress={() => {
-          setSelectMode("Manual");
+          setSelectMode("manual");
         }}
       >
         <Text
           style={[
             styles.textMode,
             {
-              color: selectMode == "Manual" ? "white" : "black",
+              color: selectMode == "manual" ? "white" : "black",
             },
           ]}
         >
@@ -689,13 +689,13 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
       </TouchableOpacity>
       <TouchableOpacity
         style={{
-          backgroundColor: selectMode == "Auto" ? "#567091" : "white",
-          borderColor: selectMode == "Auto" ? "#567091" : "gray",
+          backgroundColor: selectMode == "auto" ? "#567091" : "white",
+          borderColor: selectMode == "auto" ? "#567091" : "gray",
           marginLeft: "1%",
           ...styles.selectMode,
         }}
         onPress={() => {
-          setSelectMode("Auto");
+          setSelectMode("auto");
         }}
       >
         <Text
@@ -703,7 +703,7 @@ const ModeComponent = ({ selectMode, setSelectMode }) => (
             styles.textMode,
             ,
             {
-              color: selectMode == "Auto" ? "white" : "black",
+              color: selectMode == "auto" ? "white" : "black",
             },
           ]}
         >
@@ -1022,7 +1022,7 @@ const CreateJobScreen = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [positions, setPositions] = useState([]);
   const [selectJob, setSelectJob] = useState([]);
-  const [selectMode, setSelectMode] = useState("Manual");
+  const [selectMode, setSelectMode] = useState("manual");
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <KeyboardAvoidingView
@@ -1131,9 +1131,9 @@ const CreateJobScreen = ({ navigation }) => {
               positions: positions
             };            
 
-            api.job.createJob(JSON.stringify(job));
+            api.job.createJob(job);
             navigation.goBack();
-            
+
           }
         }}
       />
