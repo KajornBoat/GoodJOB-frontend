@@ -431,8 +431,7 @@ const Map = (props) => {
   );
 };
 
-const MapComponent = ({ location, setLocation }) => {
-  const [address, setAddress] = useState("");
+const MapComponent = ({ location, setLocation ,address ,setAddress}) => {
   const [showMap, setShowMap] = useState(false);
   return (
     <View>
@@ -1019,6 +1018,7 @@ const CreateJobScreen = ({ navigation }) => {
   // Date
 
   const [location, setLocation] = useState(null);
+  const [nameAddress, setNameAddress] = useState("");
   const [description, setDescription] = useState("");
   const [positions, setPositions] = useState([]);
   const [selectJob, setSelectJob] = useState([]);
@@ -1049,7 +1049,12 @@ const CreateJobScreen = ({ navigation }) => {
               setFinishDate={setFinishDate}
             />
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            <MapComponent location={location} setLocation={setLocation} />
+            <MapComponent 
+              location={location} 
+              setLocation={setLocation} 
+              address = {nameAddress}
+              setAddress ={setNameAddress}
+            />
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <TextAreaComponent
               height={140}
@@ -1126,11 +1131,13 @@ const CreateJobScreen = ({ navigation }) => {
               description: description,
               start_date: sd,
               finish_date: fd,
-              location: [location.latitude, location.longitude],
+              location: {
+                coordinates : [location.latitude, location.longitude],
+                nameAddress : nameAddress
+              },
               mode: selectMode,
               positions: positions
             };            
-
             api.job.createJob(job);
             navigation.goBack();
 

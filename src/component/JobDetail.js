@@ -136,14 +136,14 @@ const LocationComponent = ({ location, place }) => {
 const JobDetail = ({ children, job }) => {
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
-      <HeaderComponent title={job.title} url={job.url} name={job.name} />
+      <HeaderComponent title={job.title} url={job.owner.photoURL} name={job.owner.firstname+"  "+job.owner.lastname} />
       <View style={styles.container}>
         <Text
           style={[styles.titleFont, { textAlign: "center", marginBottom: 20 }]}
           children="รายละเอียด"
         />
-        <DateComponet startDate={job.start_date} finishDate={job.finish_date} />
-        <LocationComponent location={job.location} place={job.place} />
+        <DateComponet startDate={new Date(job.start_date)} finishDate={new Date(job.finish_date)} />
+        <LocationComponent location={job.location.coordinates} place={job.location.nameAddress} />
         <Text style={{ lineHeight: 20, marginBottom: 10 }}>
           {job.description}
         </Text>

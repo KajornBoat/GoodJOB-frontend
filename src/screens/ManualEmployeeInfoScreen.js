@@ -7,6 +7,7 @@ import {
   Picker,
   ScrollView,
   Modal,
+  ActivityIndicator
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -18,56 +19,66 @@ export default function ManualEmployeeInfoScreen({
   route,
   filter,
 }) {
-  const job_data = useSelector(
+  const job = useSelector(
     ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.itemId)[0];
-  const employee = job_data.myEmployee;
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
-        <ShowEmployeeProfileList
-          employee={employee}
-          filter={filter}
-          navigation={navigation}
-          route={route}
-        />
-      </ScrollView>
-      <TouchableOpacity
-        style={{ backgroundColor: "#afd9ff" }}
-        activeOpacity={0.5}
-        onPress={() =>
-          navigation.navigate("SelectForInviteScreen", {
-            filter: filter,
-            itemId: route.params.itemId,
-          })
-        }
-        disabled={
-          filter == "ตำแหน่ง" ||
-          job_data.posReq[job_data.position.indexOf(filter)] ==
-            job_data.posHave[job_data.position.indexOf(filter)]
-        }
-      >
-        <View
-          style={{
-            ...styles.footerView,
-            backgroundColor:
-              filter == "ตำแหน่ง" ||
-              job_data.posReq[job_data.position.indexOf(filter)] ==
-                job_data.posHave[job_data.position.indexOf(filter)]
-                ? "#dfdede"
-                : "#afd9ff",
-          }}
-        >
-          <MaterialCommunityIcons
-            name="account-plus"
-            size={32}
-            color={"white"}
+  ).lists.filter((value) => value._id == route.params.itemId)[0];
+  const employee = job.acceptEmployee;
+  //console.log(employee.filter(value => value.position == filter).length)
+  if(employee){
+    return (
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
+          <ShowEmployeeProfileList
+            employee={employee}
+            filter={filter}
+            navigation={navigation}
+            route={route}
           />
-          <Text style={styles.footerText}>เชิญคนเพิ่ม</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
+        </ScrollView>
+{/*         
+        <TouchableOpacity
+          style={{ backgroundColor: "#afd9ff" }}
+          activeOpacity={0.5}
+          onPress={() =>
+            console.log("Press")
+            // navigation.navigate("SelectForInviteScreen", {
+            //   filter: filter,
+            //   itemId: route.params.itemId,
+            // })
+          }
+          disabled={
+            filter == "ตำแหน่ง" ||
+            !(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
+          }
+        >
+          <View
+            style={{
+              ...styles.footerView,
+              backgroundColor:
+                filter == "ตำแหน่ง" ||
+                !(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
+                  ? "#dfdede"
+                  : "#afd9ff",
+            }}
+          >
+            <MaterialCommunityIcons
+              name="account-plus"
+              size={32}
+              color={"white"}
+            />
+            <Text style={styles.footerText}>เชิญคนเพิ่ม</Text>
+          </View>
+        </TouchableOpacity> */}
+      </View>
+    );
+  }
+  else{
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 }
 
 const ShowEmployeeProfileList = ({ employee, route, filter, navigation }) => {
@@ -81,14 +92,12 @@ const ShowEmployeeProfileList = ({ employee, route, filter, navigation }) => {
           <View key={index} style={{ width: "50%" }}>
             <EmployeeProfile
               key={index}
-              image={value.image}
-              firstName={value.firstName}
-              lastName={value.lastName}
-              onPress={() => {
-                console.log("selected");
+              image={value.user.photoURL}
+              firstName={value.user.firstname}
+              lastName={value.user.lastname}
+              onPress={() => { 
                 navigation.navigate("IndividualEmployeeProfileScreen", {
-                  parentItemId: route.params.itemId,
-                  itemId: value.id,
+                  employeeInfo : value,
                 });
               }}
             />
@@ -116,5 +125,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginHorizontal: 10,
     fontWeight: "bold",
+  },
+  loading: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

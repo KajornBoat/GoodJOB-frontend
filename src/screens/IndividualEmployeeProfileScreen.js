@@ -12,13 +12,7 @@ import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 
 export default function IndividualEmployeeProfileScreen({ route, navigation }) {
-  const employeeInfo = useSelector(
-    ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.parentItemId)[0].myEmployee;
   const [imageVisible, setImageVisible] = useState(false);
-
-  const itemId = route.params.itemId;
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <PopUpScreen
@@ -27,19 +21,19 @@ export default function IndividualEmployeeProfileScreen({ route, navigation }) {
         transparent
       >
         <View style={{ justifyContent: "center" }}>
-          <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
+          <EmployeeAvatar uri={route.params.employeeInfo.user.photoURL} size={250} />
         </View>
       </PopUpScreen>
 
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={{ marginTop: 20, marginBottom: 10 }}>
           <EmployeeAvatar
-            uri={employeeInfo[itemId].image}
+            uri={route.params.employeeInfo.user.photoURL}
             size={100}
             onPress={() => setImageVisible(true)}
           />
         </View>
-        <TextEmployeeInfo data={employeeInfo[itemId]} />
+        <TextEmployeeInfo data={route.params.employeeInfo.user} />
       </ScrollView>
     </View>
   );

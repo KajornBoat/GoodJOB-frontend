@@ -38,13 +38,17 @@ const UserStack = () => {
   //--- setup employer screen ---//
   const jobEmployerReducer = useSelector(
     ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data;
+  ).lists;
+
   const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
   const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
   const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
+  
+
   const AutoEmployeeInfo = (props) => (
     <AutoEmployeeInfoScreen {...props} filter={autoPosition} />
   );
+  
   const ManualEmployeeInfo = (props) => (
     <ManualEmployeeInfoScreen {...props} filter={manualPosition} />
   );
@@ -189,9 +193,7 @@ const UserStack = () => {
               value={autoPosition}
               setOnValueChange={setAutoPosition}
               items={
-                jobEmployerReducer.filter(
-                  (value) => value.id == route.params.itemId
-                )[0].position
+                route.params.job.tags 
               }
             />
           ),
@@ -208,9 +210,7 @@ const UserStack = () => {
               value={manualPosition}
               setOnValueChange={setManualPosition}
               items={
-                jobEmployerReducer.filter(
-                  (value) => value.id == route.params.itemId
-                )[0].position
+                route.params.job.tags 
               }
             />
           ),
@@ -227,9 +227,7 @@ const UserStack = () => {
               value={applicantPosition}
               setOnValueChange={setApplicantPosition}
               items={
-                jobEmployerReducer.filter(
-                  (value) => value.id == route.params.itemId
-                )[0].position
+                route.params.job.tags 
               }
             />
           ),

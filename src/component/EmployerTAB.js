@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -6,10 +6,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 
 import SettingMenu from "../screens/SettingMenuScreen";
-import TestScreen from "../screens/TestScreen";
 import EmployerListJob from "../screens/EmployerListJob";
+import { useDispatch } from "react-redux";
+import api from "../API/API";
+import { setJobEmployer } from "../redux/actions/jobemployer.action";
+import TestScreen from "../screens/TestScreen";
 
 const EmployerTabs = () => {
+  const dispatch = useDispatch();
+  api.job.getJobEmployer().then(job => {
+    dispatch(setJobEmployer(job));
+    console.log("LoadJobEmployer")
+  });
   return (
     <Tab.Navigator
       initialRouteName="หน้าหลัก"
@@ -59,6 +67,7 @@ const EmployerTabs = () => {
         }}
       />
     </Tab.Navigator>
+    
   );
 };
 

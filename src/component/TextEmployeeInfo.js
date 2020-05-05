@@ -6,12 +6,12 @@ const TextEmployeeInfo = ({ data }) => {
     <View>
       <TextInformation
         title="ชื่อ-นามสกุล"
-        data={data.firstName + " " + data.lastName}
+        data={data.firstname + " " + data.lastname}
       />
       <TextInformation title="อายุ" data={data.age} />
       <TextInformation title="เพศ" data={data.gender} />
-      <TextIntroduce introduceText={data.introduceText} />
-      <TextExperience experience={data.experience} />
+      <TextIntroduce introduceText={data.introduce_text} />
+      {/* <TextExperience experience={data.experience} /> */}
     </View>
   );
 };

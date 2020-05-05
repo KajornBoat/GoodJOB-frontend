@@ -14,9 +14,13 @@ import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
 import * as action from "../redux/actions/user.action";
-import api from "../API/API";
+import * as actionJob from "../redux/actions/jobemployer.action";
+import { Value } from "react-native-reanimated";
 
 const TestScreen = (props) => {
+  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer);
+  const dipatch = useDispatch();
+  
   const getUID = () => {
     manageUser.getUserID().then((uid) => {
       console.log("UID = ", uid);
@@ -42,9 +46,22 @@ const TestScreen = (props) => {
     let link = await API.user.update.image(file);
     console.log("Link = ", link);
   };
+  const getJob = async () => {
+  
+    const job_list = await API.job.getJobEmployer();
+    dipatch(actionJob.setJobEmployer(job_list));
+
+  }
+  const printjob = () => {
+    console.log(job_lists)
+    // job_lists.map(value => {
+    //   console.log(value.title);
+    // })
+  }
+
 
   const userReducer = useSelector(({ userReducer }) => userReducer);
-  const dipatch = useDispatch();
+  
   return (
     <SafeAreaView>
       <View style={(styles.container, { margin: 0 })}>
@@ -69,9 +86,22 @@ const TestScreen = (props) => {
           onPress={() => dipatch(action.setUser("Boat"))}
         />
         <Button
-          title="test update Role"
-          onPress={() => api.user.update.role("Employee")}
+          title="test GetJob"
+          onPress={() => getJob()}
         />
+        <Button
+          title="printJob"
+          onPress={() => printjob()}
+        />
+
+        <Text>{job_lists.lists.length}</Text>
+
+        {job_lists.lists.map(value=>{
+          return(
+            <Text>{value.title}</Text>
+          )
+        })}
+
       </View>
     </SafeAreaView>
   );

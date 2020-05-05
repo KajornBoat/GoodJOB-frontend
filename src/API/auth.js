@@ -110,7 +110,9 @@ class Auth {
               firebase
               .auth()
               .signInWithCredential(credential)
-              .catch((error) => {
+              .then(() => {
+                console.log('SignedIn firebaseCredential');
+              }).catch((error) => {
                     console.log(error)
                 });
               

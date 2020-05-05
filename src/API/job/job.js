@@ -24,6 +24,61 @@ class Job {
           });
         return job;
     }
+    async getJobEmployer(){
+      const idtoken = await manageUser.getIdToken();   
+      let job = await fetch(config.hostname+'/job', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              "idtoken" : idtoken
+          }
+        })
+        .then( res => res.json()
+        .then( result => {
+          return result;
+        }))
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      return job;
+    }
+    async getEmployee(jobId,mode){
+      const idtoken = await manageUser.getIdToken();   
+      type = "";
+      if(mode) type = "?mode="+mode
+      let employee = await fetch(config.hostname+'/job/'+"5eae3c36aa35800021301e18"+"/users"+"" , {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              "idtoken" : idtoken
+          }
+        })
+        .then( res => res.json()
+        .then( result => {
+          return result;
+        }))
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      return employee;
+    }
+    async acceptJob(jobID,userID,status){
+      const idtoken = await manageUser.getIdToken();  
+      return await fetch(config.hostname+'/job/'+"5eae3c36aa35800021301e18"+"/users"+"" , { //fetch(config.hostname+'/job/'+jobID+"/accepting/"+userID+"?status="+status , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "idtoken" : idtoken
+        }
+      })
+      .then( res => res.json()
+      .then( result => {
+        return result;
+      }))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
 
 }
 

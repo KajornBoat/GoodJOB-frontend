@@ -9,7 +9,9 @@ import {
 import { BoxList } from "./EmployeeListJob";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../API/API";
+import { setAcceptEmployee, setApplyEmployee } from "../redux/actions/jobemployer.action";
 
 const Stack = createStackNavigator();
 
@@ -34,7 +36,7 @@ const BoxListWithEmployeeData = ({
         onPress={onPress}
         style={styles.boxlist_container_edit}
       />
-      {mode === "Manual" ? (
+      {mode === "manual" ? (
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             style={[
@@ -70,8 +72,9 @@ const BoxListWithEmployeeData = ({
   );
 };
 
-const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
-  return (
+const EmployerListJob = ({ navigation ,job_list, mode }) => {
+  const dispatch = useDispatch();
+  return (   
     <ScrollView
       style={[
         styles.container,
@@ -81,37 +84,63 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
       ]}
     >
       <View style={{ marginBottom: 40 }}>
-        {job_lists.map((value, index) => {
+        {job_list.map((value, index) => {
           return (
-            value.mode == mode && (
+            value.mode == mode  && (
               <BoxListWithEmployeeData
                 key={index}
                 title={value.title}
-                startDate={value.start_date}
-                finishDate={value.finish_date}
-                place={value.place}
-                onPress={() => {
-                  navigation.navigate("JobDetailEmployerView", {
-                    itemId: value.id,
-                  });
+                startDate={new Date(value.start_date)}
+                finishDate={new Date(value.finish_date)}
+                place={value.location.nameAddress}
+                onPress={() => {           
+                  navigation.navigate("JobDetailEmployerView", { job : value });              
                 }}
                 key={index}
                 {...value}
-                onBottomMiddlePress={() =>
-                  navigation.navigate("AutoEmployeeInfoScreen", {
-                    itemId: value.id,
+                onBottomMiddlePress={() => {
+                    navigation.navigate("AutoEmployeeInfoScreen", {
+                    itemId: value._id,
+                    job : value
                   })
-                }
-                onBottomLeftPress={() =>
+                  api.job.getEmployee(value._id,"accept").then(employee => {
+                    const playload = {
+                      "employee" : employee,
+                      "jobID" : value._id
+                    }
+                    console.log("Load_acceptEmployee")
+                    dispatch(setAcceptEmployee(playload))
+                  })
+                
+                }}
+                onBottomLeftPress={() => {
                   navigation.navigate("ManualEmployeeInfoScreen", {
-                    itemId: value.id,
+                    itemId : value._id,
+                    job : value
                   })
-                }
-                onBottomRightPress={() =>
+                  api.job.getEmployee(value._id,"accept").then(employee => {
+                    const playload = {
+                      "employee" : employee,
+                      "jobID" : value._id
+                    }
+                    console.log("Load_acceptEmployee")
+                    dispatch(setAcceptEmployee(playload))
+                  }) 
+                }}
+                onBottomRightPress={() => {
                   navigation.navigate("ManualApplicantInfoScreen", {
-                    itemId: value.id,
+                    itemId: value._id,
+                    job : value
                   })
-                }
+                  api.job.getEmployee(value._id,"applying").then(employee => {
+                    const playload = {
+                      "employee" : employee,
+                      "jobID" : value._id
+                    }
+                    console.log("Load_applyEmployee")
+                    dispatch(setApplyEmployee(playload))
+                  })     
+                }}
               />
             )
           );
@@ -122,14 +151,15 @@ const EmployerListJob = ({ navigation, route, job_lists, mode }) => {
 };
 
 export default ({ navigation, route }) => {
-  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer)
-    .data;
-  const [mode, setMode] = useState("Manual");
+  
+  const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer);
+  const [mode, setMode] = useState("manual");
 
   const EmployerJob = () => (
     <EmployerListJob
       navigation={navigation}
-      job_lists={job_lists}
+      job_lists={job_lists.data}
+      job_list={job_lists.lists}
       mode={mode}
       route={route}
     />
@@ -143,9 +173,9 @@ export default ({ navigation, route }) => {
           headerLeft: () => (
             <TouchableOpacity
               style={styles.mode_box}
-              onPress={() => setMode(mode === "Manual" ? "Auto" : "Manual")}
+              onPress={() => setMode(mode === "manual" ? "auto" : "manual")}
             >
-              <Text style={{ color: "white" }}>{mode} Search</Text>
+              <Text style={{ color: "white" }}>{mode === "manual" ? "Manual" : "Auto"}</Text>
             </TouchableOpacity>
           ),
           headerTitle: null,
@@ -168,6 +198,8 @@ export default ({ navigation, route }) => {
     </Stack.Navigator>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {

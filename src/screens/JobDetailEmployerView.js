@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import { TextList } from "./CreateJobScreen";
-import { useSelector } from "react-redux";
 
 const PositionComponent = ({ job }) => (
   <View style={{ marginHorizontal: 10 }}>
@@ -15,10 +14,10 @@ const PositionComponent = ({ job }) => (
       <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>จำนวน</Text>
       <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>ค่าจ้าง</Text>
     </View>
-    {job.position.map((value, index) => (
+    {job.positions.map((position, index) => (
       <View key={index} style={{ flexDirection: "row", marginBottom: 10 }}>
         <Text style={{ flex: 3, fontSize: 13, textAlign: "left" }}>
-          {job.position[index]}
+          {position.name}
         </Text>
         <View
           style={{
@@ -29,12 +28,12 @@ const PositionComponent = ({ job }) => (
             textAlign: "right",
           }}
         >
-          <Text children={job.posHave[index]} style={{ color: "#567091" }} />
+          <Text children={position.apply.length} style={{ color: "#567091" }} />
           <Text children="/" />
-          <Text children={job.posReq[index]} />
+          <Text children={position.required} />
         </View>
         <Text style={{ flex: 1, fontSize: 13, textAlign: "right" }}>
-          {job.posWage[index]}฿
+          {position.wage}฿
         </Text>
       </View>
     ))}
@@ -42,13 +41,12 @@ const PositionComponent = ({ job }) => (
 );
 
 const JobDetailEmployerView = ({ navigation, route }) => {
-  const job = useSelector(
-    ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.itemId)[0];
+  const job = route.params.job;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
         <JobDetail job={job}>
+          <Text>{job.title}</Text>
           <View
             style={[
               styles.container,
@@ -61,10 +59,10 @@ const JobDetailEmployerView = ({ navigation, route }) => {
             style={{ marginHorizontal: 20, marginTop: 10, paddingVertical: 15 }}
           >
             <TextList
-              positions={job.position.map((value, i) => ({
-                position: value,
-                amount: job.posReq[i],
-                cost: job.posWage[i],
+              positions={job.positions.map((position) => ({
+                name: position.name,
+                required: position.required,
+                wage: position.wage,
               }))}
             />
           </View>
