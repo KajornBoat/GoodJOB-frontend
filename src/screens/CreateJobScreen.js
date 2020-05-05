@@ -848,9 +848,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               styles.gapVertical,
               { borderColor: "gray", borderBottomWidth: 0.5 },
             ]}
-            placeholder={
-              inputType === "required" ? "จำนวน" : "ค่าจ้าง"
-            }
+            placeholder={inputType === "required" ? "จำนวน" : "ค่าจ้าง"}
             maxLength={inputType === "required" ? 2 : 5}
             keyboardType="numeric"
           />
@@ -865,7 +863,9 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               onPress={() => {
                 setActive(false);
                 setText(
-                  inputType === "required" ? newPosition.required : newPosition.wage
+                  inputType === "required"
+                    ? newPosition.required
+                    : newPosition.wage
                 );
               }}
             >
@@ -878,7 +878,8 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
                 setActive(false);
                 setNewPosition({
                   name: newPosition.name,
-                  required: inputType === "required" ? text : newPosition.required,
+                  required:
+                    inputType === "required" ? text : newPosition.required,
                   wage: inputType === "wage" ? text : newPosition.wage,
                 });
               }}
@@ -1114,6 +1115,7 @@ const CreateJobScreen = ({ navigation }) => {
             msg += fd <= sd ? "เวลางานไม่ถูกต้อง\n" : "";
           }
           msg += location == null ? "กรุณาเลือกสถานที่\n" : "";
+          msg += len(description) < 10 ? "กรุณากรอกลายละเอียด\n" : "";
           msg +=
             positions.length > 0 ? "" : "กรุณาเลือกตำแหน่งงานที่ต้องการจ้าง\n";
           if (msg != "") {
@@ -1128,12 +1130,11 @@ const CreateJobScreen = ({ navigation }) => {
               finish_date: fd,
               location: [location.latitude, location.longitude],
               mode: selectMode,
-              positions: positions
-            };            
+              positions: positions,
+            };
 
             api.job.createJob(job);
             navigation.goBack();
-
           }
         }}
       />
