@@ -81,6 +81,7 @@ const TextInputComponent = ({
   maxLength,
   keyboardType,
   updateData,
+  condition = (_) => true,
 }) => {
   if (keyboardType === "numeric" && value != undefined) value = String(value);
   const [active, setActive] = useState(false);
@@ -144,6 +145,10 @@ const TextInputComponent = ({
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={async () => {
+                if (!condition(text)) {
+                  alert(title + "ไม่ถูกต้อง");
+                  return;
+                }
                 setActiveLoad(true);
                 await updateData(text);
                 setActiveLoad(false);
@@ -479,6 +484,7 @@ const SettingScreen = () => {
               onSaved={actionUser.setFirstname}
               maxLength={20}
               updateData={api.user.update.firstname}
+              condition={(text) => text.match(/^[ก-ํ]+$/)}
             />
             <TextInputComponent
               title="นามสกุล"
@@ -486,6 +492,7 @@ const SettingScreen = () => {
               onSaved={actionUser.setLastname}
               maxLength={20}
               updateData={api.user.update.lastName}
+              condition={(text) => text.match(/^[ก-ํ ]+$/)}
             />
             <TextInputComponent
               title="อายุ"
@@ -494,6 +501,7 @@ const SettingScreen = () => {
               maxLength={2}
               keyboardType="numeric"
               updateData={api.user.update.age}
+              condition={(text) => text.match(/^[1][3-9]$|^[2-9][0-9]$/)}
             />
             <TextInputComponent
               title="หมายเลขโทรศัพท์"
@@ -502,6 +510,7 @@ const SettingScreen = () => {
               maxLength={10}
               keyboardType="numeric"
               updateData={api.user.update.phoneNumber}
+              condition={(text) => text.match(/^[0-9]{9,10}$/)}
             />
             <TextInputComponent
               title="เลขประจำตัวประชาชน"
@@ -510,6 +519,7 @@ const SettingScreen = () => {
               maxLength={13}
               keyboardType="numeric"
               updateData={api.user.update.id_card}
+              condition={(text) => text.match(/^[0-9]{13}$/)}
             />
             <PickerComponent
               title="จังหวัดที่อยู่ปัจจุบัน"

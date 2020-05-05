@@ -67,6 +67,7 @@ const TextInputComponent = ({
   title,
   maxLength,
   keyboardType,
+  condition = (_) => true,
 }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
@@ -128,6 +129,10 @@ const TextInputComponent = ({
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={() => {
+                if (!condition(text)) {
+                  alert(title + "ไม่ถูกต้อง");
+                  return;
+                }
                 setActive(false);
                 onSaved(text);
               }}
@@ -164,6 +169,7 @@ const BankScreen = () => {
               onSaved={(value) => setBank({ ...bank, id: value })}
               maxLength={12}
               keyboardType="numeric"
+              condition={(text) => text.match(/^[0-9]{10,12}$/)}
             />
           </View>
         </ScrollView>
