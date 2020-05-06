@@ -11,20 +11,19 @@ import PopUpScreen from "../component/PopUpScreen";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
 import ConfirmPopUp from "../component/ConfirmPopUp";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../API/API";
+import { setSelectEmployee } from "../redux/actions/jobemployer.action";
 
 export default function IndividualInviteEmployeeProfileScreen({
   route,
   navigation,
 }) {
-  const employeeInfo = useSelector(
-    ({ jobEmployerReducer }) => jobEmployerReducer
-  ).data.filter((value) => value.id == route.params.parentItemId)[0]
-    .inviteEmployee;
+  const employeeInfo = route.params.employeeInfo;
   const [imageVisible, setImageVisible] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-  const itemId = route.params.itemId;
-
+  const jobID = route.params.jobID;
+  const dispatch = useDispatch()
   return (
     <View style={{ flex: 1 }}>
       <PopUpScreen
@@ -33,7 +32,7 @@ export default function IndividualInviteEmployeeProfileScreen({
         transparent
       >
         <View style={{ justifyContent: "center" }}>
-          <EmployeeAvatar uri={employeeInfo[itemId].image} size={250} />
+          <EmployeeAvatar uri={employeeInfo.user.photoURL} size={250} />
         </View>
       </PopUpScreen>
 
@@ -42,26 +41,37 @@ export default function IndividualInviteEmployeeProfileScreen({
         setVisible={setShowPopUp}
         textPopup={
           'คุณยืนยันที่จะเชิญ "' +
-          employeeInfo[itemId].firstName +
+          employeeInfo.user.firstname +
           " " +
-          employeeInfo[itemId].lastName +
+          employeeInfo.user.lastname +
           '" หรือไม่?'
         }
         navigation={navigation}
         callback={() => {
-          console.log("Sent Invite");
+          console.log("Sent Invite",employeeInfo.user._id);
+          api.job.employer.inviteUser(jobID,employeeInfo.user._id,route.params.position).then(employee => {
+            api.job.employer.getEmployee(jobID,"selecting").then(employee => {
+              const playload = {
+                "employee" : employee,
+                "jobID" : jobID
+              }
+              console.log("ReLoad_SelectEmployee")
+              dispatch(setSelectEmployee(playload))
+            })
+          })
+          
         }}
       />
 
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={{ marginTop: 20, marginBottom: 10 }}>
           <EmployeeAvatar
-            uri={employeeInfo[itemId].image}
+            uri={employeeInfo.user.photoURL}
             size={100}
             onPress={() => setImageVisible(true)}
           />
         </View>
-        <TextEmployeeInfo data={employeeInfo[itemId]} />
+        <TextEmployeeInfo data={employeeInfo.user} />
       </ScrollView>
 
       <View style={{ backgroundColor: "white" }}>

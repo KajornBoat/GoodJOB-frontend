@@ -68,7 +68,7 @@ const JobEmployeeTab = () => {
         }}
       />
       <Tab.Screen
-        name="สถานะงาน"
+        name="งานที่สมัคร"
         component={EmployeeListJob}
         initialParams={{
           routeName: "JobDetailStatus",
@@ -144,7 +144,7 @@ const EmployeeTabs = () => {
         }}
       />
       <Tab.Screen
-        name="ประสบการณ์"
+        name="ประวัติงาน"
         component={EmployeeListJobWithFilter}
         initialParams={{
           routeName: "JobDetailHistory",
@@ -185,6 +185,25 @@ const EmployeeTabs = () => {
           },
         }}
       />
+      {/* <Tab.Screen
+        name="Test"
+        component={TestScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => {
+            return (
+              <Image
+                source={
+                  focused
+                    ? require("../assets/setting.png")
+                    : require("../assets/setting-outline.png")
+                }
+                style={{ width: size * 1.25, height: size * 1.25 }}
+                resizeMode="contain"
+              />
+            );
+          },
+        }}
+      /> */}
     </Tab.Navigator>
   );
 };

@@ -5,14 +5,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Button
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PopUpScreen from "../component/PopUpScreen";
 import EmployeeAvatar from "../component/EmployeeAvatar";
 import TextEmployeeInfo from "../component/TextEmployeeInfo";
+import api from "../API/API";
+import { setAcceptEmployee } from "../redux/actions/jobemployer.action";
 
 export default function IndividualEmployeeProfileScreen({ route, navigation }) {
   const [imageVisible, setImageVisible] = useState(false);
+  const dispatch = useDispatch();
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <PopUpScreen
@@ -34,6 +38,20 @@ export default function IndividualEmployeeProfileScreen({ route, navigation }) {
           />
         </View>
         <TextEmployeeInfo data={route.params.employeeInfo.user} />
+        <Button title="จ่ายเงิน" onPress={() => {
+         api.job.employer.finishJob(route.params.jobID,route.params.employeeInfo.user._id).then(() => {
+          api.job.employer.getEmployee(route.params.jobID,"accept").then(employee => {
+            const playload = {
+              "employee" : employee,
+              "jobID" : route.params.jobID
+            }
+            console.log("ReLoad_acceptEmployee")
+            dispatch(setAcceptEmployee(playload))
+          }) 
+         })
+          navigation.navigate("ManualEmployeeInfoScreen")
+        }} />
+        
       </ScrollView>
     </View>
   );

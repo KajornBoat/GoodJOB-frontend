@@ -212,11 +212,11 @@ export const MyPositionComponent = ({ job }) => (
     >
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ตำแหน่ง</Text>
-        <Text>{job.myPosition}</Text>
+        <Text>{job.position}</Text>
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text style={{ fontWeight: "bold", marginBottom: 20 }}>ค่าจ้าง</Text>
-        <Text>{job.posWage[job.position.indexOf(job.myPosition)]}฿</Text>
+        <Text>{job.wage}฿</Text>
       </View>
     </View>
   </View>

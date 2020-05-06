@@ -103,7 +103,7 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                     itemId: value._id,
                     job : value
                   })
-                  api.job.getEmployee(value._id,"accept").then(employee => {
+                  api.job.employer.getEmployee(value._id,"accept").then(employee => {
                     const playload = {
                       "employee" : employee,
                       "jobID" : value._id
@@ -118,7 +118,7 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                     itemId : value._id,
                     job : value
                   })
-                  api.job.getEmployee(value._id,"accept").then(employee => {
+                  api.job.employer.getEmployee(value._id,"accept").then(employee => {
                     const playload = {
                       "employee" : employee,
                       "jobID" : value._id
@@ -132,7 +132,7 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                     itemId: value._id,
                     job : value
                   })
-                  api.job.getEmployee(value._id,"applying").then(employee => {
+                  api.job.employer.getEmployee(value._id,"applying").then(employee => {
                     const playload = {
                       "employee" : employee,
                       "jobID" : value._id

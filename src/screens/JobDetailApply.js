@@ -4,6 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import JobDetail, { FooterComment } from "../component/JobDetail";
 import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
+import api from "../API/API";
 
 const AddPositionComponent = ({ job, navigation }) => {
   const [position, setPosition] = React.useState("");
@@ -71,16 +72,16 @@ const AddPositionComponent = ({ job, navigation }) => {
         setVisible={setPopUp}
         visible={popUp}
         textPopup={`คุณยืนยันที่จะสมัครตำแหน่ง "${position}" หรือไม่?`}
-        callback={() => console.log(position)}
+        callback={() => {
+          api.job.employee.applyJob(job._id,position)
+        }}
       />
     </View>
   );
 };
 
 const JobDetailApply = ({ navigation, route }) => {
-  const job = useSelector(({ jobApplyReducer }) => jobApplyReducer).data.filter(
-    (value) => value.id == route.params.itemId
-  )[0];
+  const job = route.params.job;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>

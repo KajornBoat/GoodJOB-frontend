@@ -9,9 +9,7 @@ import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
 
 const JobDetailStatus = ({ navigation, route }) => {
-  const job = useSelector(
-    ({ jobStatusReducer }) => jobStatusReducer
-  ).data.filter((value) => value.id == route.params.itemId)[0];
+  const job = route.params.job;
   const [popUp, setPopUp] = useState(false);
   return (
     <View style={{ flex: 1 }}>
@@ -22,11 +20,11 @@ const JobDetailStatus = ({ navigation, route }) => {
             style={{ position: "absolute", bottom: 25, right: "7%" }}
             onPress={() => setPopUp(true)}
           >
-            <AntDesign
+            {/* <AntDesign
               name="closecircle"
               size={18}
               style={{ color: "#f65a5a" }}
-            />
+            /> */}
           </TouchableOpacity>
         </JobDetail>
       </View>
@@ -37,9 +35,9 @@ const JobDetailStatus = ({ navigation, route }) => {
         textPopup={`คุณยืนยันที่จะยกเลิกตำแหน่ง "${job.myPosition}" หรือไม่?`}
         callback={() => console.log("Cancel")}
       />
-      <View style={{ flex: 1 }}>
+      {/* <View style={{ flex: 1 }}>
         <FooterComment navigation={navigation} job={job} />
-      </View>
+      </View> */}
     </View>
   );
 };

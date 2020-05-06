@@ -49,14 +49,15 @@ export default function IndividualApplicantProfileScreen({
         navigation={navigation}
         callback={async() => {
           console.log("Accept");
-          api.job.acceptJob(jobID,employeeInfo.user._id,"accept").then(employee => {
+          api.job.employer.acceptUser(jobID,employeeInfo.user._id,"accept").then(employee => {   
             const playload = {
               "employee" : employee,
               "jobID" : jobID
             }
-            console.log("ReLoad_applyEmployee")
+            console.log("ReLoad_applyEmployee",employee)
             dispatch(setApplyEmployee(playload))
           })
+         
         }}
       />
 
@@ -73,14 +74,15 @@ export default function IndividualApplicantProfileScreen({
         navigation={navigation}
         callback={() => {
           console.log("Decline");
-          api.job.acceptJob(jobID,employeeInfo.user._id,"cancel").then(employee => {
+          api.job.employer.acceptUser(jobID,employeeInfo.user._id,"cancel").then(employee => {    
             const playload = {
               "employee" : employee,
               "jobID" : jobID
             }
-            console.log("ReLoad_applyEmployee")
-            dispatch(setApplyEmployee(playload))
+            console.log("ReLoad_applyEmployee",employee)
+            dispatch(setApplyEmployee(playload))   
           })
+          
         }}
       />
 

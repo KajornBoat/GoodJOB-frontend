@@ -5,7 +5,7 @@ export default () => {
     return (
         <View style={styles.container}>
           <ActivityIndicator size="large" />
-          <Text>Loading...Splash</Text>
+          <Text>Loading...</Text>
         </View>
       );
 };

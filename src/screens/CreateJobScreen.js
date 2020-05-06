@@ -22,6 +22,8 @@ import PopUpScreen from "../component/PopUpScreen";
 // Constant Import
 import { JOB_POSITION, MONTH_TH } from "../assets/constValue";
 import api from "../API/API";
+import { setJobEmployer } from "../redux/actions/jobemployer.action";
+import { useDispatch } from "react-redux";
 
 const TextInputComponent = ({
   value,
@@ -1023,6 +1025,9 @@ const CreateJobScreen = ({ navigation }) => {
   const [positions, setPositions] = useState([]);
   const [selectJob, setSelectJob] = useState([]);
   const [selectMode, setSelectMode] = useState("manual");
+
+  const dispatch = useDispatch();
+
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <KeyboardAvoidingView
@@ -1125,7 +1130,6 @@ const CreateJobScreen = ({ navigation }) => {
             alert(msg);
           } else {
             console.log("Saving...");
-
             let job = {
               title: jobName,
               description: description,
@@ -1138,9 +1142,11 @@ const CreateJobScreen = ({ navigation }) => {
               mode: selectMode,
               positions: positions
             };            
-            api.job.createJob(job);
+            api.job.employer.createJob(job).then( (jobnew) => {          
+              dispatch(setJobEmployer(jobnew));
+            });
             navigation.goBack();
-
+            
           }
         }}
       />

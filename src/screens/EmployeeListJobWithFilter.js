@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -195,7 +195,7 @@ const MultiSelectPicker = ({
   );
 };
 
-const EmployeeListJobWithFilter = ({ route }) => {
+const EmployeeListJobWithFilter = ({ route,navigation }) => {
   const items = require("../assets/constValue").JOB_POSITION;
   const { interested } = useSelector(({ userReducer }) => userReducer);
   const popUpState = useState(false);
@@ -220,9 +220,11 @@ const EmployeeListJobWithFilter = ({ route }) => {
     })()
   );
 
-  const EmployeeJob = (props) => (
-    <EmployeeListJob {...props} filter={filterState} />
-  );
+  const EmployeeJob = (props) => {
+    return(
+      <EmployeeListJob {...props} filter={filterState} navigation={navigation}  />
+    )
+  };
   return (
     <Stack.Navigator initialRouteName="EmployeeListJobWithHeader">
       <Stack.Screen

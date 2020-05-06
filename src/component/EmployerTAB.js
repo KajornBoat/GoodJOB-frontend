@@ -14,7 +14,7 @@ import TestScreen from "../screens/TestScreen";
 
 const EmployerTabs = () => {
   const dispatch = useDispatch();
-  api.job.getJobEmployer().then(job => {
+  api.job.employer.getJobEmployer().then(job => {
     dispatch(setJobEmployer(job));
     console.log("LoadJobEmployer")
   });

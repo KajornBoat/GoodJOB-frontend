@@ -6,11 +6,11 @@ import JobDetail, {
 } from "../component/JobDetail";
 import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
+import api from "../API/API";
 
 const JobDetailInvite = ({ navigation, route }) => {
-  const job = useSelector(
-    ({ jobInviteReducer }) => jobInviteReducer
-  ).data.filter((value) => value.id == route.params.itemId)[0];
+  const job = route.params.job;
+  const setJobs = route.params.setJob;
   const [popUp, setPopUp] = useState(false);
   const [title, setTitle] = useState("");
   const [accept, setAccept] = useState(false);
@@ -57,9 +57,28 @@ const JobDetailInvite = ({ navigation, route }) => {
         navigation={navigation}
         setVisible={setPopUp}
         visible={popUp}
-        textPopup={`คุณยืนยันที่จะ${title}ตำแหน่ง "${job.myPosition}" หรือไม่?`}
+        textPopup={`คุณยืนยันที่จะ${title}ตำแหน่ง "${job.position}" หรือไม่?`}
         callback={
-          accept ? () => console.log("Accept") : () => console.log("Decline")
+          accept ? 
+          () => {
+            console.log("Accept")
+            api.job.employee.acceptJob(job._id,"accept").then(()=> {
+              api.job.employee.getJobs("jobInviteReducer").then(job => {
+                console.log("Reload : jobInvite")
+                setJobs(job)
+              });    
+            })
+            
+          }
+          : () => {
+            console.log("Decline")
+            api.job.employee.acceptJob(job._id,"cancel").then(()=> {
+              api.job.employee.getJobs("jobInviteReducer").then(job => {
+                console.log("Reload : jobInvite")
+                setJobs(job)
+              });    
+            })
+          }
         }
       />
       <View style={{ flex: 1 }}>

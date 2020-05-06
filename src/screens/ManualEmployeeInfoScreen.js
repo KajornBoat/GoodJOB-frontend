@@ -11,8 +11,10 @@ import {
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import EmployeeProfile from "../component/EmployeeProfile";
+import api from "../API/API";
+import { setSelectEmployee } from "../redux/actions/jobemployer.action";
 
 export default function ManualEmployeeInfoScreen({
   navigation,
@@ -23,7 +25,7 @@ export default function ManualEmployeeInfoScreen({
     ({ jobEmployerReducer }) => jobEmployerReducer
   ).lists.filter((value) => value._id == route.params.itemId)[0];
   const employee = job.acceptEmployee;
-  //console.log(employee.filter(value => value.position == filter).length)
+  const dispatch = useDispatch();
   if(employee){
     return (
       <View style={{ flex: 1 }}>
@@ -35,17 +37,25 @@ export default function ManualEmployeeInfoScreen({
             route={route}
           />
         </ScrollView>
-{/*         
+        
         <TouchableOpacity
           style={{ backgroundColor: "#afd9ff" }}
           activeOpacity={0.5}
-          onPress={() =>
-            console.log("Press")
-            // navigation.navigate("SelectForInviteScreen", {
-            //   filter: filter,
-            //   itemId: route.params.itemId,
-            // })
-          }
+          onPress={() => {
+            api.job.employer.getEmployee(job._id,"selecting").then(employee => {
+              const playload = {
+                "employee" : employee,
+                "jobID" : job._id
+              }
+              console.log("Load_SelectEmployee")
+              dispatch(setSelectEmployee(playload))
+            })
+            navigation.navigate("SelectForInviteScreen", {
+              filter: filter,
+              itemId: route.params.itemId,
+              nextRouts : "IndividualInviteEmployeeProfileScreen"
+            })
+          }}
           disabled={
             filter == "ตำแหน่ง" ||
             !(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
@@ -68,7 +78,7 @@ export default function ManualEmployeeInfoScreen({
             />
             <Text style={styles.footerText}>เชิญคนเพิ่ม</Text>
           </View>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     );
   }
@@ -98,6 +108,7 @@ const ShowEmployeeProfileList = ({ employee, route, filter, navigation }) => {
               onPress={() => { 
                 navigation.navigate("IndividualEmployeeProfileScreen", {
                   employeeInfo : value,
+                  jobID : route.params.itemId,
                 });
               }}
             />
