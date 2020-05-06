@@ -28,6 +28,7 @@ import IndividualInviteEmployeeProfileScreen from "./IndividualInviteEmployeePro
 import SelectForInviteScreen from "./SelectForInviteScreen";
 import IndividualApplicantProfileScreen from "./IndividualApplicantProfileScreen";
 import PickerFilter from "../component/PickerFilter";
+import CommentScreen from "./CommentScreen";
 
 import TestScreen from "./TestScreen";
 
@@ -43,12 +44,11 @@ const UserStack = () => {
   const [autoPosition, setAutoPosition] = useState("ตำแหน่ง");
   const [manualPosition, setManualPosition] = useState("ตำแหน่ง");
   const [applicantPosition, setApplicantPosition] = useState("ตำแหน่ง");
-  
 
   const AutoEmployeeInfo = (props) => (
     <AutoEmployeeInfoScreen {...props} filter={autoPosition} />
   );
-  
+
   const ManualEmployeeInfo = (props) => (
     <ManualEmployeeInfoScreen {...props} filter={manualPosition} />
   );
@@ -71,7 +71,7 @@ const UserStack = () => {
         headerTitleStyle: styles.labelFont,
       }}
     >
-      { role === "Employer" && (
+      {role === "Employer" && (
         <Stack.Screen
           name="EmployerTabs"
           component={EmployerTabs}
@@ -80,7 +80,7 @@ const UserStack = () => {
           }}
         />
       )}
-      { role === "Employee" && (
+      {role === "Employee" && (
         <Stack.Screen
           name="EmployeeTabs"
           component={EmployeeTabs}
@@ -192,9 +192,7 @@ const UserStack = () => {
               title="ตำแหน่ง"
               value={autoPosition}
               setOnValueChange={setAutoPosition}
-              items={
-                route.params.job.tags 
-              }
+              items={route.params.job.tags}
             />
           ),
           headerTitle: null,
@@ -209,9 +207,7 @@ const UserStack = () => {
               title="ตำแหน่ง"
               value={manualPosition}
               setOnValueChange={setManualPosition}
-              items={
-                route.params.job.tags 
-              }
+              items={route.params.job.tags}
             />
           ),
           headerTitle: null,
@@ -226,23 +222,21 @@ const UserStack = () => {
               title="ตำแหน่ง"
               value={applicantPosition}
               setOnValueChange={setApplicantPosition}
-              items={
-                route.params.job.tags 
-              }
+              items={route.params.job.tags}
             />
           ),
           headerTitle: null,
         })}
       />
-{/*.......................................... Test ..........................................*/}
+      {/*.......................................... Test ..........................................*/}
       <Stack.Screen
-        name="TestScreen"
-        component={TestScreen}
+        name="Comment"
+        component={CommentScreen}
         options={{
-          headerShown: false,
+          headerTitle: "คอมเมนต์",
         }}
       />
-{/*.......................................... test ..........................................*/}
+      {/*.......................................... test ..........................................*/}
     </Stack.Navigator>
   );
 };

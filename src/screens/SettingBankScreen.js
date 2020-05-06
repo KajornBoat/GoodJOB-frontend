@@ -25,7 +25,10 @@ const PickerComponent = ({ title, value, items, onValueChange }) => {
               color: "transparent",
               height: 25,
             }}
-            onValueChange={(itemValue, itemIndex) => onValueChange(itemValue)}
+            onValueChange={(itemValue, itemIndex) => {
+              onValueChange(itemValue);
+              alert("บันทึก" + title + "สำเร็จ");
+            }}
           >
             <Picker.Item
               key={0}
@@ -67,6 +70,7 @@ const TextInputComponent = ({
   title,
   maxLength,
   keyboardType,
+  condition = (text) => true,
 }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
@@ -128,8 +132,13 @@ const TextInputComponent = ({
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={() => {
+                if (!condition(text)) {
+                  alert("บันทึก" + title + "ไม่สำเร็จ");
+                  return;
+                }
                 setActive(false);
                 onSaved(text);
+                alert("บันทึก" + title + "สำเร็จ");
               }}
             >
               <Text>ตกลง</Text>
@@ -164,6 +173,7 @@ const BankScreen = () => {
               onSaved={(value) => setBank({ ...bank, id: value })}
               maxLength={12}
               keyboardType="numeric"
+              condition={(text) => text.match(/^[0-9]{10,12}$/)}
             />
           </View>
         </ScrollView>

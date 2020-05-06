@@ -433,7 +433,7 @@ const Map = (props) => {
   );
 };
 
-const MapComponent = ({ location, setLocation ,address ,setAddress}) => {
+const MapComponent = ({ location, setLocation, address, setAddress }) => {
   const [showMap, setShowMap] = useState(false);
   return (
     <View>
@@ -739,9 +739,15 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
         onPress={() => {
           let msg = "";
           msg += newPosition.name == "" ? "ตำแหน่งไม่ถูกต้อง\n" : "";
-          msg += Number(newPosition.required) > 0 ? "" : "จำนวนไม่ถูกต้อง\n";
           msg +=
-            newPosition.wage != "" && Number(newPosition.wage) >= 0
+            Number(newPosition.required) > 0 &&
+            Number.isInteger(Number(newPosition.required))
+              ? ""
+              : "จำนวนไม่ถูกต้อง\n";
+          msg +=
+            newPosition.wage != "" &&
+            Number(newPosition.wage) >= 0 &&
+            Number.isInteger(Number(newPosition.wage))
               ? ""
               : "ค่าจ้างไม่ถูกต้อง\n";
           if (msg == "") {
@@ -849,9 +855,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               styles.gapVertical,
               { borderColor: "gray", borderBottomWidth: 0.5 },
             ]}
-            placeholder={
-              inputType === "required" ? "จำนวน" : "ค่าจ้าง"
-            }
+            placeholder={inputType === "required" ? "จำนวน" : "ค่าจ้าง"}
             maxLength={inputType === "required" ? 2 : 5}
             keyboardType="numeric"
           />
@@ -866,7 +870,9 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
               onPress={() => {
                 setActive(false);
                 setText(
-                  inputType === "required" ? newPosition.required : newPosition.wage
+                  inputType === "required"
+                    ? newPosition.required
+                    : newPosition.wage
                 );
               }}
             >
@@ -879,7 +885,8 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
                 setActive(false);
                 setNewPosition({
                   name: newPosition.name,
-                  required: inputType === "required" ? text : newPosition.required,
+                  required:
+                    inputType === "required" ? text : newPosition.required,
                   wage: inputType === "wage" ? text : newPosition.wage,
                 });
               }}
@@ -1054,11 +1061,11 @@ const CreateJobScreen = ({ navigation }) => {
               setFinishDate={setFinishDate}
             />
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            <MapComponent 
-              location={location} 
-              setLocation={setLocation} 
-              address = {nameAddress}
-              setAddress ={setNameAddress}
+            <MapComponent
+              location={location}
+              setLocation={setLocation}
+              address={nameAddress}
+              setAddress={setNameAddress}
             />
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <TextAreaComponent
@@ -1102,11 +1109,18 @@ const CreateJobScreen = ({ navigation }) => {
           let msg = "";
           let sd, fd;
           msg += jobName === "" ? "กรุณากรอกชื่องาน\n" : "";
+          msg +=
+            description.length >= 10
+              ? ""
+              : "กรุณากรอกรายละเอียดตั้งแต่ 10 ตัว\n";
           msg += date == null ? "กรุณาเลือกวันที่\n" : "";
           msg += startDate == null ? "กรุณาเลือกเวลาเริ่มงาน\n" : "";
           msg += finishDate == null ? "กรุณาเลือกเวลาสิ้นสุดงาน\n" : "";
           if (date != null && startDate != null && finishDate != null) {
-            msg += date > Date.now() ? "" : "วันที่ไม่ถูกต้อง";
+            msg +=
+              date > Date.now()
+                ? ""
+                : "วันที่ต้องมากกว่าวันปัจจุบันอย่างน้อย 1 วัน";
             sd = new Date(
               date.getFullYear(),
               date.getMonth(),
@@ -1121,7 +1135,7 @@ const CreateJobScreen = ({ navigation }) => {
               finishDate.getHours(),
               finishDate.getMinutes()
             );
-            msg += fd <= sd ? "เวลางานไม่ถูกต้อง\n" : "";
+            msg += fd <= sd ? "เริ่มงานถึงสิ้นสุดงานไม่ถูกต้อง\n" : "";
           }
           msg += location == null ? "กรุณาเลือกสถานที่\n" : "";
           msg +=
@@ -1136,17 +1150,16 @@ const CreateJobScreen = ({ navigation }) => {
               start_date: sd,
               finish_date: fd,
               location: {
-                coordinates : [location.latitude, location.longitude],
-                nameAddress : nameAddress
+                coordinates: [location.latitude, location.longitude],
+                nameAddress: nameAddress,
               },
               mode: selectMode,
-              positions: positions
-            };            
-            api.job.employer.createJob(job).then( (jobnew) => {          
+              positions: positions,
+            };
+            api.job.employer.createJob(job).then((jobnew) => {
               dispatch(setJobEmployer(jobnew));
             });
             navigation.goBack();
-            
           }
         }}
       />

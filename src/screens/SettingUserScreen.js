@@ -81,6 +81,7 @@ const TextInputComponent = ({
   maxLength,
   keyboardType,
   updateData,
+  condition = (text) => true,
 }) => {
   if (keyboardType === "numeric" && value != undefined) value = String(value);
   const [active, setActive] = useState(false);
@@ -144,11 +145,16 @@ const TextInputComponent = ({
             <TouchableOpacity
               style={{ marginVertical: 5, marginHorizontal: 10 }}
               onPress={async () => {
+                if (!condition(text)) {
+                  alert("บันทึก" + title + "ไม่สำเร็จ");
+                  return;
+                }
                 setActiveLoad(true);
                 await updateData(text);
                 setActiveLoad(false);
                 setActive(false);
                 dispatch(onSaved(text));
+                alert("บันทึก" + title + "สำเร็จ");
               }}
             >
               <Text>ตกลง</Text>
@@ -191,6 +197,7 @@ const PickerComponent = ({
               await updateData(itemValue);
               setActiveLoad(false);
               dispatch(onValueChange(itemValue));
+              alert("บันทึก" + title + "สำเร็จ");
             }}
           >
             <Picker.Item
@@ -338,6 +345,7 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
                     await updateData(list);
                     setActiveLoad(false);
                     setActive(false);
+                    alert("บันทึก" + title + "สำเร็จ");
                   }}
                 >
                   <Text>ตกลง</Text>
@@ -436,6 +444,7 @@ const TextAreaComponent = ({
                 setActiveLoad(false);
                 setActive(false);
                 dispatch(onSaved(text));
+                alert("บันทึก" + title + "สำเร็จ");
               }}
             >
               <Text>ตกลง</Text>
@@ -479,6 +488,7 @@ const SettingScreen = () => {
               onSaved={actionUser.setFirstname}
               maxLength={20}
               updateData={api.user.update.firstname}
+              condition={(text) => text.match(/^[ก-ํ]+$/)}
             />
             <TextInputComponent
               title="นามสกุล"
@@ -486,6 +496,7 @@ const SettingScreen = () => {
               onSaved={actionUser.setLastname}
               maxLength={20}
               updateData={api.user.update.lastName}
+              condition={(text) => text.match(/^[ก-ํ ]+$/)}
             />
             <TextInputComponent
               title="อายุ"
@@ -494,6 +505,7 @@ const SettingScreen = () => {
               maxLength={2}
               keyboardType="numeric"
               updateData={api.user.update.age}
+              condition={(text) => text.match(/^[1][6-9]$|^[2-9][0-9]$/)}
             />
             <TextInputComponent
               title="หมายเลขโทรศัพท์"
@@ -502,6 +514,7 @@ const SettingScreen = () => {
               maxLength={10}
               keyboardType="numeric"
               updateData={api.user.update.phoneNumber}
+              condition={(text) => text.match(/^[0-9]{9,10}$/)}
             />
             <TextInputComponent
               title="เลขประจำตัวประชาชน"
@@ -510,6 +523,7 @@ const SettingScreen = () => {
               maxLength={13}
               keyboardType="numeric"
               updateData={api.user.update.id_card}
+              condition={(text) => text.match(/^[0-9]{13}$/)}
             />
             <PickerComponent
               title="จังหวัดที่อยู่ปัจจุบัน"

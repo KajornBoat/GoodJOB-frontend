@@ -46,7 +46,6 @@ const JobDetailEmployerView = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 11 }}>
         <JobDetail job={job}>
-          <Text>{job.title}</Text>
           <View
             style={[
               styles.container,

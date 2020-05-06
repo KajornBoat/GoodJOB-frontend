@@ -1,11 +1,11 @@
-import React ,{ useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { DateComponet } from "../component/JobDetail";
 import { Ionicons } from "@expo/vector-icons";
@@ -61,45 +61,46 @@ export const BoxList = ({
 };
 
 const EmployeeListJob = ({ navigation, route, filter }) => {
-
   const [jobs, setJobs] = useState();
-  if(jobs == undefined){
-    
-    api.job.employee.getJobs(route.params.jobs).then(job => {
-      console.log('Load : ',route.params.routeName);
-      setJobs(job)
-    });    
+  if (jobs == undefined) {
+    api.job.employee.getJobs(route.params.jobs).then((job) => {
+      console.log("Load : ", route.params.routeName);
+      setJobs(job);
+    });
   }
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', e => {
-      
-      api.job.employee.getJobs(route.params.jobs).then(job => {
-        console.log('Reload : ',route.params.routeName);
-        setJobs(job)
-      });    
+    const unsubscribe = navigation.addListener("tabPress", (e) => {
+      api.job.employee.getJobs(route.params.jobs).then((job) => {
+        console.log("Reload : ", route.params.routeName);
+        setJobs(job);
+      });
     });
     return unsubscribe;
   }, [navigation]);
-  if(jobs !== undefined){
+  if (jobs !== undefined) {
+    console.log("Update");
     const job_lists =
-    filter === undefined || route.params.routeName !== "EmployeeListJobWithHeader"
-      ? jobs
-      : jobs.filter((job) => {
-          if (filter === undefined) return true;
-          else
-            return (
-              filter.filter((select) => job.position.indexOf(select) > -1)
-                .length > 0
-            );
-        });
-    const job_list = Object.keys(job_lists)
-    if(job_list.length > 0){
+      filter == undefined
+        ? jobs
+        : jobs.filter((job) => {
+            if (filter === undefined) return true;
+            else {
+              console.log(job.tags);
+              return (
+                filter.filter((select) => job.tags.indexOf(select) > -1)
+                  .length > 0
+              );
+            }
+          });
+    const job_list = Object.keys(job_lists);
+    if (job_list.length > 0) {
       return (
         <ScrollView
           style={[
             styles.container,
             {
-              paddingTop: require("expo-constants").default.statusBarHeight + 15,
+              paddingTop:
+                require("expo-constants").default.statusBarHeight + 15,
             },
           ]}
         >
@@ -112,32 +113,29 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
                 finishDate={new Date(value.finish_date)}
                 place={value.location.nameAddress}
                 onPress={() => {
-                  navigation.navigate(route.params.routeName, { job : value ,setJob : setJobs});
+                  navigation.navigate(route.params.routeName, {
+                    job: value,
+                    setJob: setJobs,
+                  });
                 }}
               />
             ))}
           </View>
         </ScrollView>
       );
+    } else {
+      return <View style={styles.loading}></View>;
     }
-    else{
-      return (
-        <View style={styles.loading}>
-        </View>
-      )
-    }
-  }
-  else{
+  } else {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" />
       </View>
-    )
+    );
   }
 };
 
 export default EmployeeListJob;
-
 
 const styles = StyleSheet.create({
   container: {
