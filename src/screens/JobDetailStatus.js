@@ -7,8 +7,9 @@ import JobDetail, {
 import { AntDesign } from "@expo/vector-icons";
 import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
+import api from "../API/API";
 
-const JobDetailStatus = ({ navigation, route }) => {
+const JobDetailStatus = ({ navigation, route  }) => {
   const job = route.params.job;
   const [popUp, setPopUp] = useState(false);
   return (
@@ -33,7 +34,15 @@ const JobDetailStatus = ({ navigation, route }) => {
         setVisible={setPopUp}
         visible={popUp}
         textPopup={`คุณยืนยันที่จะยกเลิกตำแหน่ง "${job.position}" หรือไม่?`}
-        callback={() => console.log("Cancel")}
+        callback={() => {
+          console.log("CancelJob")
+          api.job.employee.acceptJob(job._id,"cancel").then(()=> {
+            api.job.employee.getJobs("jobStatusReducer").then((job) => {
+              console.log("Reload : JobDetailApply");
+              route.params.setJob(job);
+            });
+          })
+        }}
       />
       <View style={{ flex: 1 }}>
         <FooterComment navigation={navigation} job={job} />

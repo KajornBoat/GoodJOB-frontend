@@ -6,7 +6,7 @@ import ConfirmPopUp from "../component/ConfirmPopUp";
 import { useSelector } from "react-redux";
 import api from "../API/API";
 
-const AddPositionComponent = ({ job, navigation }) => {
+const AddPositionComponent = ({ job, navigation ,route}) => {
   const [position, setPosition] = React.useState("");
   const [popUp, setPopUp] = React.useState(false);
   return (
@@ -73,7 +73,12 @@ const AddPositionComponent = ({ job, navigation }) => {
         visible={popUp}
         textPopup={`คุณยืนยันที่จะสมัครตำแหน่ง "${position}" หรือไม่?`}
         callback={() => {
-          api.job.employee.applyJob(job._id,position)
+          api.job.employee.applyJob(job._id,position).then(() => {
+            api.job.employee.getJobs("jobApplyReducer").then((job) => {
+              console.log("Reload : JobDetailAvailable");
+              route.params.setJob(job);
+            });
+          })
         }}
       />
     </View>
@@ -87,7 +92,7 @@ const JobDetailApply = ({ navigation, route }) => {
       <View style={{ flex: 11 }}>
         <JobDetail job={job}>
           <View style={styles.container}>
-            <AddPositionComponent job={job} navigation={navigation} />
+            <AddPositionComponent job={job} navigation={navigation} route={route} />
           </View>
         </JobDetail>
       </View>
