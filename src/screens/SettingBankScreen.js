@@ -11,8 +11,12 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PopUpScreen from "../component/PopUpScreen";
+import api from "../API/API";
+import { useSelector, useDispatch } from "react-redux";
+import { setBankAccount, setBank } from "../redux/actions/user.action";
 
-const PickerComponent = ({ title, value, items, onValueChange }) => {
+const PickerComponent = ({ title, value, items, onValueChange ,onUpdate}) => {
+  const dispatch = useDispatch()
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -25,8 +29,10 @@ const PickerComponent = ({ title, value, items, onValueChange }) => {
               color: "transparent",
               height: 25,
             }}
-            onValueChange={(itemValue, itemIndex) => {
-              onValueChange(itemValue);
+            onValueChange={async(itemValue, itemIndex) => {
+              console.log(itemValue)
+              dispatch(onValueChange(itemValue));
+              onUpdate(itemValue)
               alert("บันทึก" + title + "สำเร็จ");
             }}
           >
@@ -70,15 +76,16 @@ const TextInputComponent = ({
   title,
   maxLength,
   keyboardType,
+  onUpdate,
   condition = (text) => true,
 }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState(value);
-
+  const dispatch = useDispatch()
   useEffect(() => {
     setText(value);
   }, [value]);
-
+  
   return (
     <View>
       <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
@@ -137,7 +144,8 @@ const TextInputComponent = ({
                   return;
                 }
                 setActive(false);
-                onSaved(text);
+                dispatch(onSaved(text));
+                onUpdate(text)
                 alert("บันทึก" + title + "สำเร็จ");
               }}
             >
@@ -151,7 +159,7 @@ const TextInputComponent = ({
 };
 
 const BankScreen = () => {
-  const [bank, setBank] = useState({ name: "", id: "" });
+  const userReducer = useSelector(({ userReducer }) => userReducer);
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAvoidingView
@@ -163,14 +171,16 @@ const BankScreen = () => {
           <View style={styles.formContainer}>
             <PickerComponent
               title="ธนาคาร"
-              value={bank.name}
-              onValueChange={(value) => setBank({ ...bank, name: value })}
+              value={userReducer.bank}
+              onValueChange={setBank}
+              onUpdate={api.user.update.bank}
               items={require("../assets/constValue").BANK}
             />
             <TextInputComponent
               title="เลขบัญชีธนาคาร"
-              value={bank.id}
-              onSaved={(value) => setBank({ ...bank, id: value })}
+              value={userReducer.bank_account}
+              onSaved={setBankAccount}
+              onUpdate={api.user.update.bank_account}
               maxLength={12}
               keyboardType="numeric"
               condition={(text) => text.match(/^[0-9]{10,12}$/)}

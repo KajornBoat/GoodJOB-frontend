@@ -11,6 +11,8 @@ import {
   ACTION_USER_SET_INTERESTED,
   ACTION_USER_SET_PHOTO_URL,
   ACTION_USER_SET_ROLE,
+  ACTION_USER_SET_BANK,
+  ACTION_USER_SET_BKNK_ACCOUNT,
 } from "../constants";
 
 export const setUser = (payload) => ({
@@ -61,5 +63,14 @@ export const setPhotoURL = (payload) => ({
 });
 export const setRole = (payload) => ({
   type: ACTION_USER_SET_ROLE,
+  payload,
+});
+
+export const setBank = (payload) => ({
+  type: ACTION_USER_SET_BANK,
+  payload,
+});
+export const setBankAccount = (payload) => ({
+  type: ACTION_USER_SET_BKNK_ACCOUNT,
   payload,
 });

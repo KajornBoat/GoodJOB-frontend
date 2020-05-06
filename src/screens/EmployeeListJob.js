@@ -78,14 +78,13 @@ const EmployeeListJob = ({ navigation, route, filter }) => {
     return unsubscribe;
   }, [navigation]);
   if (jobs !== undefined) {
-    console.log("Update");
     const job_lists =
       filter == undefined
         ? jobs
         : jobs.filter((job) => {
             if (filter === undefined) return true;
             else {
-              console.log(job.tags);
+              
               return (
                 filter.filter((select) => job.tags.indexOf(select) > -1)
                   .length > 0

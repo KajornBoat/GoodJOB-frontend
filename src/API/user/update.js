@@ -68,10 +68,7 @@ class Update {
                 "idtoken" : idToken
               },
               body: JSON.stringify({
-                "info": {
-                  "photoURL": downloadURL,
-                     }
-                
+                  "photoURL": downloadURL,               
               }),
             }) 
             .then(result => {
@@ -118,8 +115,13 @@ class Update {
   }
   async role(data){
     return await updateData({"current_role" : data});
+  } 
+  async bank(data){
+    return await updateData({"bank" : data});
   }
-
+  async bank_account(data){
+    return await updateData({"bank_account" : data});
+  }  
 }
 
 const update = new Update();

@@ -11,6 +11,8 @@ import {
   ACTION_USER_SET_PHOTO_URL,
   ACTION_USER_SET_INTERESTED,
   ACTION_USER_SET_ROLE,
+  ACTION_USER_SET_BANK,
+  ACTION_USER_SET_BKNK_ACCOUNT,
 } from "../constants";
 import api from "../../API/API";
 
@@ -82,6 +84,11 @@ export default (state = initialState, { type, payload }) => {
       api.user.update.role(payload);
       return { ...state, role: payload };
     }
+    case ACTION_USER_SET_BKNK_ACCOUNT:
+      return { ...state, bank_account: payload };
+
+    case ACTION_USER_SET_BANK:
+      return { ...state, bank: payload };
 
     default:
       return state;
