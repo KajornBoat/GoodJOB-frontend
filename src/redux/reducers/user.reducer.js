@@ -48,6 +48,8 @@ export default (state = initialState, { type, payload }) => {
         province: payload.current_province,
         interested: payload.interested,
         role: payload.current_role,
+        bank_account : payload.bank_account,
+        bank : payload.bank
       };
 
     case ACTION_USER_SET_PHOTO_URL:

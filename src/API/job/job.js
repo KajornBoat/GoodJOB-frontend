@@ -160,7 +160,6 @@ class Job {
       },
       async applyJob(jobID,position){
         const idtoken = await manageUser.getIdToken();
-        console.log("Apply : ",position," id " ,jobID) 
         return await fetch(config.hostname+'/job/'+jobID+"/apply" , {
           method: 'POST',
           headers: {

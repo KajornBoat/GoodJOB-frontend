@@ -82,7 +82,7 @@ const GENDER = ["ชาย", "หญิง"];
 const BANK = [
   "BBL",
   "BBC",
-  "KBT",
+  "KTB",
   "BAY",
   "KBANK",
   "CITI",
