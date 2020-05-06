@@ -11,7 +11,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../API/API";
-import { setAcceptEmployee, setApplyEmployee } from "../redux/actions/jobemployer.action";
+import { setAcceptEmployee, setApplyEmployee, setJobEmployer } from "../redux/actions/jobemployer.action";
 
 const Stack = createStackNavigator();
 
@@ -94,7 +94,11 @@ const EmployerListJob = ({ navigation ,job_list, mode ,route}) => {
                 finishDate={new Date(value.finish_date)}
                 place={value.location.nameAddress}
                 onPress={() => {           
-                  navigation.navigate("JobDetailEmployerView", { job : value });              
+                  navigation.navigate("JobDetailEmployerView", { job : value });
+                  api.job.employer.getJobEmployer().then(job => {
+                    dispatch(setJobEmployer(job));
+                    console.log("ReLoadJobEmployer")
+                  });              
                 }}
                 key={index}
                 {...value}

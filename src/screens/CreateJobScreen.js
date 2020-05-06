@@ -330,7 +330,6 @@ const Map = (props) => {
         longitude: props.coordinate.longitude,
       });
     }
-    console.log(marker);
 
     return () => {
       mounted = false;
@@ -1143,7 +1142,6 @@ const CreateJobScreen = ({ navigation }) => {
           if (msg != "") {
             alert(msg);
           } else {
-            console.log("Saving...");
             let job = {
               title: jobName,
               description: description,

@@ -30,6 +30,8 @@ export default AutoEmployeeInfoScreen = ({ navigation, route, filter }) => {
                     onPress={() => {
                       navigation.navigate("IndividualEmployeeProfileScreen", {
                         employeeInfo : value,
+                        jobID : route.params.itemId,
+                        nextRoute : "AutoEmployeeInfoScreen"
                       });
                     }}
                   />

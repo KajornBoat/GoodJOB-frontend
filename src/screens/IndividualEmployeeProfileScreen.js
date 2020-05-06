@@ -49,7 +49,7 @@ export default function IndividualEmployeeProfileScreen({ route, navigation }) {
             dispatch(setAcceptEmployee(playload))
           }) 
          })
-          navigation.navigate("ManualEmployeeInfoScreen")
+          navigation.navigate(route.params.nextRoute)
         }} />
         
       </ScrollView>

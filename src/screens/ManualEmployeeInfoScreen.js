@@ -118,6 +118,7 @@ const ShowEmployeeProfileList = ({ employee, route, filter, navigation }) => {
                 navigation.navigate("IndividualEmployeeProfileScreen", {
                   employeeInfo : value,
                   jobID : route.params.itemId,
+                  nextRoute : "ManualEmployeeInfoScreen"
                 });
               }}
             />
