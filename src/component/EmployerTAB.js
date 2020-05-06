@@ -34,7 +34,7 @@ const EmployerTabs = ({ route }) => {
           routeName: "JobDetailApply", 
           jobs: "jobApplyReducer" , 
           setManualPosition : route.params.setManualPosition ,
-          setManualPosition : route.params.setManualPosition,
+          setAutoPosition : route.params.setAutoPosition,
           setApplicantPosition : route.params.setApplicantPosition
       }}
         options={{
