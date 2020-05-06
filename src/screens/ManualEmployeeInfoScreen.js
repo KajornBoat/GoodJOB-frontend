@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   Picker,
   ScrollView,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -26,6 +27,7 @@ export default function ManualEmployeeInfoScreen({
   ).lists.filter((value) => value._id == route.params.itemId)[0];
   const employee = job.acceptEmployee;
   const dispatch = useDispatch();
+  console.log(filter)
   if(employee){
     return (
       <View style={{ flex: 1 }}>
@@ -42,31 +44,38 @@ export default function ManualEmployeeInfoScreen({
           style={{ backgroundColor: "#afd9ff" }}
           activeOpacity={0.5}
           onPress={() => {
-            api.job.employer.getEmployee(job._id,"selecting").then(employee => {
-              const playload = {
-                "employee" : employee,
-                "jobID" : job._id
-              }
-              console.log("Load_SelectEmployee")
-              dispatch(setSelectEmployee(playload))
-            })
-            navigation.navigate("SelectForInviteScreen", {
-              filter: filter,
-              itemId: route.params.itemId,
-              nextRouts : "IndividualInviteEmployeeProfileScreen"
-            })
-          }}
-          disabled={
-            filter == "ตำแหน่ง" ||
-            !(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
+            if(filter === "ตำแหน่ง") {
+              Alert.alert(
+                'Error!',
+                'กรุณาเลือกตำเเหน่ง',
+                [
+                  {text: 'OK'},
+                ],
+              );
+            }
+            else{
+              api.job.employer.getEmployee(job._id,"selecting").then(employee => {
+                const playload = {
+                  "employee" : employee,
+                  "jobID" : job._id
+                }
+                console.log("Load_SelectEmployee")
+                dispatch(setSelectEmployee(playload))
+              })
+              navigation.navigate("SelectForInviteScreen", {
+                filter: filter,
+                itemId: route.params.itemId,
+                nextRouts : "IndividualInviteEmployeeProfileScreen"
+              })
+            }}
           }
         >
           <View
             style={{
               ...styles.footerView,
               backgroundColor:
-                filter == "ตำแหน่ง" ||
-                !(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
+                filter === "ตำแหน่ง" //||
+                //!(job.positions.filter(value => value.name == filter)[0].required > employee.filter(value => value.position == filter).length)
                   ? "#dfdede"
                   : "#afd9ff",
             }}

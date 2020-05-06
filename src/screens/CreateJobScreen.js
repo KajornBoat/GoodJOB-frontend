@@ -212,7 +212,7 @@ const DateInputComponent = ({
             </Text>
             <AntDesign
               name="down"
-              size={12}
+              size={15}
               style={{ ...styles.pickArrow, top: "33%" }}
             />
           </TouchableOpacity>
@@ -772,7 +772,7 @@ const AddPosition = ({ positions, setPositions, selectJob, setSelectJob }) => {
       >
         <AntDesign
           name="pluscircle"
-          size={16}
+          size={20}
           style={{
             color: "#0bb203",
           }}
