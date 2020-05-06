@@ -11,7 +11,7 @@ const TextEmployeeInfo = ({ data }) => {
       <TextInformation title="อายุ" data={data.age} />
       <TextInformation title="เพศ" data={data.gender} />
       <TextIntroduce introduceText={data.introduce_text} />
-      {/* <TextExperience experience={data.experience} /> */}
+      <TextExperience experience={data.selectedBy} />
     </View>
   );
 };
@@ -49,14 +49,17 @@ const TextExperience = ({ experience }) => {
           marginRight: 10,
         }}
       >
-        <Text style={{ ...styles.textTitle, flex: 1.5, marginLeft: 40 }}>
+        <Text style={{ flex: 1.5, marginLeft: 40 }}>
+          เคยรับทำงานมาเเล้ว {experience.length} ครั้ง
+        </Text>
+        {/* <Text style={{ ...styles.textTitle, flex: 1.5, marginLeft: 40 }}>
           งาน
         </Text>
         <Text style={{ ...styles.textTitle, flex: 1, marginLeft: 10 }}>
           ตำแหน่ง
-        </Text>
+        </Text> */}
       </View>
-      <View style={{ marginBottom: 10 }}>
+      {/* <View style={{ marginBottom: 10 }}>
         {experience.map((value, index) => (
           <View
             key={index}
@@ -67,11 +70,11 @@ const TextExperience = ({ experience }) => {
               marginRight: 10,
             }}
           >
-            <Text style={{ flex: 1.5 }}>{index + 1 + ". " + value.work}</Text>
-            <Text style={{ flex: 1, marginLeft: 10 }}>{value.position}</Text>
+            <Text style={{ flex: 1.5 }}>{index + 1 + ". " + value}</Text>
+            <Text style={{ flex: 1, marginLeft: 10 }}>{value}</Text>
           </View>
         ))}
-      </View>
+      </View> */}
     </View>
   );
 };
