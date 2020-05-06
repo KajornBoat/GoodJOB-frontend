@@ -19,7 +19,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/Logo.png",
+    "icon": "./src/assets/Logo3.png",
     "splash": {
       "image": "./src/assets/Cover.png",
       "resizeMode": "cover"
@@ -31,7 +31,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kmitl.goodjob",
+      "buildNumber": "1.0.0"
     }
   }
 }

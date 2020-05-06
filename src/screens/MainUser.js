@@ -48,9 +48,8 @@ const UserStack = () => {
   const AutoEmployeeInfo = (props) => (
     <AutoEmployeeInfoScreen {...props} filter={autoPosition} />
   );
-  
   const ManualEmployeeInfo = (props) => (
-    <ManualEmployeeInfoScreen {...props} filter={manualPosition} />
+    <ManualEmployeeInfoScreen {...props} filter={manualPosition}/>
   );
   const ManualApplicantInfo = (props) => (
     <ManualApplicantInfoScreen {...props} filter={applicantPosition} />
@@ -62,7 +61,7 @@ const UserStack = () => {
           <TouchableOpacity onPress={onPress}>
             <Ionicons
               name="ios-arrow-round-back"
-              size={32}
+              size={35}
               style={styles.iconColor}
             />
           </TouchableOpacity>
@@ -75,6 +74,11 @@ const UserStack = () => {
         <Stack.Screen
           name="EmployerTabs"
           component={EmployerTabs}
+          initialParams={{ 
+            setAutoPosition: setAutoPosition,
+            setManualPosition : setManualPosition,
+            setApplicantPosition : setApplicantPosition
+           }}
           options={{
             headerShown: false,
           }}

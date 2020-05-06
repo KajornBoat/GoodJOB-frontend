@@ -72,7 +72,7 @@ const BoxListWithEmployeeData = ({
   );
 };
 
-const EmployerListJob = ({ navigation ,job_list, mode }) => {
+const EmployerListJob = ({ navigation ,job_list, mode ,route}) => {
   const dispatch = useDispatch();
   return (   
     <ScrollView
@@ -98,8 +98,9 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                 }}
                 key={index}
                 {...value}
-                onBottomMiddlePress={() => {
-                    navigation.navigate("AutoEmployeeInfoScreen", {
+                onBottomMiddlePress={async() => {
+                  await route.params.setAutoPosition("ตำแหน่ง")
+                  navigation.navigate("AutoEmployeeInfoScreen", {
                     itemId: value._id,
                     job : value
                   })
@@ -114,6 +115,7 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                 
                 }}
                 onBottomLeftPress={() => {
+                  route.params.setManualPosition("ตำแหน่ง")
                   navigation.navigate("ManualEmployeeInfoScreen", {
                     itemId : value._id,
                     job : value
@@ -127,7 +129,8 @@ const EmployerListJob = ({ navigation ,job_list, mode }) => {
                     dispatch(setAcceptEmployee(playload))
                   }) 
                 }}
-                onBottomRightPress={() => {
+                onBottomRightPress={async() => {
+                  await route.params.setApplicantPosition("ตำแหน่ง")
                   navigation.navigate("ManualApplicantInfoScreen", {
                     itemId: value._id,
                     job : value
@@ -154,7 +157,6 @@ export default ({ navigation, route }) => {
   
   const job_lists = useSelector(({ jobEmployerReducer }) => jobEmployerReducer);
   const [mode, setMode] = useState("manual");
-
   const EmployerJob = () => (
     <EmployerListJob
       navigation={navigation}
@@ -186,7 +188,7 @@ export default ({ navigation, route }) => {
             >
               <AntDesign
                 name="pluscircle"
-                size={24}
+                size={33}
                 style={{
                   color: "#0bb203",
                 }}

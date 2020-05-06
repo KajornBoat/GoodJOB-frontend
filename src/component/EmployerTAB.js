@@ -12,7 +12,7 @@ import api from "../API/API";
 import { setJobEmployer } from "../redux/actions/jobemployer.action";
 import TestScreen from "../screens/TestScreen";
 
-const EmployerTabs = () => {
+const EmployerTabs = ({ route }) => {
   const dispatch = useDispatch();
   api.job.employer.getJobEmployer().then(job => {
     dispatch(setJobEmployer(job));
@@ -30,7 +30,13 @@ const EmployerTabs = () => {
       <Tab.Screen
         name="หน้าหลัก"
         component={EmployerListJob}
-        initialParams={{ routeName: "JobDetailApply", jobs: "jobApplyReducer" }}
+        initialParams={{ 
+          routeName: "JobDetailApply", 
+          jobs: "jobApplyReducer" , 
+          setManualPosition : route.params.setManualPosition ,
+          setManualPosition : route.params.setManualPosition,
+          setApplicantPosition : route.params.setApplicantPosition
+      }}
         options={{
           tabBarIcon: ({ focused, size }) => {
             return (

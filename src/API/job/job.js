@@ -176,14 +176,13 @@ class Job {
         });
       },
       async acceptJob(jobID,status){
-        const idtoken = await manageUser.getIdToken();
-        console.log("jobID : ",jobID," status " ,status) 
-        return await fetch(config.hostname+'/job/'+jobID+"/useraccept" , {
+        const idtoken = await manageUser.getIdToken(); 
+        return await fetch(config.hostname+'/job/'+jobID+"/useraccept?status="+status , {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json',
               "idtoken" : idtoken
-          }
+          },
         })
         .catch((error) => {
           console.error('Error: ', error);

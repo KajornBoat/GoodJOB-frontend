@@ -4,6 +4,7 @@ import { View, Picker } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 const PickerFilter = ({ title, value, items, setOnValueChange }) => {
+  
   return (
     <View
       style={{
