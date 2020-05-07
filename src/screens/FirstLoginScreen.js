@@ -8,14 +8,18 @@ import { checkFirst } from "../utils/checkUser";
 export default () => {
     const user = useSelector(({ userReducer }) => userReducer);
     const dispatch = useDispatch()
+    const [state, setstate] = useState(true)
     React.useEffect(()=> {
-        Alert.alert(
-            'กรุณากรอกข้อมูล ',
-            'กรอกข้อมูลส่วนตัวกันก่อนเข้าใช้เเอพน้า',
-            [
-              {text: 'OK'},
-            ],    
-          );
+        if(state){
+            Alert.alert(
+                'กรุณากรอกข้อมูล ',
+                'กรอกข้อมูลส่วนตัวกันก่อนเข้าใช้เเอพน้า',
+                [
+                {text: 'OK'},
+                ],    
+            );
+        setstate(false)
+        }
     })
     return(
         <View style={{ flex: 1 }}>
@@ -23,7 +27,7 @@ export default () => {
                  <SettingScreen/>
              </View>
              <Button title="Next" onPress={() => {
-                 if(!checkFirst(user)){
+                 if(checkFirst(user)){
                     Alert.alert(
                         'Error ',
                         'กรุณากรอกข้อมูลที่เป็น *',

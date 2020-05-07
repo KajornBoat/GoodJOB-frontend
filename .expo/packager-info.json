@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 105168,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPid": 101136,
+  "expoServerNgrokUrl": "https://9u-nai.kajornboat.goodjob-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.9u-nai.kajornboat.goodjob-frontend.exp.direct",
+  "ngrokPid": 104128
 }

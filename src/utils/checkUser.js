@@ -4,15 +4,19 @@ import { useSelector } from "react-redux"
 import { View } from "react-native";
 
 export const checkFirst = (user) => {
-    const condition = [undefined,""]
+    let interested = ""
+    if(user.interested.length == 0) interested = undefined;
+
     return ([
-        condition.indexOf(user.firstname),
-        condition.indexOf(user.lastname),
-        condition.indexOf(user.age),
-        condition.indexOf(user.phone_number),
-        condition.indexOf(user.id_card),
-        condition.indexOf(user.province),
-        condition.indexOf(user.gender),
-        user.interested.length,
-    ].indexOf(0) == -1 )
+        user.firstname,
+        user.lastname,
+        user.age,
+        user.phone_number,
+        user.id_card,
+        user.province,
+        user.gender,
+        interested,
+    ].indexOf(undefined) > -1 )
+    
+    
 }

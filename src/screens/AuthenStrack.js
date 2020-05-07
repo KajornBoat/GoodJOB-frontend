@@ -36,7 +36,7 @@ export const CheckIfLoggedIn = ({ children }) => {
           dispatch(setLoading());
           const user = await api.auth.login();
           await dispatch(action.setUser(user));
-          if(!checkFirst(user)){
+          if(checkFirst(user)){
             dispatch(setFirst());
           }
           else{
