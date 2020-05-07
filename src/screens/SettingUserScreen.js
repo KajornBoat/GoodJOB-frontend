@@ -239,7 +239,7 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
   const list = [...values];
   const [message, setMessage] = useState("");
   const Item = (props) => {
-    const [state, setState] = useState(props.default);
+  const [state, setState] = useState(props.default);
 
     return (
       <View style={{ width: "100%" }}>
@@ -283,7 +283,10 @@ const MultipleSelect = ({ title, values, onChange, items, updateData }) => {
   const dispatch = useDispatch();
   return (
     <View>
-      <Text style={[styles.labelFont, styles.gapVertical]}>{title}</Text>
+      <View style={[{ flexDirection: "row" }, styles.gapVertical]}>
+        <Text style={styles.labelFont}>{title}</Text>
+        <Text style={{ paddingHorizontal: 5, color: "red" }}>*</Text>
+      </View>
       <TouchableOpacity onPress={() => setActive(true)}>
         <View>
           <Text

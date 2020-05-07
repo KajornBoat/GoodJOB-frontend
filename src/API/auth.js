@@ -18,7 +18,21 @@ class Auth {
       })
       .then( res => res.json()
       .then( result => {
-        return result;
+        const user = {
+          email: result.email,
+          photoURL: result.photoURL,
+          firstname: result.firstname,
+          lastname: result.lastname,
+          age: result.age,
+          phone_number: result.phone_number,
+          id_card: result.id_card,
+          gender: result.gender,
+          introduce: result.introduce_text,
+          province: result.current_province,
+          interested: result.interested,
+          role: result.current_role,
+        }
+        return user;
       }))
       .catch((error) => {
         console.error('Error:', error);

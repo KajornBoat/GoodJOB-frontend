@@ -27,7 +27,7 @@ const initialState = {
   gender: "",
   introduce: "",
   province: "",
-  interested: [""],
+  interested: [],
   role: "",
 };
 
@@ -44,10 +44,10 @@ export default (state = initialState, { type, payload }) => {
         phone_number: payload.phone_number,
         id_card: payload.id_card,
         gender: payload.gender,
-        introduce: payload.introduce_text,
-        province: payload.current_province,
+        introduce: payload.introduce,
+        province: payload.province,
         interested: payload.interested,
-        role: payload.current_role,
+        role: payload.role,
         bank_account : payload.bank_account,
         bank : payload.bank
       };

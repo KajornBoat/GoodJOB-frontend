@@ -2,6 +2,7 @@ import {
   ACTION_PAGE_STATUS_LOADING,
   ACTION_PAGE_STATUS_LOGIN,
   ACTION_PAGE_STATUS_AVAILABLE,
+  ACTION_PAGE_STATUS_FIRST,
 } from "../constants";
 
 const initialState = {
@@ -16,6 +17,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, status: "loading" };
     case ACTION_PAGE_STATUS_LOGIN:
       return { ...state, status: "login" };
+    case ACTION_PAGE_STATUS_FIRST:
+      return { ...state, status: "first" };
     default:
       return state;
   }

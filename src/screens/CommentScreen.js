@@ -174,8 +174,9 @@ export default function CommentScreen({ route }) {
         <TouchableOpacity
           onPress={() => {
             if (commentText.length > 0) {
-              alert(commentText);
+              //alert(commentText);
               setCommentText("");
+              comment.push(commentText)
             }
           }}
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}

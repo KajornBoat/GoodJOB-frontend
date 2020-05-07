@@ -10,6 +10,7 @@ import {
   setAvailable,
   setLogin,
   setLoading,
+  setFirst,
 } from "../redux/actions/pagestatus.action";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
@@ -19,6 +20,8 @@ import SplashScreen from "./SplashScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import FirstLoginScreen from "./FirstLoginScreen";
+import { checkFirst } from "../utils/checkUser";
 
 const Stack = createStackNavigator();
 
@@ -29,13 +32,20 @@ export const CheckIfLoggedIn = ({ children }) => {
     .onAuthStateChanged(async function (user) {
       console.log("AUTH STATE CHANGED CALLED ");
       if (user) {    
-          console.log("SignIn..............");
+          console.log("SignIn");
           dispatch(setLoading());
           const user = await api.auth.login();
-          dispatch(action.setUser(user));
-          dispatch(setAvailable());
+          await dispatch(action.setUser(user));
+          if(!checkFirst(user)){
+            dispatch(setFirst());
+          }
+          else{
+            dispatch(setAvailable())
+          }
+          
+          
       } else {
-        console.log("SignOut...");
+        console.log("SignOut");
         dispatch(setLogin());  
       }
       
@@ -74,6 +84,11 @@ const AuthStack = () => {
             <Stack.Screen name="MainUser" component={MainUser} />
           </Stack.Navigator>
         )}
+      {status == "first" && (
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="FirstLoginScreen" component={FirstLoginScreen} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 };
